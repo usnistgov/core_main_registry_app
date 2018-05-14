@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Resource xmlns="http://schema.nist.gov/xml/res-md/1.0wd-02-2017" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" localid="1" status="active">
+   <identity>
+      <title>resource name</title>
+   </identity>
+   <providers>
+      <publisher>publisher_1</publisher>
+      <contact>
+         <name>provider_contact</name>
+      </contact>
+   </providers>
+   <content>
+      <description>content description</description>
+      <subject>content subject</subject>
+      <landingPage />
+   </content>
+   <role xsi:type="Organization">
+      <type>Organization: Institution</type>
+   </role>
+</Resource>
