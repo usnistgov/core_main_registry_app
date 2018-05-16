@@ -1,2 +1,2 @@
 core_main_app==1.0.0-beta2
-
+xml_utils==1.0.0-beta1
