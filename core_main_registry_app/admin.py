@@ -17,8 +17,6 @@ admin_urls = [
 
     url(r'^data', common_views.ViewData.as_view(administration=True), name='core_main_app_data_detail'),
     url(r'^templates$', admin_views.manage_templates, name='core_main_app_templates'),
-    url(r'^template/upload$', admin_views.upload_template,
-        name='core_main_app_upload_template'),
     url(r'^template/upload/(?P<version_manager_id>\w+)', admin_views.upload_template_version,
         name='core_main_app_upload_template_version'),
     url(r'^template/versions/(?P<version_manager_id>\w+)', admin_views.manage_template_versions,
