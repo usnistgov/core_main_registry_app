@@ -1,9 +1,28 @@
 """ Data's registry api
 """
 
+from xml_utils.xsd_tree.xsd_tree import XSDTree
+
 import core_main_app.components.data.api as data_api
 from core_main_app.commons import exceptions as exceptions
-from xml_utils.xsd_tree.xsd_tree import XSDTree
+from core_main_app.components.workspace import api as workspace_api
+from core_main_app.utils.access_control.decorators import access_control
+from core_main_registry_app.components.data.access_control import can_publish_data
+
+
+@access_control(can_publish_data)
+def publish(data, user):
+    """ Assign data to a workspace.
+
+    Args:
+        data:
+        user:
+
+    Returns:
+
+    """
+    data.workspace = workspace_api.get_global_workspace()
+    return data.save()
 
 
 def set_status(data, status, user):
