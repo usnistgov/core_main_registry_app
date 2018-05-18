@@ -3,10 +3,11 @@
 from django.conf.urls import url
 from rest_framework.urlpatterns import format_suffix_patterns
 
-from core_main_app.rest.workspace import views as workspace_views
-from core_main_app.rest.data import views as data_views
-from core_main_registry_app.rest.data import views as registry_data_views
 import core_main_app.rest.xsl_transformation.views as xslTransformationList_view
+from core_main_app.rest.data import views as data_views
+from core_main_app.rest.template import views as template_views
+from core_main_app.rest.workspace import views as workspace_views
+from core_main_registry_app.rest.data import views as registry_data_views
 
 urlpatterns = [
 
@@ -30,6 +31,9 @@ urlpatterns = [
 
     url(r'^data/(?P<pk>\w+)/publish/$', registry_data_views.publish_data,
         name='core_main_app_rest_publish_data'),
+
+    url(r'^template/(?P<pk>\w+)/download/$', template_views.TemplateDownload.as_view(),
+        name='core_main_app_rest_template_download'),
 
     url(r'^xslt/$', xslTransformationList_view.XslTransformationList.as_view(),
         name='core_main_app_rest_xslt'),
