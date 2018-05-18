@@ -2,12 +2,13 @@
 """
 from django.conf.urls import url
 from django.contrib import admin
-from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic.base import RedirectView
+
 from core_main_app.utils.rendering import admin_render
 from core_main_app.views.admin import views as admin_views, ajax as admin_ajax
 from core_main_app.views.common import views as common_views
+from core_main_registry_app.views.admin import views as registry_admin_views
 
 # FIXME: Check needed URLs for registry and remove the others.
 
@@ -16,7 +17,7 @@ admin_urls = [
     url(r'^logout', RedirectView.as_view(url=reverse_lazy("core_main_app_logout"))),
 
     url(r'^data', common_views.ViewData.as_view(administration=True), name='core_main_app_data_detail'),
-    url(r'^templates$', admin_views.manage_templates, name='core_main_app_templates'),
+    url(r'^templates$', registry_admin_views.manage_templates, name='core_main_registry_app_templates'),
     url(r'^template/upload/(?P<version_manager_id>\w+)', admin_views.upload_template_version,
         name='core_main_app_upload_template_version'),
     url(r'^template/versions/(?P<version_manager_id>\w+)', admin_views.manage_template_versions,
