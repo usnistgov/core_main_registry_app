@@ -20,6 +20,16 @@ urlpatterns = [
     url(r'^rest/', include('core_main_registry_app.rest.urls')),
     url(r'^data',  common_views.ViewData.as_view(), name='core_main_app_data_detail'),
 
+    url(r'^template/versions/(?P<version_manager_id>\w+)', user_views.manage_template_versions,
+        name='core_main_app_manage_template_versions'),
+
+    url(r'^template/version/disable', common_ajax.disable_template_version_from_version_manager,
+        name='core_main_app_disable_template_version'),
+    url(r'^template/version/restore', common_ajax.restore_template_version_from_version_manager,
+        name='core_main_app_restore_template_version'),
+    url(r'^template/version/current', common_ajax.set_current_template_version_from_version_manager,
+        name='core_main_app_set_current_template_version'),
+
     url(r'^xslt$', common_views.XSLTView.as_view(), name='core_main_app_xslt'),
     url(r'^xslt/upload$', common_views.UploadXSLTView.as_view(), name='core_main_app_upload_xslt'),
     url(r'^template/xslt/(?P<template_id>\w+)',
