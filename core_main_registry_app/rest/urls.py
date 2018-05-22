@@ -6,10 +6,40 @@ from rest_framework.urlpatterns import format_suffix_patterns
 import core_main_app.rest.xsl_transformation.views as xslTransformationList_view
 from core_main_app.rest.data import views as data_views
 from core_main_app.rest.template import views as template_views
+from core_main_app.rest.template_version_manager import views as template_version_manager_views
 from core_main_app.rest.workspace import views as workspace_views
 from core_main_registry_app.rest.data import views as registry_data_views
 
 urlpatterns = [
+    url(r'^template-version-manager/global/$',
+        template_version_manager_views.GlobalTemplateVersionManagerList.as_view(),
+        name='core_main_app_rest_template_version_manager_global_list'),
+
+    url(r'^template-version-manager/(?P<pk>\w+)/$',
+        template_version_manager_views.TemplateVersionManagerDetail.as_view(),
+        name='core_main_app_rest_template_version_manager_detail'),
+
+    url(r'^template-version-manager/(?P<pk>\w+)/version/$',
+        template_version_manager_views.TemplateVersion.as_view(),
+        name='core_main_app_rest_template_version'),
+
+    url(r'^template/version/(?P<pk>\w+)/current/$',
+        template_version_manager_views.CurrentTemplateVersion.as_view(),
+        name='core_main_app_rest_template_version_current'),
+
+    url(r'^template/version/(?P<pk>\w+)/disable/$',
+        template_version_manager_views.DisableTemplateVersion.as_view(),
+        name='core_main_app_rest_template_version_disable'),
+
+    url(r'^template/version/(?P<pk>\w+)/restore/$',
+        template_version_manager_views.RestoreTemplateVersion.as_view(),
+        name='core_main_app_rest_template_version_restore'),
+
+    url(r'^template/(?P<pk>\w+)/download/$', template_views.TemplateDownload.as_view(),
+        name='core_main_app_rest_template_download'),
+
+    url(r'^template/(?P<pk>\w+)/$', template_views.TemplateDetail.as_view(),
+        name='core_main_app_rest_template_detail'),
 
     url(r'^data/$', data_views.DataList.as_view(),
         name='core_main_app_rest_data_list'),
@@ -31,9 +61,6 @@ urlpatterns = [
 
     url(r'^data/(?P<pk>\w+)/publish/$', registry_data_views.publish_data,
         name='core_main_app_rest_publish_data'),
-
-    url(r'^template/(?P<pk>\w+)/download/$', template_views.TemplateDownload.as_view(),
-        name='core_main_app_rest_template_download'),
 
     url(r'^xslt/$', xslTransformationList_view.XslTransformationList.as_view(),
         name='core_main_app_rest_xslt'),
