@@ -1,6 +1,5 @@
-=============
 Core Main Registry App
-=============
+======================
 
 This Django reusable app contains the main functionalities for the registry core project.
 
@@ -37,7 +36,7 @@ Configuration
 =============
 
 1. Add "core_main_registry_app" to your INSTALLED_APPS setting like this
----------------------------------------------------------------
+------------------------------------------------------------------------
 
 .. code:: python
 
@@ -47,7 +46,7 @@ Configuration
     ]
 
 2. Include the core_main_registry_app URLconf in your project urls.py like this
-----------------------------------------------------------------------
+-------------------------------------------------------------------------------
 
 .. code:: python
 
