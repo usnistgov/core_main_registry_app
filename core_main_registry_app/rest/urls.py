@@ -62,6 +62,9 @@ urlpatterns = [
     url(r'^data/(?P<pk>\w+)/publish/$', registry_data_views.publish_data,
         name='core_main_app_rest_publish_data'),
 
+    url(r'^data/(?P<pk>\w+)/assign/(?P<workspace_id>\w+)$', data_views.DataAssign.as_view(),
+        name='core_main_app_rest_data_assign'),
+
     url(r'^xslt/$', xslTransformationList_view.XslTransformationList.as_view(),
         name='core_main_app_rest_xslt'),
 
