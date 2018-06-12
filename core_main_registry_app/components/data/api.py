@@ -1,13 +1,15 @@
 """ Data's registry api
 """
-
-from xml_utils.xsd_tree.xsd_tree import XSDTree
+import random
+import string
 
 import core_main_app.components.data.api as data_api
 from core_main_app.commons import exceptions as exceptions
+from core_main_app.components.data.models import Data
 from core_main_app.components.workspace import api as workspace_api
 from core_main_app.utils.access_control.decorators import access_control
 from core_main_registry_app.components.data.access_control import can_publish_data
+from xml_utils.xsd_tree.xsd_tree import XSDTree
 
 
 @access_control(can_publish_data)
@@ -61,3 +63,33 @@ def get_status(data):
         return data.dict_content['Resource']['@status']
     except Exception, e:
         raise exceptions.ModelError(e.message)
+
+
+def is_local_id_already_used(local_id):
+    """ Check if the local id given already exist in db
+
+    Args:
+        local_id:
+
+    Returns:
+
+    """
+    return len(Data.execute_query({'dict_content.Resource.@localid': str(local_id)})) > 0
+
+
+def generate_unique_local_id(length_id):
+    """ Generate an unique ID with the given length
+
+    Args:
+        length_id:
+
+    Returns:
+
+    """
+    # we generate an local id
+    local_id = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(length_id))
+    # we make sure this local id does not exist in db
+    while is_local_id_already_used(local_id):
+        # otherwise we generate one until then
+        local_id = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(length_id))
+    return local_id
