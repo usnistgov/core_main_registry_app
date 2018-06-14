@@ -34,13 +34,23 @@ class TestDataSetStatus(MongoIntegrationBaseTestCase):
     fixture = fixture_data
 
     @patch.object(Data, 'convert_to_file')
-    def test_data_set_status_changes_status_with_the_given_one(self, mock_convert_to_file):
+    def test_data_set_status_to_inactive_should_always_work(self, mock_convert_to_file):
         # Arrange
         user = create_mock_user('1', True, True)
         status = data_registry_api.get_status(self.fixture.data_1)
         self.assertTrue(status == DataStatus.ACTIVE)
         # Act
-        data = data_registry_api.set_status(self.fixture.data_1, DataStatus.DELETED, user)
+        data = data_registry_api.set_status(self.fixture.data_1, DataStatus.INACTIVE, user)
         status = data_registry_api.get_status(data)
         # Assert
-        self.assertTrue(status == DataStatus.DELETED)
+        self.assertTrue(status == DataStatus.INACTIVE)
+
+    @patch.object(Data, 'convert_to_file')
+    def test_data_set_status_to_deleted_raise_exception_if_data_is_not_published(self, mock_convert_to_file):
+        # Arrange
+        user = create_mock_user('1', True, True)
+        status = data_registry_api.get_status(self.fixture.data_1)
+        self.assertTrue(status == DataStatus.ACTIVE)
+        # Act Assert
+        with self.assertRaises(exceptions.ModelError):
+            data_registry_api.set_status(self.fixture.data_1, DataStatus.DELETED, user)
