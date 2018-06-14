@@ -35,14 +35,15 @@ Manual installation
 Configuration
 =============
 
-1. Add "core_main_registry_app" to your INSTALLED_APPS setting like this
-------------------------------------------------------------------------
+1. Add "core_main_registry_app" and "mptt" to your INSTALLED_APPS setting like this
+-----------------------------------------------------------------------------------
 
 .. code:: python
 
     INSTALLED_APPS = [
         ...
         "core_main_registry_app",
+        "mptt",
     ]
 
 2. Include the core_main_registry_app URLconf in your project urls.py like this
@@ -51,3 +52,9 @@ Configuration
 .. code:: python
 
     url(r'^', include("core_main_registry_app.urls")),
+
+
+3. Launch migration: create table and constraints.
+--------------------------------------------------
+
+    $ python manage.py migrate
