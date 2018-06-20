@@ -163,7 +163,6 @@ class FancyTreeWidget(Widget):
                                            $('#%(id)s_' + (node.key)).prop('checked', true);
                                            return node.key;
                                     });
-                                    manageFilters($(this));
                                 },
                                 click: function(event, data) {
                                     var node = data.node;
