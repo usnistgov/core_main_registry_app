@@ -46,3 +46,20 @@ def get_by_id(category_id):
 
     """
     return Category.get_by_id(category_id)
+
+
+def get_all_categories_ids_by_parent_slug_and_refinement_id(parent_slug, refinement_id):
+    """ Get a list of all category ids by parent_slug and refinement id.
+
+    Args:
+        parent_slug:
+        refinement_id:
+
+    Returns:
+
+    """
+    # Get categories
+    categories = Category.get_all_categories_by_parent_slug_and_refinement_id(parent_slug,
+                                                                              refinement_id)
+    # Return a list of category ids
+    return list(categories.values_list('id', flat=True))

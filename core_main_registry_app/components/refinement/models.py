@@ -4,6 +4,8 @@
 from django.db import models
 from django_extensions.db.fields import AutoSlugField
 
+from core_main_app.commons import exceptions as exceptions
+
 
 class Refinement(models.Model):
     name = models.CharField(max_length=50)
@@ -60,3 +62,21 @@ class Refinement(models.Model):
 
         """
         return len(Refinement.get_all_filtered_by_template_hash(template_hash)) > 0
+
+    @staticmethod
+    def get_by_template_hash_and_by_slug(template_hash, slug):
+        """ Get refinement by template hash and by slug.
+
+        Args:
+            template_hash:
+            slug:
+
+        Returns: Refinement collection
+
+        """
+        try:
+            return Refinement.objects.get(template_hash=template_hash, slug=slug)
+        except Refinement.DoesNotExist as e:
+            raise exceptions.DoesNotExist(e.message)
+        except Exception as ex:
+            raise exceptions.ModelError(ex.message)

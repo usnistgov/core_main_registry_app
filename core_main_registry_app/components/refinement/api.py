@@ -51,3 +51,16 @@ def check_refinements_already_exist_by_template_hash(template_hash):
 
     """
     return Refinement.check_refinements_already_exist_by_template_hash(template_hash)
+
+
+def get_by_template_hash_and_by_slug(template_hash, slug):
+    """ Get refinement by template hash and by slug.
+
+    Args:
+        template_hash:
+        slug:
+
+    Returns: Refinement collection
+
+    """
+    return Refinement.get_by_template_hash_and_by_slug(template_hash=template_hash, slug=slug)
