@@ -50,7 +50,7 @@ def loads_refinements_trees(template):
                 else:
                     element = element[0]
                     # get the label of refinements
-                    label = _get_label(element, xml_doc_tree, target_ns_prefix)
+                    element_name, element_label = _get_element_info(element, xml_doc_tree, target_ns_prefix)
                     query = []
 
                     # Build the path to access the element (dot notation)
@@ -72,7 +72,10 @@ def loads_refinements_trees(template):
 
                     dot_query = ".".join(query)
                     # Build the corresponding refinement tree
-                    trees = tree.build_tree(tree=trees, root=label, enums=enums,
+                    trees = tree.build_tree(tree=trees,
+                                            element_name=element_name,
+                                            element_display_name=element_label,
+                                            enums=enums,
                                             dot_query=dot_query)
         except Exception, e:
             # Log the exception
@@ -112,7 +115,7 @@ def _get_target_namespace_prefix(ref_xml_schema_content, xml_doc_tree):
     return target_ns_prefix
 
 
-def _get_label(element, xml_doc_tree, target_ns_prefix):
+def _get_element_info(element, xml_doc_tree, target_ns_prefix):
     """ Get the element label.
 
     Args:
@@ -139,10 +142,11 @@ def _get_label(element, xml_doc_tree, target_ns_prefix):
                 break
 
     # Get the label
-    label = app_info['label'] if 'label' in app_info else element.attrib['name']
-    label = label if label is not None else element.attrib['name']
+    name = parent.attrib['name']
+    label = app_info['label'] if 'label' in app_info else name
+    label = label if label is not None else name
 
-    return label
+    return name, label
 
 
 def _get_simple_type_or_complex_type_info(xml_doc_tree, target_ns_prefix, element, query=None):

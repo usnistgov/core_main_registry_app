@@ -163,6 +163,9 @@ class FancyTreeWidget(Widget):
                                            $('#%(id)s_' + (node.key)).prop('checked', true);
                                            return node.key;
                                     });
+                                    if (typeof fancy_tree_select == 'function'){
+                                        fancy_tree_select(event, data);
+                                    }
                                 },
                                 click: function(event, data) {
                                     var node = data.node;

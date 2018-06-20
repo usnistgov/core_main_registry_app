@@ -10,10 +10,12 @@ class TreeInfo:
     Representation of refinement.
     """
 
+    xsd_name = ""
     title = ""
     selected = False
 
-    def __init__(self, title="", path="", value=""):
+    def __init__(self, xsd_name="", title="", path="", value=""):
+        self.xsd_name = xsd_name
         self.title = title
         self.path = path
         self.value = value
@@ -38,12 +40,13 @@ class TreeInfo:
         return "_category"
 
 
-def build_tree(tree, root, enums, dot_query):
+def build_tree(tree, element_name, element_display_name, enums, dot_query):
     """ Create a tree of refinements.
 
     Args:
         tree:
-        root:
+        element_name:
+        element_display_name:
         enums:
         dot_query:
 
@@ -54,7 +57,9 @@ def build_tree(tree, root, enums, dot_query):
     for enum in enums:
         # Init tree.
         t = tree
-        t = t.setdefault(TreeInfo(title=root), OrderedDict())
+        t = t.setdefault(TreeInfo(xsd_name=element_name,
+                                  title=element_display_name),
+                         OrderedDict())
         # Levels are represented by the character ':' in the schema. (Level1: Level2: ... LevelN).
         groups = enum.attrib['value'].split(':')
         split_index = 0
@@ -69,7 +74,10 @@ def build_tree(tree, root, enums, dot_query):
             # Get the name of the element.
             title = part
             # Create the tree info.
-            g = TreeInfo(title=title, path=path, value=value)
+            g = TreeInfo(xsd_name=title,
+                         title=title,
+                         path=path,
+                         value=value)
             # Add the element to the tree as the parent.
             t = t.setdefault(g, OrderedDict())
 

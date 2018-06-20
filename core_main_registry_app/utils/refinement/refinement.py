@@ -23,6 +23,7 @@ def init_refinements(template):
             # Create refinements.
             for root, tree in refinements_trees.iteritems():
                 refinement = refinement_api.create_and_save(name=root.title,
+                                                            xsd_name=root.xsd_name,
                                                             template_hash=template.hash)
                 # Create categories.
                 create_categories(tree, refinement)

@@ -4,11 +4,12 @@
 from core_main_registry_app.components.refinement.models import Refinement
 
 
-def create_and_save(name, template_hash):
+def create_and_save(name, xsd_name, template_hash):
     """ Create and save a refinement.
 
     Args:
         name:
+        xsd_name:
         template_hash:
 
     Returns:
@@ -16,7 +17,7 @@ def create_and_save(name, template_hash):
     """
 
     # Save refinement
-    return Refinement.create_and_save(name=name, template_hash=template_hash)
+    return Refinement.create_and_save(name=name, xsd_name=xsd_name, template_hash=template_hash)
 
 
 def get_all():

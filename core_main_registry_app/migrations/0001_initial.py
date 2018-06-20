@@ -39,6 +39,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=50)),
+                ('xsd_name', models.CharField(max_length=50)),
                 ('slug', django_extensions.db.fields.AutoSlugField(blank=True, editable=False, overwrite=True, populate_from=b'name')),
                 ('template_hash', models.CharField(max_length=255)),
             ],

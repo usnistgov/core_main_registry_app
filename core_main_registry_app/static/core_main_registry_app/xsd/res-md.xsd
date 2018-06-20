@@ -2207,11 +2207,10 @@
        <xs:extension base="rsm:Applicability">
          <xs:sequence>
            <xs:element name="dataOrigin" type="rsm:Data_origin" 
-                       minOccurs="0" maxOccurs="4"
-                       xmlns:ns0="http://mdcs.ns"
-                       ns0:_mod_mdcs_="/registry/fancy_tree_data_origin">
+                       minOccurs="0" maxOccurs="4">
              <xs:annotation>
                <xs:appinfo>
+                <module>module-fancy-tree-registry</module>
                  <label>Origin of Data</label>
                </xs:appinfo>
                <xs:documentation>
@@ -2221,11 +2220,10 @@
            </xs:element>
 
            <xs:element name="materialType" type="rsm:Material_types"
-                       minOccurs="0" maxOccurs="unbounded"
-                       xmlns:ns0="http://mdcs.ns"
-                       ns0:_mod_mdcs_="/registry/fancy_tree_material_type">
+                       minOccurs="0" maxOccurs="unbounded">
              <xs:annotation>
                <xs:appinfo>
+                   <module>module-fancy-tree-registry</module>
                  <label>Material Type</label>
                </xs:appinfo>
                <xs:documentation>
@@ -2237,11 +2235,10 @@
 
            <xs:element name="structuralFeature"
                        type="rsm:Structural_features"
-                       minOccurs="0" maxOccurs="unbounded"
-                       xmlns:ns0="http://mdcs.ns"
-                       ns0:_mod_mdcs_="/registry/fancy_tree_structural_feature">
+                       minOccurs="0" maxOccurs="unbounded">
              <xs:annotation>
                <xs:appinfo>
+                   <module>module-fancy-tree-registry</module>
                  <label>Structural Feature</label>
                </xs:appinfo>
                <xs:documentation>
@@ -2252,11 +2249,10 @@
            </xs:element>
 
            <xs:element name="propertyAddressed" type="rsm:Properties_addressed" 
-                       minOccurs="0" maxOccurs="unbounded"
-                       xmlns:ns0="http://mdcs.ns"
-                       ns0:_mod_mdcs_="/registry/fancy_tree_property_addressed">
+                       minOccurs="0" maxOccurs="unbounded">
              <xs:annotation>
                <xs:appinfo>
+                   <module>module-fancy-tree-registry</module>
                  <label>Property Addressed</label>
                </xs:appinfo>
                <xs:documentation>
@@ -2266,11 +2262,10 @@
            </xs:element>
 
            <xs:element name="characterizationMethod" type="rsm:Characterization_methods" 
-                       minOccurs="0" maxOccurs="unbounded"
-                       xmlns:ns0="http://mdcs.ns"
-                       ns0:_mod_mdcs_="/registry/fancy_tree_characterization_method">
+                       minOccurs="0" maxOccurs="unbounded">
              <xs:annotation>
                <xs:appinfo>
+                   <module>module-fancy-tree-registry</module>
                  <label>Experimental Characterization Methods</label>
                </xs:appinfo>
                <xs:documentation>
@@ -2281,11 +2276,10 @@
            </xs:element>
 
            <xs:element name="computationalMethod" type="rsm:Computational_methods" 
-                       minOccurs="0" maxOccurs="unbounded"
-                       xmlns:ns0="http://mdcs.ns"
-                       ns0:_mod_mdcs_="/registry/fancy_tree_computational_method">
+                       minOccurs="0" maxOccurs="unbounded">
              <xs:annotation>
                <xs:appinfo>
+                   <module>module-fancy-tree-registry</module>
                  <label>Computational Data Acquisition Methods</label>
                </xs:appinfo>
                <xs:documentation>
@@ -2296,11 +2290,10 @@
            </xs:element>
 
            <xs:element name="computeScale" type="rsm:Compute_scales" 
-                       minOccurs="0" maxOccurs="unbounded"
-                       xmlns:ns0="http://mdcs.ns"
-                       ns0:_mod_mdcs_="/registry/fancy_tree_compute_scale">
+                       minOccurs="0" maxOccurs="unbounded">
              <xs:annotation>
                <xs:appinfo>
+                   <module>module-fancy-tree-registry</module>
                  <label>Physical scale modeled by computation</label>
                </xs:appinfo>
                <xs:documentation>
@@ -2311,11 +2304,10 @@
 
            <xs:element name="synthesisProcessing" 
                        type="rsm:Synthesis_and_processing" 
-                       minOccurs="0" maxOccurs="unbounded"
-                       xmlns:ns0="http://mdcs.ns"
-                       ns0:_mod_mdcs_="/registry/fancy_tree_synthesis_processing">
+                       minOccurs="0" maxOccurs="unbounded">
              <xs:annotation>
                <xs:appinfo>
+                   <module>module-fancy-tree-registry</module>
                  <label>Synthesis Processing</label>
                </xs:appinfo>
                <xs:documentation>
