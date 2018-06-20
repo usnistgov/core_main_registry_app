@@ -33,3 +33,16 @@ def get_all_filtered_by_refinement_id(refinement_id):
 
     """
     return Category.get_all_filtered_by_refinement_id(refinement_id)
+
+
+def get_by_id(category_id):
+    """ Get category by its id.
+
+    Parameters:
+        category_id:
+
+    Returns:
+        Category object
+
+    """
+    return Category.get_by_id(category_id)

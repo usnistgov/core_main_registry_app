@@ -5,6 +5,8 @@ from django.db import models
 from django_extensions.db.fields import AutoSlugField
 from mptt.models import MPTTModel, TreeForeignKey
 
+from core_main_app.commons import exceptions as exceptions
+
 
 class Category(MPTTModel):
     parent = TreeForeignKey('self', null=True, on_delete=models.CASCADE, blank=True,
@@ -48,3 +50,21 @@ class Category(MPTTModel):
         """
         return Category.objects.create(name=name, path=path, value=value, parent=parent,
                                        refinement=refinement)
+
+    @staticmethod
+    def get_by_id(category_id):
+        """ Get category by its id.
+
+        Parameters:
+            category_id:
+
+        Returns:
+            Category object
+
+        """
+        try:
+            return Category.objects.get(pk=category_id)
+        except Category.DoesNotExist as e:
+            raise exceptions.DoesNotExist(e.message)
+        except Exception as ex:
+            raise exceptions.ModelError(ex.message)
