@@ -3,9 +3,15 @@ Mongo query creation for the refinements.
 """
 
 import logging
+import operator
+
+from django.db.models import Q
 
 from core_main_app.commons import exceptions as exceptions
 from core_main_registry_app.components.category import api as category_api
+from core_main_registry_app.components.category.models import Category
+from core_main_registry_app.components.refinement import api as refinement_api
+from core_main_registry_app.components.template import api as template_registry_api
 
 logger = logging.getLogger("core_main_registry_app.utils.refinement.mongo_query")
 
@@ -65,3 +71,58 @@ def build_refinements_query(refinements):
         logger.error("Something went wrong during the creation of the refinement query. Search "
                      "won't be refined: {0}.".format(e.message))
         return {}
+
+
+def get_refinement_selected_values_from_query(query):
+    """ get the refinement selected values from a json query
+
+    Args:
+        query:
+
+    Returns:
+        {
+            refinement_name: [cat_id, cat_id ,cat_id],
+            refinement_name: [cat_id, cat_id ,cat_id],
+            refinement_name: [cat_id, cat_id ,cat_id],
+        }
+
+    """
+    # create a list of key (category), value_list (selected values)
+    category_values_list = {}
+    # if the query have the key '$and', there is refinement selected
+    if '$and' in query:
+        for element_or in query['$and']:
+            # go through all '$or' => where refinement are
+            for element in element_or['$or']:
+                for key, value in element.iteritems():
+                    # we only want path which does not contain '#text' at the end of it
+                    if not key.endswith('#text'):
+                        for selected_value in value['$in']:
+                            # then we build our list and we don't want categories ending with '__category'
+                            if not selected_value.endswith('__category'):
+                                if key in category_values_list:
+                                    category_values_list[key].append(selected_value)
+                                else:
+                                    category_values_list.update({key: [selected_value]})
+
+    # get global template.
+    template = template_registry_api.get_current_registry_template()
+    # get refinements.
+    refinements = refinement_api.get_all_filtered_by_template_hash(template.hash)
+    refinements_ids = [x.id for x in refinements]
+    # get all category.
+    q_list = []
+    for key, values in category_values_list.iteritems():
+        # prepare the query
+        q_list.append(Q(path=key) & Q(refinement_id__in=refinements_ids) & Q(value__in=values))
+    categories = category_api.get_all().filter((reduce(operator.or_, q_list)))
+    # now we have to build a list of {refinement name: category ids, }
+    return_value = {}
+    for category in categories:
+        key = category.refinement.slug
+        if key in return_value:
+            return_value[key].append(category.id)
+        else:
+            return_value.update({key: [category.id]})
+    # return the structure
+    return return_value

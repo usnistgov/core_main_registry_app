@@ -86,3 +86,12 @@ class Category(MPTTModel):
             raise exceptions.DoesNotExist(e.message)
         except Exception as ex:
             raise exceptions.ModelError(ex.message)
+
+    @staticmethod
+    def get_all():
+        """ Get all categories.
+
+        Returns: Category collection
+
+        """
+        return Category.objects.all()
