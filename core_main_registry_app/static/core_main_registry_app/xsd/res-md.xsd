@@ -156,8 +156,13 @@
               replicated as an identifier under the identity section.
             </xs:documentation>
          </xs:annotation>
-        <xs:simpleType xmlns:ns0="http://mdcs.ns" ns0:_mod_mdcs_="/registry/local-id">
-          <xs:restriction base="xs:string"/>                      
+        <xs:simpleType>
+          <xs:annotation>
+              <xs:appinfo>
+                  <module>module-local-id-registry</module>
+              </xs:appinfo>
+          </xs:annotation>
+            <xs:restriction base="xs:string"/>
         </xs:simpleType>
       </xs:attribute>
 
@@ -171,7 +176,12 @@
               actively maintained.
             </xs:documentation>
          </xs:annotation>
-        <xs:simpleType xmlns:ns0="http://mdcs.ns" ns0:_mod_mdcs_="/registry/status">
+        <xs:simpleType>
+            <xs:annotation>
+                <xs:appinfo>
+                    <module>module-status-registry</module>
+                </xs:appinfo>
+            </xs:annotation>
             <xs:restriction base="xs:string">
                <xs:enumeration value="active">
                  <xs:annotation>
