@@ -661,11 +661,10 @@
            </xs:element>
 
            <xs:element name="inputsOutputs" type="xs:token"
-                       xmlns:ns0="http://mdcs.ns"
-                       ns0:_mod_mdcs_="/registry/description"
                        minOccurs="0" maxOccurs="1">
              <xs:annotation>
                <xs:appinfo>
+                 <module>module-text-area</module>
                  <label>Briefly describe software's inputs and outputs</label>
                  <placeholder>Describe the input data the software operates on and the output data it produces...</placeholder>
                </xs:appinfo>
@@ -676,11 +675,10 @@
            </xs:element>
 
            <xs:element name="useNotes" type="xs:token"
-                       xmlns:ns0="http://mdcs.ns"
-                       ns0:_mod_mdcs_="/registry/description"
                        minOccurs="0" maxOccurs="1">
              <xs:annotation>
                <xs:appinfo>
+                 <module>module-text-area</module>
                  <label>Provide any notes, caveats requirements, or recommendations for installing and using this software</label>
                </xs:appinfo>
                <xs:documentation>
@@ -1533,9 +1531,10 @@
      </xs:annotation>
 
      <xs:sequence>
-       <xs:element name="description" type="xs:token" xmlns:ns0="http://mdcs.ns" ns0:_mod_mdcs_="/registry/description" maxOccurs="unbounded">
+       <xs:element name="description" type="xs:token" maxOccurs="unbounded">
           <xs:annotation>
             <xs:appinfo>
+              <module>module-text-area</module>
               <label>Description</label>
               <placeholder>Enter Resource's description</placeholder>
               <tooltip>An account of the nature of the resource</tooltip>
@@ -1856,9 +1855,10 @@
          </xs:annotation>
        </xs:element>
 
-       <xs:element name="description" type="xs:token" xmlns:ns0="http://mdcs.ns" ns0:_mod_mdcs_="/registry/description" minOccurs="0">
+       <xs:element name="description" type="xs:token" minOccurs="0">
           <xs:annotation>
             <xs:appinfo>
+              <module>module-text-area</module>
               <label>Description</label>
             </xs:appinfo>
              <xs:documentation>
