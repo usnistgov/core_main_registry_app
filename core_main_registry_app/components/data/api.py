@@ -1,6 +1,7 @@
 """ Data's registry api
 """
 import random
+import datetime
 import string
 
 import core_main_app.components.data.api as data_api
@@ -11,6 +12,21 @@ from core_main_app.utils.access_control.decorators import access_control
 from core_main_registry_app.commons.constants import DataStatus
 from core_main_registry_app.components.data.access_control import can_publish_data
 from xml_utils.xsd_tree.xsd_tree import XSDTree
+
+
+def get_role(data):
+    """ Get the role saved in the data's dict content
+
+    Args:
+        data:
+
+    Returns:
+
+    """
+    try:
+        return data.dict_content['Resource']['role']['@xsi:type']
+    except Exception, e:
+        raise exceptions.ModelError(e.message)
 
 
 @access_control(can_publish_data)
@@ -25,6 +41,7 @@ def publish(data, user):
 
     """
     data.workspace = workspace_api.get_global_workspace()
+    data.last_modification_date = datetime.datetime.now()
     return data.save()
 
 
