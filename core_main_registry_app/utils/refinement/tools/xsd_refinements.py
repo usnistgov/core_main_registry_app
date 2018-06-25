@@ -142,7 +142,7 @@ def _get_element_info(element, xml_doc_tree, target_ns_prefix):
                 break
 
     # Get the label
-    name = parent.attrib['name']
+    name = parent.attrib['name'] if 'name' in parent.attrib else ''
     label = app_info['label'] if 'label' in app_info else name
     label = label if label is not None else name
 
