@@ -8,10 +8,11 @@ import operator
 from django.db.models import Q
 
 from core_main_app.commons import exceptions as exceptions
+from core_main_registry_app.commons.constants import DataStatus
 from core_main_registry_app.components.category import api as category_api
-from core_main_registry_app.components.category.models import Category
 from core_main_registry_app.components.refinement import api as refinement_api
 from core_main_registry_app.components.template import api as template_registry_api
+from core_main_registry_app.constants import PATH_STATUS
 
 logger = logging.getLogger("core_main_registry_app.utils.refinement.mongo_query")
 
@@ -126,3 +127,13 @@ def get_refinement_selected_values_from_query(query):
             return_value.update({key: [category.id]})
     # return the structure
     return return_value
+
+
+def add_not_deleted_status_criteria():
+    """Adds a criteria on status. Status should not be deleted.
+
+        Returns:
+            Criteria
+
+    """
+    return {PATH_STATUS: {'$ne': DataStatus.DELETED}}
