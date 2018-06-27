@@ -116,15 +116,18 @@ def get_refinement_selected_values_from_query(query):
     for key, values in category_values_list.iteritems():
         # prepare the query
         q_list.append(Q(path=key) & Q(refinement_id__in=refinements_ids) & Q(value__in=values))
-    categories = category_api.get_all().filter((reduce(operator.or_, q_list)))
-    # now we have to build a list of {refinement name: category ids, }
+
     return_value = {}
-    for category in categories:
-        key = category.refinement.slug
-        if key in return_value:
-            return_value[key].append(category.id)
-        else:
-            return_value.update({key: [category.id]})
+    # if refinement are found, we build the structure
+    if len(q_list) > 0:
+        categories = category_api.get_all().filter((reduce(operator.or_, q_list)))
+        # now we have to build a list of {refinement name: category ids, }
+        for category in categories:
+            key = category.refinement.slug
+            if key in return_value:
+                return_value[key].append(category.id)
+            else:
+                return_value.update({key: [category.id]})
     # return the structure
     return return_value
 
