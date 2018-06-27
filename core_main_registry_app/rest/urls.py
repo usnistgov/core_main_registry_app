@@ -56,7 +56,7 @@ urlpatterns = [
     url(r'^data/query/$', data_views.ExecuteLocalQueryView.as_view(),
         name='core_explore_common_local_query'),
 
-    url(r'^data/(?P<pk>\w+)/$', data_views.DataDetail.as_view(),
+    url(r'^data/(?P<pk>\w+)/$', registry_data_views.DataDetailRegistry.as_view(),
         name='core_main_app_rest_data_detail'),
 
     url(r'^data/(?P<pk>\w+)/publish/$', registry_data_views.publish_data,

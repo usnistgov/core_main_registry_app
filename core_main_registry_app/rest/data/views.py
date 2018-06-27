@@ -1,11 +1,13 @@
 """ REST views for the registry Data API
 """
+
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from core_main_app.commons import exceptions
 from core_main_app.components.data import api as data_api
+from core_main_app.rest.data.views import DataDetail
 from core_main_app.utils.access_control.exceptions import AccessControlError
 from core_main_registry_app.components.data import api as registry_data_api
 
@@ -39,3 +41,35 @@ def publish_data(request, pk):
     except Exception as api_exception:
         content = {'message': api_exception.message}
         return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class DataDetailRegistry(DataDetail):
+    """
+    Retrieve or update a data.
+    """
+
+    def delete(self, request, pk):
+        """ Delete a data
+
+        Args:
+            request:
+            pk:
+
+        Returns:
+
+        """
+        content = {'message': 'Data cannot be deleted.'}
+        return Response(content, status=status.HTTP_403_FORBIDDEN)
+
+    def patch(self, request, pk):
+        """ Update data
+
+        Args:
+            request:
+            pk:
+
+        Returns:
+
+        """
+        content = {'message': 'Data cannot be updated.'}
+        return Response(content, status=status.HTTP_403_FORBIDDEN)
