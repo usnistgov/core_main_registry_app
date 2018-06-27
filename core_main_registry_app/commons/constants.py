@@ -14,4 +14,5 @@ class DataRole:
             'Dataset': 'Dataset',
             'ServiceAPI': 'Service',
             'WebSite': 'Informational Site',
-            'Software': 'Software'}
+            'Software': 'Software',
+            'Database': 'Database'}

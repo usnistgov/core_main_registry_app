@@ -1,7 +1,7 @@
 """ Data's registry api
 """
-import random
 import datetime
+import random
 import string
 
 import core_main_app.components.data.api as data_api
@@ -9,9 +9,11 @@ from core_main_app.commons import exceptions as exceptions
 from core_main_app.components.data.models import Data
 from core_main_app.components.workspace import api as workspace_api
 from core_main_app.utils.access_control.decorators import access_control
+from xml_utils.xsd_tree.xsd_tree import XSDTree
+
 from core_main_registry_app.commons.constants import DataStatus
 from core_main_registry_app.components.data.access_control import can_publish_data
-from xml_utils.xsd_tree.xsd_tree import XSDTree
+from core_main_registry_app.utils.role.extraction import role_extraction
 
 
 def get_role(data):
@@ -23,17 +25,7 @@ def get_role(data):
     Returns:
 
     """
-    try:
-        list_resource_role = data.dict_content['Resource']['role']
-        list_role = []
-        if '@xsi:type' in list_resource_role:
-            list_role.append(list_resource_role['@xsi:type'])
-            return list_role
-        for dict_role in list_resource_role:
-            list_role.append(dict_role['@xsi:type'])
-        return list_role
-    except Exception, e:
-        raise exceptions.ModelError(e.message)
+    return role_extraction(data.dict_content)
 
 
 @access_control(can_publish_data)
