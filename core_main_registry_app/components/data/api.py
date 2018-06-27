@@ -15,7 +15,7 @@ from xml_utils.xsd_tree.xsd_tree import XSDTree
 
 
 def get_role(data):
-    """ Get the role saved in the data's dict content
+    """ Get the list of role saved in the data's dict content
 
     Args:
         data:
@@ -24,7 +24,14 @@ def get_role(data):
 
     """
     try:
-        return data.dict_content['Resource']['role']['@xsi:type']
+        list_resource_role = data.dict_content['Resource']['role']
+        list_role = []
+        if '@xsi:type' in list_resource_role:
+            list_role.append(list_resource_role['@xsi:type'])
+            return list_role
+        for dict_role in list_resource_role:
+            list_role.append(dict_role['@xsi:type'])
+        return list_role
     except Exception, e:
         raise exceptions.ModelError(e.message)
 
