@@ -77,7 +77,7 @@ class Refinement(models.Model):
 
         """
         try:
-            return Refinement.objects.get(template_hash=template_hash, slug=slug)
+            return Refinement.objects.get(template_hash=template_hash, slug__startswith=slug)
         except Refinement.DoesNotExist as e:
             raise exceptions.DoesNotExist(e.message)
         except Exception as ex:

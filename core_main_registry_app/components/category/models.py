@@ -81,7 +81,8 @@ class Category(MPTTModel):
 
         """
         try:
-            return Category.objects.get(slug=parent_slug, refinement_id=refinement_id).get_family()
+            return Category.objects.get(slug__startswith=parent_slug,
+                                        refinement_id=refinement_id).get_family()
         except Category.DoesNotExist as e:
             raise exceptions.DoesNotExist(e.message)
         except Exception as ex:
