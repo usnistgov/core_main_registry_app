@@ -32,7 +32,7 @@ chdir(normpath(join(abspath(__file__), pardir)))
 
 setup(
     name="core_main_registry_app",
-    version="1.0.0-alpha2",
+    version="1.0.0-alpha3",
     description="Main functionalities for the registry project",
     long_description=long_desc,
     author="NIST IT Lab",
