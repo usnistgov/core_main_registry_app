@@ -21,23 +21,40 @@ except ImportError:
     import json
 
 
-def get_doc(node, values):
+def get_doc(node, values, count_mode):
+    """ Represent a node.
+
+    Args:
+        node:
+        values:
+        count_mode:  Add an html element to display counts next to each node (True/False).
+
+    Returns:
+
+    """
     if hasattr(node, "get_doc"):
         return node.get_doc(values)
     if hasattr(node, "name"):
         name = node.name
     else:
         name = unicode(node)
-    doc = {"title": name, "key": node.pk}
+
+    #  Add an html element to display counts next to each node.
+    if count_mode:
+        count_html = "<em class='occurrences' id='{0}'></em>".format(node.pk)
+        doc = {"title": "{0} {1}".format(name, count_html), "key": node.pk}
+    else:
+        doc = {"title": name, "key": node.pk}
+
     if str(node.pk) in values:
         doc['selected'] = True
         doc['expand'] = True
     return doc
 
 
-def recursive_node_to_dict(node, values):
-    result = get_doc(node, values)
-    children = [recursive_node_to_dict(c, values) for c in node.get_children()]
+def recursive_node_to_dict(node, values, count_mode):
+    result = get_doc(node, values, count_mode)
+    children = [recursive_node_to_dict(c, values, count_mode) for c in node.get_children()]
     if children:
         expand = [c for c in children if c.get('selected', False)]
         if expand:
@@ -47,17 +64,27 @@ def recursive_node_to_dict(node, values):
     return result
 
 
-def get_tree(nodes, values):
+def get_tree(nodes, values, count_mode):
     root_nodes = cache_tree_children(nodes)
-    return [recursive_node_to_dict(n, values) for n in root_nodes]
+    return [recursive_node_to_dict(n, values, count_mode) for n in root_nodes]
 
 
 class FancyTreeWidget(Widget):
-    def __init__(self, attrs=None, choices=(), queryset=None, select_mode=3):
+    def __init__(self, attrs=None, choices=(), queryset=None, select_mode=3, count_mode=False):
+        """
+
+        Args:
+            attrs:
+            choices:
+            queryset:
+            select_mode:
+            count_mode: Add an html element to display counts next to each node (True/False).
+        """
         super(FancyTreeWidget, self).__init__(attrs)
         self.queryset = queryset
         self.select_mode = select_mode
         self.choices = list(choices)
+        self.count_mode = count_mode
 
     def value_from_datadict(self, data, files, name):
         if isinstance(data, (MultiValueDict)):
@@ -99,7 +126,7 @@ class FancyTreeWidget(Widget):
         if has_id:
             output.append(u'var %s = %s;' % (
                 js_data_var,
-                json.dumps(get_tree(self.queryset, str_values))
+                json.dumps(get_tree(self.queryset, str_values, self.count_mode))
             ))
             output.append(
                 """
@@ -178,7 +205,11 @@ class FancyTreeWidget(Widget):
                                         node.toggleSelected();
                                         return false;
                                     }
-                                }
+                                },
+                                init: function(event, data) {
+                                    // Render all nodes even if collapsed
+                                    data.tree.getRootNode().render(force=true, deep=true);
+                                },
                             });
                         });
                     });
