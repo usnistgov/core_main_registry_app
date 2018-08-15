@@ -1,2 +1,2 @@
-core-main-app==1.0.0-beta4
-xml-utils==1.0.0-beta1
+core-main-app==1.0.0-beta5
+xml-utils==1.0.0-beta2
