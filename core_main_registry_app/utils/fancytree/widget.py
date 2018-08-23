@@ -190,9 +190,8 @@ class FancyTreeWidget(Widget):
                                            $('#%(id)s_' + (node.key)).prop('checked', true);
                                            return node.key;
                                     });
-                                    if (typeof fancy_tree_select == 'function'){
-                                        fancy_tree_select(event, data);
-                                    }
+                                    // trigger the event fancy_tree_select
+                                    $(document).trigger("fancy_tree_select_event", data);
                                 },
                                 click: function(event, data) {
                                     var node = data.node;
@@ -209,6 +208,8 @@ class FancyTreeWidget(Widget):
                                 init: function(event, data) {
                                     // Render all nodes even if collapsed
                                     data.tree.getRootNode().render(force=true, deep=true);
+                                    // trigger the event fancy_tree_ready
+                                    $(document).trigger("fancy_tree_ready_event", data);
                                 },
                             });
                         });
