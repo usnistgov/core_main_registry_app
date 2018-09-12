@@ -124,10 +124,11 @@ def get_refinement_selected_values_from_query(query):
         # now we have to build a list of {refinement name: category ids, }
         for category in categories:
             key = category.refinement.slug
+            display_name = category.refinement.name
             if key in return_value:
-                return_value[key].append({"id": category.id, "value": category.value})
+                return_value[key][display_name].append({"id": category.id, "value": category.value})
             else:
-                return_value.update({key: [{"id": category.id, "value": category.value}]})
+                return_value.update({key: {display_name: [{"id": category.id, "value": category.value}]}})
     # return the structure
     return return_value
 
