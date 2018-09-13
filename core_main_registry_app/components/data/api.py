@@ -10,6 +10,7 @@ from core_main_app.components.data.models import Data
 from core_main_app.components.workspace import api as workspace_api
 from core_main_app.utils.access_control.decorators import access_control
 from xml_utils.xsd_tree.xsd_tree import XSDTree
+from core_main_app.utils.labels import get_data_label
 
 from core_main_registry_app.commons.constants import DataStatus
 from core_main_registry_app.components.data.access_control import can_publish_data
@@ -56,7 +57,7 @@ def set_status(data, status, user):
 
     """
     if status == DataStatus.DELETED and (data.workspace is None or data.workspace.is_public is False):
-        raise exceptions.ModelError("the data should be published if the targeted status is 'Deleted'")
+        raise exceptions.ModelError("the " + get_data_label() + " should be published if the targeted status is 'Deleted'")
 
     # build the xsd tree
     xml_tree = XSDTree.build_tree(data.xml_content)
