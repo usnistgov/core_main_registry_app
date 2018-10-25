@@ -58,4 +58,5 @@ urlpatterns = [
     url(r'^add-group-right-to-workspace', user_ajax.add_group_right_to_workspace,
         name='core_main_add_group_right_to_workspace'),
     url(r'^docs/api$', schema_view, name='swagger_view'),
+    url(r'^tz_detect/', include('tz_detect.urls')),
 ]
