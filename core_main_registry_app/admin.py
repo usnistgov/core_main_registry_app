@@ -5,14 +5,23 @@ from django.contrib import admin
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic.base import RedirectView
 
+import core_main_app.components.web_page_login.api as login_page_api
+from core_main_app.commons.enums import WEB_PAGE_TYPES
 from core_main_app.utils.rendering import admin_render
 from core_main_app.views.admin import views as admin_views, ajax as admin_ajax
+from core_main_app.views.admin.views import WebPageView
 from core_main_app.views.common import views as common_views
 from core_main_registry_app.views.admin import views as registry_admin_views
 
 # FIXME: Check needed URLs for registry and remove the others.
 
 admin_urls = [
+    url(r'^login/message/$',
+        WebPageView.as_view(api=login_page_api,
+                            get_redirect='core_main_app/admin/web_page/login_page.html',
+                            post_redirect='admin:core_main_app_login_page',
+                            web_page_type=WEB_PAGE_TYPES["login"]),
+        name='core_main_app_login_page'),
     url(r'^login', RedirectView.as_view(url=reverse_lazy("core_main_app_login"))),
     url(r'^logout', RedirectView.as_view(url=reverse_lazy("core_main_app_logout"))),
 
