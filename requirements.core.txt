@@ -1,2 +1,2 @@
-core-main-app==1.0.0-rc1
-xml-utils==1.0.0-rc1
+core-main-app==1.0.0-rc2
+xml-utils==1.0.0-rc2
