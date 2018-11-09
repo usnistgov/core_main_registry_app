@@ -4,6 +4,8 @@ import datetime
 import random
 import string
 
+import pytz
+
 import core_main_app.components.data.api as data_api
 from core_main_app.commons import exceptions as exceptions
 from core_main_app.components.data.models import Data
@@ -41,7 +43,7 @@ def publish(data, user):
 
     """
     data.workspace = workspace_api.get_global_workspace()
-    data.last_modification_date = datetime.datetime.now()
+    data.last_modification_date = datetime.datetime.now(pytz.utc)
     return data.save()
 
 
