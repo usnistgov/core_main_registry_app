@@ -14,14 +14,23 @@ from core_main_registry_app.components.data import api as registry_data_api
 
 @api_view(['PATCH'])
 def publish_data(request, pk):
-    """ Publish a data.
+    """ Publish a data
 
     Args:
-        request:
-        pk:
+
+        request: HTTP request
+        pk: ObjectId
 
     Returns:
 
+        - code: 200
+          content: Publication succeed
+        - code: 403
+          content: Authentication error
+        - code: 404
+          content: Object was not found
+        - code: 500
+          content: Internal server error
     """
     try:
         # Get data
@@ -44,32 +53,37 @@ def publish_data(request, pk):
 
 
 class DataDetailRegistry(DataDetail):
-    """
-    Retrieve or update a data.
+    """ Retrieve or update a data
     """
 
     def delete(self, request, pk):
-        """ Delete a data
+        """ Data cannot be deleted
 
         Args:
-            request:
-            pk:
+
+            request: HTTP request
+            pk: ObjectId
 
         Returns:
 
+            - code: 403
+              content: Data cannot be deleted
         """
         content = {'message': 'Data cannot be deleted.'}
         return Response(content, status=status.HTTP_403_FORBIDDEN)
 
     def patch(self, request, pk):
-        """ Update data
+        """ Data cannot be updated
 
         Args:
-            request:
-            pk:
+
+            request: HTTP request
+            pk: ObjectId
 
         Returns:
 
+            - code: 403
+              content: Data cannot be updated
         """
         content = {'message': 'Data cannot be updated.'}
         return Response(content, status=status.HTTP_403_FORBIDDEN)
