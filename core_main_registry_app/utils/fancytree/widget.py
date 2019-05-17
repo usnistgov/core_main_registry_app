@@ -208,14 +208,16 @@ class FancyTreeWidget(Widget):
                                 init: function(event, data) {
                                     // Render all nodes even if collapsed
                                     data.tree.getRootNode().render(force=true, deep=true);
-                                    // trigger the event fancy_tree_ready
-                                    $(document).trigger("fancy_tree_ready_event", data);
+                                    // set a timeout to let the tree finish its rendering
+                                    setTimeout(function(){
+                                        // trigger the event fancy_tree_ready
+                                        $(document).trigger("fancy_tree_ready_event", data);
+                                    }, 200);
                                 },
                             });
                         });
                     });
                 };
-
                 onjQueryReady(defer_initFancyTree);
 
                 """ % {
