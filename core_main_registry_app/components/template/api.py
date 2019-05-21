@@ -18,5 +18,5 @@ def get_current_registry_template():
         template_version = version_manager_api.\
             get_active_global_version_manager_by_title(REGISTRY_XSD_FILENAME)
         return template_api.get(version_manager_api.get_current(template_version))
-    except Exception, e:
+    except Exception as e:
         raise exceptions.ModelError(e.message)

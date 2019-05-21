@@ -27,7 +27,7 @@ def init_refinements(template):
                                                             template_hash=template.hash)
                 # Create categories.
                 create_categories(tree, refinement)
-    except Exception, e:
+    except Exception as e:
         raise Exception("Impossible to init the refinements. An error occurred while retrieving "
                         "the template: {0}".format(e.message))
 

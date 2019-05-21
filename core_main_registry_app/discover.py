@@ -28,7 +28,7 @@ def init_registry():
         _add_template()
         # Init the refinements from the schema.
         _init_refinements()
-    except Exception, e:
+    except Exception as e:
         logger.error("Impossible to init the registry: {0}".format(e.message))
 
 
@@ -49,7 +49,7 @@ def _add_template():
         template = Template(filename=xsd_filename, content=xsd_data)
         template_version_manager = TemplateVersionManager(title=xsd_filename)
         template_version_manager_api.insert(template_version_manager, template)
-    except Exception, e:
+    except Exception as e:
         logger.error("Impossible to add the template: {0}".format(e.message))
 
 
@@ -61,5 +61,5 @@ def _init_refinements():
         template = template_registry_api.get_current_registry_template()
         # Init.
         refinement.init_refinements(template)
-    except Exception, e:
+    except Exception as e:
         logger.error("Impossible to init the refinements: {0}".format(e.message))

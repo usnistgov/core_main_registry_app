@@ -13,6 +13,7 @@ from core_main_registry_app.components.category import api as category_api
 from core_main_registry_app.components.refinement import api as refinement_api
 from core_main_registry_app.components.template import api as template_registry_api
 from core_main_registry_app.constants import PATH_STATUS
+from functools import reduce
 
 logger = logging.getLogger("core_main_registry_app.utils.refinement.mongo_query")
 
@@ -47,7 +48,7 @@ def build_refinements_query(refinements):
                     # Create a dict with the dot notation as the key
                     else:
                         queries[dot_notation] = [value]
-                except (exceptions.DoesNotExist, Exception), e:
+                except (exceptions.DoesNotExist, Exception) as e:
                     logger.warning("Impossible to find the category ({0}): {1}."
                                    .format(str(len(category_id)), e.message))
 
@@ -68,7 +69,7 @@ def build_refinements_query(refinements):
             and_query = {'$and': or_queries}
 
         return and_query
-    except Exception, e:
+    except Exception as e:
         logger.error("Something went wrong during the creation of the refinement query. Search "
                      "won't be refined: {0}.".format(e.message))
         return {}

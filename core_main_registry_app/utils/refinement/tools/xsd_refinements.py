@@ -77,7 +77,7 @@ def loads_refinements_trees(template):
                                             element_display_name=element_label,
                                             enums=enums,
                                             dot_query=dot_query)
-        except Exception, e:
+        except Exception as e:
             # Log the exception
             logger.warning(e.message)
 
@@ -176,7 +176,7 @@ def _get_simple_type_or_complex_type_info(xml_doc_tree, target_ns_prefix, elemen
             element = to_search_element[0]
             if query is not None:
                 query.insert(0, element.attrib['name'])
-    except Exception, e:
+    except Exception as e:
         raise Exception("Impossible to get simple type / complex type information: {0}"
                         .format(e.message))
 
@@ -208,7 +208,7 @@ def _get_extension_info(xml_doc_tree, element, query=None):
             element = to_search_element[0]
             if query is not None:
                 query.insert(0, element.attrib['name'])
-    except Exception, e:
+    except Exception as e:
         raise Exception("Impossible to get the extension information: {0}".format(e.message))
 
     return element
@@ -236,7 +236,7 @@ def _find_extension(xml_doc_tree, target_ns_prefix, element):
                          .format(str(len(element))))
         else:
             element = to_search_element[0]
-    except Exception, e:
+    except Exception as e:
         raise Exception("Impossible to get the extension information: {0}" .format(e.message))
 
     return element

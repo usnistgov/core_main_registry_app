@@ -84,7 +84,7 @@ def get_status(data):
     """
     try:
         return data.dict_content['Resource']['@status']
-    except Exception, e:
+    except Exception as e:
         raise exceptions.ModelError(e.message)
 
 
