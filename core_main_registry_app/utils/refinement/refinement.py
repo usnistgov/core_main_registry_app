@@ -21,7 +21,7 @@ def init_refinements(template):
         if not refinement_api.check_refinements_already_exist_by_template_hash(template.hash):
             refinements_trees = xsd_refinements.loads_refinements_trees(template)
             # Create refinements.
-            for root, tree in refinements_trees.iteritems():
+            for root, tree in list(refinements_trees.items()):
                 refinement = refinement_api.create_and_save(name=root.title,
                                                             xsd_name=root.xsd_name,
                                                             template_hash=template.hash)
@@ -41,7 +41,7 @@ def create_categories(tree, refinement):
 
     """
     # Iterate over the categories.
-    for key, leaves in tree.iteritems():
+    for key, leaves in list(tree.items()):
         _create_sub_categories(key, leaves, refinement)
 
 
@@ -77,6 +77,6 @@ def _create_sub_categories(key, leaves, refinement, parent=None):
             parent = category_api.create_and_save(name=key.title, path=key.path, value=key.value,
                                                   parent=parent, refinement=refinement)
         # For each children.
-        for key, value in sorted(leaves.iteritems()):
+        for key, value in sorted(leaves.items()):
             # Create sub categories.
             _create_sub_categories(key, value, refinement, parent=parent)

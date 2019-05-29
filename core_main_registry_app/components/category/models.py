@@ -1,6 +1,8 @@
 """ Category model
 """
 
+from builtins import object
+
 from django.db import models
 from django_extensions.db.fields import AutoSlugField
 from mptt.models import MPTTModel, TreeForeignKey
@@ -17,7 +19,7 @@ class Category(MPTTModel):
     value = models.CharField(max_length=255)
     refinement = models.ForeignKey('Refinement', on_delete=models.CASCADE)
 
-    class MPTTMeta:
+    class MPTTMeta(object):
         verbose_name_plural = "categories"
         unique_together = (("name", "slug", "parent"), )
         ordering = ("tree_id", "lft")

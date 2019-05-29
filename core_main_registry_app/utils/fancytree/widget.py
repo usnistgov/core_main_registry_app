@@ -3,17 +3,19 @@ FancyTree widget.
 Based on xrmx work: https://github.com/xrmx/django-fancytree.
 Modified for the registry project.
 """
+from builtins import object
+from builtins import str
 from itertools import chain
 
 from django import forms
 from django.conf import settings
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.forms.widgets import Widget
+from django.utils.datastructures import MultiValueDict
 from django.utils.encoding import force_unicode
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
-from django.utils.datastructures import MultiValueDict
 from mptt.templatetags.mptt_tags import cache_tree_children
-from django.contrib.staticfiles.templatetags.staticfiles import static
 
 try:
     import simplejson as json
@@ -37,7 +39,7 @@ def get_doc(node, values, count_mode):
     if hasattr(node, "name"):
         name = node.name
     else:
-        name = unicode(node)
+        name = str(node)
 
     #  Add an html element to display counts next to each node.
     if count_mode:
@@ -235,7 +237,7 @@ class FancyTreeWidget(Widget):
         output.append(u'</script>')
         return mark_safe(u'\n'.join(output))
 
-    class Media:
+    class Media(object):
 
         js = (
             'core_explore_common_app/common/js/tools.js',

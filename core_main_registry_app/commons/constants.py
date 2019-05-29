@@ -1,14 +1,15 @@
 """ all constants for the core_main_registry_app
 """
+from builtins import object
 
 
-class DataStatus:
+class DataStatus(object):
     ACTIVE = 'active'
     INACTIVE = 'inactive'
     DELETED = 'deleted'
 
 
-class DataRole:
+class DataRole(object):
     role = {'Organization': 'Organization',
             'DataCollection': 'Data Collection',
             'Dataset': 'Dataset',

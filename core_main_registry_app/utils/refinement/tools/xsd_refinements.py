@@ -3,15 +3,16 @@ Management of the refinements' Tree from a schema.
 """
 
 import logging
+from builtins import str
 from collections import OrderedDict
 
+from core_main_app.utils.xsd_flattener.xsd_flattener_database_url import XSDFlattenerDatabaseOrURL
+from core_main_registry_app.utils.refinement.tools import tree
 from core_parser_app.tools.parser.utils.xml import get_app_info_options
 from xml_utils.commons.constants import LXML_SCHEMA_NAMESPACE
 from xml_utils.xsd_tree.operations.namespaces import get_namespaces, get_target_namespace
 from xml_utils.xsd_tree.xsd_tree import XSDTree
 
-from core_main_app.utils.xsd_flattener.xsd_flattener_database_url import XSDFlattenerDatabaseOrURL
-from core_main_registry_app.utils.refinement.tools import tree
 logger = logging.getLogger("core_main_registry_app.utils.refinement.tools.xsd_refinements")
 
 

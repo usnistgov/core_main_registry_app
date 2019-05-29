@@ -4,6 +4,8 @@ Mongo query creation for the refinements.
 
 import logging
 import operator
+from builtins import str
+from functools import reduce
 
 from django.db.models import Q
 
@@ -13,7 +15,6 @@ from core_main_registry_app.components.category import api as category_api
 from core_main_registry_app.components.refinement import api as refinement_api
 from core_main_registry_app.components.template import api as template_registry_api
 from core_main_registry_app.constants import PATH_STATUS
-from functools import reduce
 
 logger = logging.getLogger("core_main_registry_app.utils.refinement.mongo_query")
 
@@ -96,7 +97,7 @@ def get_refinement_selected_values_from_query(query):
         for element_or in query['$and']:
             # go through all '$or' => where refinement are
             for element in element_or['$or']:
-                for key, value in element.iteritems():
+                for key, value in list(element.items()):
                     # we only want path which does not contain '#text' at the end of it
                     if not key.endswith('#text'):
                         for selected_value in value['$in']:
@@ -114,7 +115,7 @@ def get_refinement_selected_values_from_query(query):
     refinements_ids = [x.id for x in refinements]
     # get all category.
     q_list = []
-    for key, values in category_values_list.iteritems():
+    for key, values in list(category_values_list.items()):
         # prepare the query
         q_list.append(Q(path=key) & Q(refinement_id__in=refinements_ids) & Q(value__in=values))
 

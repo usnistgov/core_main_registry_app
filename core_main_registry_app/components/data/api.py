@@ -3,6 +3,8 @@
 import datetime
 import random
 import string
+from builtins import range
+from builtins import str
 
 import pytz
 
@@ -11,12 +13,11 @@ from core_main_app.commons import exceptions as exceptions
 from core_main_app.components.data.models import Data
 from core_main_app.components.workspace import api as workspace_api
 from core_main_app.utils.access_control.decorators import access_control
-from xml_utils.xsd_tree.xsd_tree import XSDTree
 from core_main_app.utils.labels import get_data_label
-
 from core_main_registry_app.commons.constants import DataStatus
 from core_main_registry_app.components.data.access_control import can_publish_data
 from core_main_registry_app.utils.role.extraction import role_extraction
+from xml_utils.xsd_tree.xsd_tree import XSDTree
 
 
 def get_role(data):
@@ -85,7 +86,7 @@ def get_status(data):
     try:
         return data.dict_content['Resource']['@status']
     except Exception as e:
-        raise exceptions.ModelError(e.message)
+        raise exceptions.ModelError(str(e))
 
 
 def is_local_id_already_used(local_id):
