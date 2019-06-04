@@ -12,7 +12,7 @@ from django.conf import settings
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.forms.widgets import Widget
 from django.utils.datastructures import MultiValueDict
-from django.utils.encoding import force_unicode
+from django.utils.encoding import force_text
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 from mptt.templatetags.mptt_tags import cache_tree_children
@@ -107,7 +107,7 @@ class FancyTreeWidget(Widget):
             output = [u'<div name="%s"></div>' % self.choices.field.label]
             id_attr = u''
         output.append(u'<ul style="display: none;" class="fancytree_checkboxes"%s>' % id_attr)
-        str_values = set([force_unicode(v) for v in value])
+        str_values = set([force_text(v) for v in value])
         for i, (option_value, option_label) in enumerate(chain(self.choices, choices)):
             if has_id:
                 final_attrs = dict(final_attrs, id='%s_%s' % (attrs['id'], option_value))
@@ -116,9 +116,9 @@ class FancyTreeWidget(Widget):
                 label_for = ''
 
             cb = forms.CheckboxInput(final_attrs, check_test=lambda value: value in str_values)
-            option_value = force_unicode(option_value)
+            option_value = force_text(option_value)
             rendered_cb = cb.render(name, option_value)
-            option_label = conditional_escape(force_unicode(option_label))
+            option_label = conditional_escape(force_text(option_label))
             output.append(
                 u'<li><label%s>%s %s</label></li>' % (label_for, rendered_cb, option_label)
             )
