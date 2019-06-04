@@ -67,9 +67,9 @@ class Category(MPTTModel):
         try:
             return Category.objects.get(pk=category_id)
         except Category.DoesNotExist as e:
-            raise exceptions.DoesNotExist(e.message)
+            raise exceptions.DoesNotExist(str(e))
         except Exception as ex:
-            raise exceptions.ModelError(ex.message)
+            raise exceptions.ModelError(str(ex))
 
     @staticmethod
     def get_all_categories_by_parent_slug_and_refinement_id(parent_slug, refinement_id):
@@ -86,9 +86,9 @@ class Category(MPTTModel):
             return Category.objects.get(slug__startswith=parent_slug,
                                         refinement_id=refinement_id).get_family()
         except Category.DoesNotExist as e:
-            raise exceptions.DoesNotExist(e.message)
+            raise exceptions.DoesNotExist(str(e))
         except Exception as ex:
-            raise exceptions.ModelError(ex.message)
+            raise exceptions.ModelError(str(ex))
 
     @staticmethod
     def get_all():

@@ -45,10 +45,10 @@ def publish_data(request, pk):
         content = {'message': 'Data not found.'}
         return Response(content, status=status.HTTP_404_NOT_FOUND)
     except AccessControlError as ace:
-        content = {'message': ace.message}
+        content = {'message': str(ace)}
         return Response(content, status=status.HTTP_403_FORBIDDEN)
     except Exception as api_exception:
-        content = {'message': api_exception.message}
+        content = {'message': str(api_exception)}
         return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 

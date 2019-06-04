@@ -29,7 +29,7 @@ def init_refinements(template):
                 create_categories(tree, refinement)
     except Exception as e:
         raise Exception("Impossible to init the refinements. An error occurred while retrieving "
-                        "the template: {0}".format(e.message))
+                        "the template: {0}".format(str(e)))
 
 
 def create_categories(tree, refinement):

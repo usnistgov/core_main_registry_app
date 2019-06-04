@@ -51,7 +51,7 @@ def build_refinements_query(refinements):
                         queries[dot_notation] = [value]
                 except (exceptions.DoesNotExist, Exception) as e:
                     logger.warning("Impossible to find the category ({0}): {1}."
-                                   .format(str(len(category_id)), e.message))
+                                   .format(str(len(category_id)), str(e)))
 
             for query in queries:
                 # Create the query with $in
@@ -72,7 +72,7 @@ def build_refinements_query(refinements):
         return and_query
     except Exception as e:
         logger.error("Something went wrong during the creation of the refinement query. Search "
-                     "won't be refined: {0}.".format(e.message))
+                     "won't be refined: {0}.".format(str(e)))
         return {}
 
 

@@ -22,4 +22,4 @@ def role_extraction(dict_content):
             list_role.append(dict_role['@xsi:type'])
         return list_role
     except Exception as e:
-        raise exceptions.ModelError(e.message)
+        raise exceptions.ModelError(str(e))
