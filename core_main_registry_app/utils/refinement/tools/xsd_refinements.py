@@ -94,7 +94,7 @@ def _get_flatten_schema(template):
     Returns:
 
     """
-    flatten = XSDFlattenerDatabaseOrURL(template.content.encode('utf-8'))
+    flatten = XSDFlattenerDatabaseOrURL(template.content)
     ref_xml_schema_content = flatten.get_flat()
 
     return ref_xml_schema_content
