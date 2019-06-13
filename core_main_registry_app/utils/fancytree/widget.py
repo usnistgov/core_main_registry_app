@@ -3,8 +3,6 @@ FancyTree widget.
 Based on xrmx work: https://github.com/xrmx/django-fancytree.
 Modified for the registry project.
 """
-from builtins import object
-from builtins import str
 from itertools import chain
 
 from django import forms

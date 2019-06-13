@@ -2,7 +2,6 @@
 Tree representation of refinement.
 """
 
-from builtins import object
 from collections import OrderedDict
 
 

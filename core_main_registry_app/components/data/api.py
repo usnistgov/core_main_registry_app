@@ -3,8 +3,6 @@
 import datetime
 import random
 import string
-from builtins import range
-from builtins import str
 
 import pytz
 

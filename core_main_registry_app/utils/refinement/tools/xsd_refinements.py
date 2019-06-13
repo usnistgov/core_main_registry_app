@@ -3,7 +3,6 @@ Management of the refinements' Tree from a schema.
 """
 
 import logging
-from builtins import str
 from collections import OrderedDict
 
 from core_main_app.utils.xsd_flattener.xsd_flattener_database_url import XSDFlattenerDatabaseOrURL

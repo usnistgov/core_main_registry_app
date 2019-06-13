@@ -4,7 +4,6 @@ Mongo query creation for the refinements.
 
 import logging
 import operator
-from builtins import str
 from functools import reduce
 
 from django.db.models import Q

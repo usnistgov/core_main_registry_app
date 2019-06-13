@@ -1,6 +1,5 @@
 """ all constants for the core_main_registry_app
 """
-from builtins import object
 
 
 class DataStatus(object):
