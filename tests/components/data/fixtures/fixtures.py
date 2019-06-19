@@ -1,9 +1,10 @@
 """ Fixtures files for Data
 """
+from os.path import join, dirname, realpath
+
 from core_main_app.components.data.models import Data
 from core_main_app.components.template.models import Template
 from core_main_app.utils.integration_tests.fixture_interface import FixtureInterface
-from os.path import join, dirname, realpath
 
 
 class DataRegistryFixtures(FixtureInterface):

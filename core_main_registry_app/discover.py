@@ -14,6 +14,7 @@ from core_main_app.utils.file import read_file_content
 from core_main_registry_app.components.template import api as template_registry_api
 from core_main_registry_app.settings import REGISTRY_XSD_FILENAME
 from core_main_registry_app.utils.refinement import refinement
+
 logger = logging.getLogger("core_main_registry_app.discover")
 
 
