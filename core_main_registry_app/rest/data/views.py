@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from core_main_app.commons import exceptions
 from core_main_app.components.data import api as data_api
 from core_main_app.rest.data.views import DataDetail
-from core_main_app.utils.access_control.exceptions import AccessControlError
+from core_main_app.access_control.exceptions import AccessControlError
 from core_main_registry_app.components.data import api as registry_data_api
 
 

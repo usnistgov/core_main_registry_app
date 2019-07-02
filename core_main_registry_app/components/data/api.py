@@ -10,7 +10,7 @@ import core_main_app.components.data.api as data_api
 from core_main_app.commons import exceptions as exceptions
 from core_main_app.components.data.models import Data
 from core_main_app.components.workspace import api as workspace_api
-from core_main_app.utils.access_control.decorators import access_control
+from core_main_app.access_control.decorators import access_control
 from core_main_app.utils.labels import get_data_label
 from core_main_registry_app.commons.constants import DataStatus
 from core_main_registry_app.components.data.access_control import can_publish_data
