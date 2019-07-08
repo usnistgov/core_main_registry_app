@@ -4,7 +4,7 @@ from unittest import mock
 
 from core_main_app.commons import exceptions as exceptions
 from django.conf import settings
-from django.test import TestCase#, override_settings
+from django.test import TestCase
 
 from core_main_registry_app.components.custom_resource import api as custom_resource_api
 from core_main_registry_app.components.custom_resource.models import CustomResource
@@ -18,11 +18,27 @@ class TestCreateAllResourceCustomResource(TestCase):
 
     fixture = fixtureCustomResource
 
+    def test_create_all_resource_custom_resource_return_url_key(self):
+        # Act
+        key = 'all_resource'
+        custom_resource = custom_resource_api._create_custom_resource_type_all(
+            self.fixture.create_custom_resource(), self.fixture.get_dict_custom_resource_all_resource()[key], key)
+        # Assert
+        self.assertEquals(custom_resource.url, "all")
+
+    def test_create_all_resource_custom_resource_return_is_resource(self):
+        # Act
+        key = 'all_resource'
+        custom_resource = custom_resource_api._create_custom_resource_type_all(
+            self.fixture.create_custom_resource(), self.fixture.get_dict_custom_resource_all_resource()[key], key)
+        # Assert
+        self.assertEquals(custom_resource.url, "all")
+
     def test_create_all_resource_custom_resource_return_type_all(self):
         # Act
         key = 'all_resource'
         custom_resource = custom_resource_api._create_custom_resource_type_all(
-            self.fixture.create_custom_resource(), self.fixture.get_dict_custom_resource_all_resource()[key])
+            self.fixture.create_custom_resource(), self.fixture.get_dict_custom_resource_all_resource()[key], key)
         # Assert
         self.assertEquals(custom_resource.type, CUSTOM_RESOURCE_TYPE.ALL)
 
@@ -30,7 +46,7 @@ class TestCreateAllResourceCustomResource(TestCase):
         # Act
         key = 'all_resource'
         custom_resource = custom_resource_api._create_custom_resource_type_all(
-            self.fixture.create_custom_resource(), self.fixture.get_dict_custom_resource_all_resource()[key])
+            self.fixture.create_custom_resource(), self.fixture.get_dict_custom_resource_all_resource()[key], key)
         # Assert
         self.assertEquals(custom_resource.icon, "fa-globe")
 
@@ -38,7 +54,7 @@ class TestCreateAllResourceCustomResource(TestCase):
         # Act
         key = 'all_resource'
         custom_resource = custom_resource_api._create_custom_resource_type_all(
-            self.fixture.create_custom_resource(), self.fixture.get_dict_custom_resource_all_resource()[key])
+            self.fixture.create_custom_resource(), self.fixture.get_dict_custom_resource_all_resource()[key], key)
         # Assert
         self.assertEquals(custom_resource.icon_color, "#557EB9")
 
@@ -46,7 +62,7 @@ class TestCreateAllResourceCustomResource(TestCase):
         # Act
         key = 'all_resource'
         custom_resource = custom_resource_api._create_custom_resource_type_all(
-            self.fixture.create_custom_resource(), self.fixture.get_dict_custom_resource_all_resource()[key])
+            self.fixture.create_custom_resource(), self.fixture.get_dict_custom_resource_all_resource()[key], key)
         # Assert
         self.assertEquals(custom_resource.sort, 0)
 

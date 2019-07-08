@@ -1,5 +1,6 @@
 """ Integration Test for Custom Resource API
 """
+from mongoengine.errors import ValidationError
 
 from core_main_app.commons import exceptions as exceptions
 from core_main_app.utils.integration_tests.integration_base_test_case import MongoIntegrationBaseTestCase
@@ -59,6 +60,14 @@ class TestCreateAndSaveCustomResource(MongoIntegrationBaseTestCase):
         # Assert
         with self.assertRaises(exceptions.ModelError):
             custom_resource_api.parse_and_save(self.fixture.get_dict_custom_resource_no_sort(), template)
+
+    def test_create_custom_resource_wrong_type_return_except(self):
+        # Act
+        template = self.fixture.create_and_save_template()
+        # Assert
+        with self.assertRaises(ValidationError):
+            custom_resource = CustomResource(template=template, title="title", type="wrong", icon="icon", sort=0)
+            custom_resource.save()
 
 
 class TestGetAllByTemplate(MongoIntegrationBaseTestCase):

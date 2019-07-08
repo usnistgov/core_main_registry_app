@@ -1,0 +1,33 @@
+#icons_table .selected_resource{
+	border-color: #00a7d0;
+	border-radius: 10px ;
+	box-shadow: 2px 2px 8px 2px #888888;
+}
+
+#icons_table {
+  border-spacing: 10px;
+  border-collapse: separate;
+  margin: 0 auto;
+}
+
+#icons_table td {
+    border-bottom: none;
+    vertical-align: top;
+    position:relative;
+    cursor: pointer;
+    cursor: hand;
+    padding: 30px;
+}
+
+#icons_table .tick {
+   display: none;
+   position:absolute;
+   right: 2px;
+   bottom: 2px;
+}
+#icons_table td[class*="selected_resource"] > .tick {
+   display: inline-block;
+   color: green;
+   z-index: 10;
+   vertical-align: top;
+}

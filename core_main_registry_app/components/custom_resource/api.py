@@ -2,11 +2,14 @@
 """
 import logging
 
-from core_main_app.commons import exceptions as exceptions
 from django.conf import settings
 
+from core_main_app.commons import exceptions as exceptions
+from core_main_app.components.template import api as template_api
+from core_main_app.components.version_manager import api as version_manager_api
 from core_main_registry_app.components.custom_resource.models import CustomResource
 from core_main_registry_app.constants import CUSTOM_RESOURCE_TYPE
+from core_main_registry_app.settings import REGISTRY_XSD_FILENAME
 
 logger = logging.getLogger("core_main_registry_app.components.custom_resource.api")
 
@@ -26,7 +29,7 @@ def parse_and_save(data, current_template):
         custom_resource = CustomResource(template=current_template)
 
         if _is_type_all(resource):
-            custom_resource = _create_custom_resource_type_all(custom_resource, resource)
+            custom_resource = _create_custom_resource_type_all(custom_resource, resource, key)
             # TODO: make sure only one type = 'all' ?
         else:
             custom_resource = _create_custom_resource(custom_resource, resource, key)
@@ -88,7 +91,7 @@ def _is_type_all(resource):
     return resource['type'] == CUSTOM_RESOURCE_TYPE.ALL
 
 
-def _create_custom_resource_type_all(custom_resource, resource):
+def _create_custom_resource_type_all(custom_resource, resource, key):
     """ Create a custom resource for 'all resource'.
 
     Args:
@@ -97,8 +100,11 @@ def _create_custom_resource_type_all(custom_resource, resource):
     Returns:
     """
     custom_resource.type = CUSTOM_RESOURCE_TYPE.ALL
+    custom_resource.name_in_schema = key
     custom_resource.title = _get_value(resource, "title")
+    custom_resource.url = _get_value(resource, "url_key")
     custom_resource.icon = _get_value(resource, "icon")
+    custom_resource.display_icon = _get_value(resource, "display_icon")
     custom_resource.icon_color = _get_value(resource, "icon_color")
     custom_resource.sort = _get_value(resource, "sort")
     return custom_resource
@@ -130,9 +136,44 @@ def _create_custom_resource(custom_resource, resource, key):
 def get_all_by_template(template):
     """ Return all custom resource by template.
 
-        Parameters:
+        Args:
              template:
 
         Returns: custom registry collection
     """
     return CustomResource.get_all_by_template(template)
+
+
+def get_all_of_current_template():
+    """ Return all custom resource of the current template.
+
+        Args:
+
+        Returns: custom registry collection
+    """
+    return get_all_by_template(_get_current_template())
+
+
+def get_current_custom_resource_type_all():
+    """ Return the custom resource of the current template with type 'all'.
+
+        Args:
+
+        Returns: custom registry collection
+    """
+    list = CustomResource.get_custom_resource_by_template_and_type(_get_current_template(), CUSTOM_RESOURCE_TYPE.ALL)
+    if len(list) > 1:
+        raise exceptions.ModelError("Multiple custom resources with type 'all' were found.")
+    elif len(list) == 0:
+        raise exceptions.DoesNotExist("The custom resource with type 'all' does not exist.")
+    return list[0]
+
+
+def _get_current_template():
+    """ Get the current template.
+
+    Returns:
+    """
+    current_template_version = version_manager_api.get_active_global_version_manager_by_title(REGISTRY_XSD_FILENAME)
+    current_template = template_api.get(version_manager_api.get_current(current_template_version))
+    return current_template
