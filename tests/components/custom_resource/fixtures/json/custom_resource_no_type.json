@@ -1,0 +1,12 @@
+{
+  "Organization": {
+    "title": "Organization",
+    "url_key": "organization",
+    "icon": "fa-university",
+    "display_icon": true,
+    "description": "a group of people that come together to contribute to or participate in a federated data operation. Organizations can be hierarchical: an organization can contain or sponsor other organizations. Organizations can also aggregate or participate with other organizations in broader collaborations.",
+    "role_choice": "Organization",
+    "role_type": "Organization",
+    "sort": 0
+  }
+}

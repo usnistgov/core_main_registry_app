@@ -1,9 +1,8 @@
 """ discover rules for core main registry app
 """
+import json
 import logging
 from os.path import join
-
-from django.contrib.staticfiles import finders
 
 from core_main_app.commons import exceptions
 from core_main_app.components.template.models import Template
@@ -11,9 +10,13 @@ from core_main_app.components.template_version_manager import api as template_ve
 from core_main_app.components.template_version_manager.models import TemplateVersionManager
 from core_main_app.components.version_manager import api as version_manager_api
 from core_main_app.utils.file import read_file_content
+from django.contrib.staticfiles import finders
+
 from core_main_registry_app.components.template import api as template_registry_api
-from core_main_registry_app.settings import REGISTRY_XSD_FILENAME
+from core_main_app.components.template import api as template_api
+from core_main_registry_app.settings import REGISTRY_XSD_FILENAME, CUSTOM_REGISTRY_FILE_PATH
 from core_main_registry_app.utils.refinement import refinement
+from core_main_registry_app.components.custom_resource import api as custom_resource_api
 
 logger = logging.getLogger("core_main_registry_app.discover")
 
@@ -29,6 +32,8 @@ def init_registry():
         _add_template()
         # Init the refinements from the schema.
         _init_refinements()
+        # Init Custom Registry
+        _init_custom_registry()
     except Exception as e:
         logger.error("Impossible to init the registry: {0}".format(str(e)))
 
@@ -64,3 +69,31 @@ def _init_refinements():
         refinement.init_refinements(template)
     except Exception as e:
         logger.error("Impossible to init the refinements: {0}".format(str(e)))
+
+
+def _init_custom_registry():
+    """ Init the custom registry.
+
+    Returns:
+    """
+
+    try:
+        current_template_version = version_manager_api.get_active_global_version_manager_by_title(REGISTRY_XSD_FILENAME)
+        current_template = template_api.get(version_manager_api.get_current(current_template_version))
+    except:
+        raise Exception("Can't get the current template.")
+
+    if len(custom_resource_api.get_all_by_template(current_template)) > 0:
+        logger.info("Custom resources related to current template already exist.")
+    else:
+        json_path = CUSTOM_REGISTRY_FILE_PATH
+        if json_path == '':
+            raise Exception('Please configure the CUSTOM_REGISTRY_FILE_PATH setting in your project.')
+
+        try:
+            default_json_path = finders.find(json_path)
+            with open(default_json_path) as json_file:
+                data = json.load(json_file)
+                custom_resource_api.parse_and_save(data, current_template)
+        except Exception as e:
+            logger.error("Impossible to use the custom registry json file: {0}".format(str(e)))

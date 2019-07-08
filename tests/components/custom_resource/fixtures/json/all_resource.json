@@ -1,0 +1,9 @@
+{
+  "all_resource": {
+    "title": "All Resources",
+	"icon": "fa-globe",
+    "icon_color": "#557EB9",
+	"type": "all",
+    "sort": 0
+  }
+}
