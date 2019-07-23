@@ -3,6 +3,7 @@
 from django.conf.urls import url, include
 from rest_framework_swagger.views import get_swagger_view
 
+from core_main_app.components.data import api as data_api
 from core_main_app.utils.rendering import render
 from core_main_app.views.common import ajax as common_ajax, views as common_views
 from core_main_app.views.user import views as user_views, ajax as user_ajax
@@ -47,7 +48,7 @@ urlpatterns = [
     url(r'^change-workspace', user_ajax.LoadFormChangeWorkspace.as_view(
         show_global_workspace=False
     ), name='core_main_change_workspace'),
-    url(r'^assign-workspace', user_ajax.assign_workspace, name='core_main_assign_workspace'),
+    url(r'^assign-workspace', user_ajax.AssignView.as_view(api=data_api), name='core_main_assign_workspace'),
 
     url(r'^add-user-form', user_ajax.load_add_user_form, name='core_main_edit_rights_users_form'),
     url(r'^add-user-right-to-workspace', user_ajax.add_user_right_to_workspace,
