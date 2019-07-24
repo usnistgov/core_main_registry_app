@@ -97,3 +97,22 @@ class Category(MPTTModel):
 
         """
         return Category.objects.all()
+
+    @staticmethod
+    def get_all_categories_ids_from_name_and_refinement_id(name, refinement_id):
+        """ Get all categories by name and refinement id.
+
+        Args:
+            name:
+            refinement_id:
+
+        Returns:
+
+        """
+        try:
+            return Category.objects.get(name=name,
+                                        refinement_id=refinement_id).get_family()
+        except Category.DoesNotExist as e:
+            raise exceptions.DoesNotExist(str(e))
+        except Exception as ex:
+            raise exceptions.ModelError(str(ex))

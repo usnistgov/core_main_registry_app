@@ -72,3 +72,16 @@ def get_all():
 
     """
     return Category.get_all()
+
+
+def get_all_categories_ids_from_name_and_refinement_id(name, refinement_id):
+    """ Get a list of all category ids by name and refinement id.
+
+    Args:
+        name:
+        refinement_id:
+
+    Returns:
+
+    """
+    return list(Category.get_all_categories_ids_from_name_and_refinement_id(name, refinement_id).values_list('id', flat=True))
