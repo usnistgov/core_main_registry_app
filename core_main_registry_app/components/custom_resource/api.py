@@ -49,8 +49,7 @@ def _check_curate(custom_resource):
     Returns:
     """
     if _is_custom_resource_type_resource(custom_resource) and 'core_curate_app' in settings.INSTALLED_APPS and \
-            (custom_resource.url is None
-             or custom_resource.role_choice is None
+            (custom_resource.role_choice is None
              or custom_resource.role_type is None):
         raise exceptions.ModelError("Curate app is installed. "
                                     "You need url key, role choice and role type configured in configuration file.")
@@ -102,7 +101,6 @@ def _create_custom_resource_type_all(custom_resource, resource, key):
     custom_resource.type = CUSTOM_RESOURCE_TYPE.ALL
     custom_resource.name_in_schema = key
     custom_resource.title = _get_value(resource, "title")
-    custom_resource.url = _get_value(resource, "url_key")
     custom_resource.icon = _get_value(resource, "icon")
     custom_resource.display_icon = _get_value(resource, "display_icon")
     custom_resource.icon_color = _get_value(resource, "icon_color")
@@ -122,7 +120,6 @@ def _create_custom_resource(custom_resource, resource, key):
     custom_resource.type = CUSTOM_RESOURCE_TYPE.RESOURCE
     custom_resource.name_in_schema = key
     custom_resource.title = _get_value(resource, "title")
-    custom_resource.url = _get_value(resource, "url_key")
     custom_resource.description = _get_value(resource, "description")
     custom_resource.icon = _get_value(resource, "icon")
     custom_resource.icon_color = _get_value(resource, "icon_color")

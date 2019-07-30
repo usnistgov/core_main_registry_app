@@ -18,22 +18,6 @@ class TestCreateAllResourceCustomResource(TestCase):
 
     fixture = fixtureCustomResource
 
-    def test_create_all_resource_custom_resource_return_url_key(self):
-        # Act
-        key = 'all_resource'
-        custom_resource = custom_resource_api._create_custom_resource_type_all(
-            self.fixture.create_custom_resource(), self.fixture.get_dict_custom_resource_all_resource()[key], key)
-        # Assert
-        self.assertEquals(custom_resource.url, "all")
-
-    def test_create_all_resource_custom_resource_return_is_resource(self):
-        # Act
-        key = 'all_resource'
-        custom_resource = custom_resource_api._create_custom_resource_type_all(
-            self.fixture.create_custom_resource(), self.fixture.get_dict_custom_resource_all_resource()[key], key)
-        # Assert
-        self.assertEquals(custom_resource.url, "all")
-
     def test_create_all_resource_custom_resource_return_type_all(self):
         # Act
         key = 'all_resource'
@@ -95,13 +79,6 @@ class TestCreateCustomResource(TestCase):
         # Assert
         self.assertEquals(custom_resource.title, "Organization")
 
-    def test_create_custom_resource_return_url(self):
-        # Act
-        key = 'Organization'
-        custom_resource = custom_resource_api._create_custom_resource(
-            self.fixture.create_custom_resource(), self.fixture.get_dict_custom_resource()[key], key)
-        # Assert
-        self.assertEquals(custom_resource.url, "organization")
 
     def test_create_custom_resource_return_description(self):
         # Act
@@ -221,38 +198,6 @@ class TestCheckCurate(TestCase):
             with self.assertRaises(exceptions.ModelError):
                 custom_resource_api._check_curate(custom_resource)
 
-    def test_check_curate_is_resource_with_url_return_except(self):
-        # Act
-        custom_resource = CustomResource(type=CUSTOM_RESOURCE_TYPE.RESOURCE, url="url")
-        # Assert
-        with mock.patch.object(settings, 'INSTALLED_APPS', ['core_curate_app']):
-            with self.assertRaises(exceptions.ModelError):
-                custom_resource_api._check_curate(custom_resource)
-
-    def test_check_curate_is_resource_with_url_and_role_choice_return_except(self):
-        # Act
-        custom_resource = CustomResource(type=CUSTOM_RESOURCE_TYPE.RESOURCE, url="url", role_choice="role_choice")
-        # Assert
-        with mock.patch.object(settings, 'INSTALLED_APPS', ['core_curate_app']):
-            with self.assertRaises(exceptions.ModelError):
-                custom_resource_api._check_curate(custom_resource)
-
-    def test_check_curate_is_resource_with_url_and_role_type_return_except(self):
-        # Act
-        custom_resource = CustomResource(type=CUSTOM_RESOURCE_TYPE.RESOURCE, url="url", role_type="role_type")
-        # Assert
-        with mock.patch.object(settings, 'INSTALLED_APPS', ['core_curate_app']):
-            with self.assertRaises(exceptions.ModelError):
-                custom_resource_api._check_curate(custom_resource)
-
-    def test_check_curate_is_resource_with_role_type_and_role_choice_return_except(self):
-        # Act
-        custom_resource = CustomResource(type=CUSTOM_RESOURCE_TYPE.RESOURCE, role_type="role_type", role_choice="role_choice")
-        # Assert
-        with mock.patch.object(settings, 'INSTALLED_APPS', ['core_curate_app']):
-            with self.assertRaises(exceptions.ModelError):
-                custom_resource_api._check_curate(custom_resource)
-
     def test_check_curate_is_resource_with_role_type_return_except(self):
         # Act
         custom_resource = CustomResource(type=CUSTOM_RESOURCE_TYPE.RESOURCE, role_type="role_type")
@@ -271,7 +216,7 @@ class TestCheckCurate(TestCase):
 
     def test_check_curate_is_resource_with_all_return_none(self):
         # Act
-        custom_resource = CustomResource(type=CUSTOM_RESOURCE_TYPE.RESOURCE, role_type="role_type", role_choice="role_choice", url="url")
+        custom_resource = CustomResource(type=CUSTOM_RESOURCE_TYPE.RESOURCE, role_type="role_type", role_choice="role_choice")
         # Assert
         with mock.patch.object(settings, 'INSTALLED_APPS', ['core_curate_app']):
             self.assertIsNone(custom_resource_api._check_curate(custom_resource))

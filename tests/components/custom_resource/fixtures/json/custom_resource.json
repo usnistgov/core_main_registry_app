@@ -1,7 +1,6 @@
 {
   "Organization": {
     "title": "Organization",
-    "url_key": "organization",
     "icon": "fa-university",
     "icon_color": "#2CAAE2",
     "display_icon": true,

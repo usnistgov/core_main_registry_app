@@ -1,7 +1,6 @@
 {
   "all_resource": {
     "title": "All Resources",
-    "url_key": "all",
 	"icon": "fa-globe",
     "icon_color": "#557EB9",
 	"type": "all",

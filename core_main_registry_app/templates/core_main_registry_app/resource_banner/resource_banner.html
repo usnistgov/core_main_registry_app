@@ -3,7 +3,7 @@
         {% for custom_resource in data.custom_resources %}
             {% if custom_resource.display_icon %}
                 {% if data.display_not_resource and not custom_resource.type == data.type_resource or custom_resource.type == data.type_resource %}
-                    <td id="td_{{custom_resource.url}}" align="center">
+                    <td id="td_{{custom_resource.slug}}" align="center">
                         <i class="fa {{custom_resource.icon}} fa-5x" aria-hidden="true" style="color: {{custom_resource.icon_color}}"></i>
                         <div class="tick" align="right">
                              <i class="fa fa-check-circle-o fa-2x" aria-hidden="true"></i>

@@ -1,5 +1,6 @@
 """ Integration Test for Custom Resource API
 """
+from django.utils.text import slugify
 from mongoengine.errors import ValidationError
 
 from core_main_app.commons import exceptions as exceptions
@@ -23,6 +24,22 @@ class TestCreateAndSaveCustomResource(MongoIntegrationBaseTestCase):
         result = custom_resource_api.get_all_by_template(template)
         # Assert
         self.assertTrue(all(isinstance(item, CustomResource) for item in result))
+
+    def test_create_custom_resource_return_slug_is_not_none(self):
+        # Act
+        template = self.fixture.create_and_save_template()
+        custom_resource_api.parse_and_save(self.fixture.get_dict_custom_resource(), template)
+        result = custom_resource_api.get_all_by_template(template)
+        # Assert
+        self.assertIsNotNone(result[0].slug)
+
+    def test_create_custom_resource_return_slug(self):
+        # Act
+        template = self.fixture.create_and_save_template()
+        custom_resource_api.parse_and_save(self.fixture.get_dict_custom_resource(), template)
+        result = custom_resource_api.get_all_by_template(template)
+        # Assert
+        self.assertEquals(result[0].slug, slugify(result[0].title))
 
     def test_create_custom_resource_return_type(self):
         # Act
