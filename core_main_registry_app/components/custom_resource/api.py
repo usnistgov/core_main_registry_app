@@ -127,6 +127,7 @@ def _create_custom_resource(custom_resource, resource, key):
     custom_resource.role_choice = _get_value(resource, "role_choice")
     custom_resource.role_type = _get_value(resource, "role_type")
     custom_resource.sort = _get_value(resource, "sort")
+    custom_resource.refinements = _get_value(resource, "refinements")
     return custom_resource
 
 

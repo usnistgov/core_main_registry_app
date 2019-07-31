@@ -34,6 +34,38 @@ class TestCreateAndSaveCustomResource(MongoIntegrationBaseTestCase):
         # Assert
         self.assertIsNotNone(result[0].slug)
 
+    def test_create_custom_resource_type_all_return_refinements_is_empty(self):
+        # Act
+        template = self.fixture.create_and_save_template()
+        custom_resource_api.parse_and_save(self.fixture.get_dict_custom_resource_all_resource(), template)
+        result = custom_resource_api.get_all_by_template(template)
+        # Assert
+        self.assertEquals(len(result[0].refinements), 0)
+
+    def test_create_custom_resource_return_refinements_is_not_none(self):
+        # Act
+        template = self.fixture.create_and_save_template()
+        custom_resource_api.parse_and_save(self.fixture.get_dict_custom_resource(), template)
+        result = custom_resource_api.get_all_by_template(template)
+        # Assert
+        self.assertIsNotNone(result[0].refinements)
+
+    def test_create_custom_resource_return_refinements_length(self):
+        # Act
+        template = self.fixture.create_and_save_template()
+        custom_resource_api.parse_and_save(self.fixture.get_dict_custom_resource(), template)
+        result = custom_resource_api.get_all_by_template(template)
+        # Assert
+        self.assertEquals(len(result[0].refinements), 1)
+
+    def test_create_custom_resource_return_refinements_value(self):
+        # Act
+        template = self.fixture.create_and_save_template()
+        custom_resource_api.parse_and_save(self.fixture.get_dict_custom_resource(), template)
+        result = custom_resource_api.get_all_by_template(template)
+        # Assert
+        self.assertEquals(result[0].refinements[0], "unspecified Organization")
+
     def test_create_custom_resource_return_slug(self):
         # Act
         template = self.fixture.create_and_save_template()

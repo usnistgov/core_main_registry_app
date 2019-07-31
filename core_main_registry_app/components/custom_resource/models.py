@@ -27,6 +27,7 @@ class CustomResource(Document):
     role_choice = fields.StringField(blank=True)
     role_type = fields.StringField(blank=True)
     sort = fields.IntField(unique_with='template', min_value=0)
+    refinements = fields.ListField(fields.StringField(), blank=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:

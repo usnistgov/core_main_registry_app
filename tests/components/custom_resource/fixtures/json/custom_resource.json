@@ -8,6 +8,7 @@
     "role_choice": "Organization",
     "role_type": "Organization",
     "type": "resource",
-    "sort": 1
+    "sort": 1,
+    "refinements": ["unspecified Organization"]
   }
 }
