@@ -2,10 +2,12 @@
 """
 from unittest import mock
 
-from core_main_app.commons import exceptions as exceptions
 from django.conf import settings
 from django.test import TestCase
+from mock.mock import patch
 
+from core_main_app.commons import exceptions as exceptions
+from core_main_app.components.template.models import Template
 from core_main_registry_app.components.custom_resource import api as custom_resource_api
 from core_main_registry_app.components.custom_resource.models import CustomResource
 from core_main_registry_app.constants import CUSTOM_RESOURCE_TYPE
@@ -79,14 +81,17 @@ class TestCreateCustomResource(TestCase):
         # Assert
         self.assertEquals(custom_resource.title, "Organization")
 
-
     def test_create_custom_resource_return_description(self):
         # Act
         key = 'Organization'
         custom_resource = custom_resource_api._create_custom_resource(
             self.fixture.create_custom_resource(), self.fixture.get_dict_custom_resource()[key], key)
         # Assert
-        self.assertEquals(custom_resource.description, "a group of people that come together to contribute to or participate in a federated data operation. Organizations can be hierarchical: an organization can contain or sponsor other organizations. Organizations can also aggregate or participate with other organizations in broader collaborations.")
+        self.assertEquals(custom_resource.description, "a group of people that come together to contribute to or "
+                                                       "participate in a federated data operation. Organizations can "
+                                                       "be hierarchical: an organization can contain or sponsor other "
+                                                       "organizations. Organizations can also aggregate or participate "
+                                                       "with other organizations in broader collaborations.")
 
     def test_create_custom_resource_return_icon(self):
         # Act
@@ -220,3 +225,23 @@ class TestCheckCurate(TestCase):
         # Assert
         with mock.patch.object(settings, 'INSTALLED_APPS', ['core_curate_app']):
             self.assertIsNone(custom_resource_api._check_curate(custom_resource))
+
+
+class TestGetByCurrentTemplateAndSlug(TestCase):
+
+    @patch.object(CustomResource, 'get_custom_resource_by_template_and_slug')
+    @patch('core_main_registry_app.components.custom_resource.api._get_current_template')
+    def test_get_returns_custom_resource(self, get_current, get_custom_resource_by_template_and_slug):
+        # Arrange
+        get_custom_resource_by_template_and_slug.return_value = CustomResource()
+        get_current.return_value = Template()
+        # Assert
+        self.assertTrue(isinstance(custom_resource_api.get_by_current_template_and_slug('test'), CustomResource))
+
+    @patch.object(CustomResource, 'get_custom_resource_by_template_and_slug')
+    def test_get_absent_slug_or_template_raises_DoesNotExist(self, get_custom_resource_by_template_and_slug):
+        # Arrange
+        get_custom_resource_by_template_and_slug.side_effect = exceptions.DoesNotExist("error")
+        # Assert
+        with self.assertRaises(exceptions.DoesNotExist):
+            custom_resource_api.get_by_current_template_and_slug('test')

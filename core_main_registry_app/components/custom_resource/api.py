@@ -174,3 +174,15 @@ def _get_current_template():
     current_template_version = version_manager_api.get_active_global_version_manager_by_title(REGISTRY_XSD_FILENAME)
     current_template = template_api.get(version_manager_api.get_current(current_template_version))
     return current_template
+
+
+def get_by_current_template_and_slug(slug):
+    """ Get the custom resource by template and slug
+
+    Args:
+        slug:
+
+    Returns:
+
+    """
+    return CustomResource.get_custom_resource_by_template_and_slug(_get_current_template(), slug)

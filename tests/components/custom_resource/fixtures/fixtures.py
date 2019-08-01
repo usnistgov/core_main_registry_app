@@ -3,16 +3,24 @@
 import json
 from os.path import join, dirname, realpath
 
+from core_main_app.components.template.models import Template
 from core_main_app.utils.integration_tests.fixture_interface import FixtureInterface
 from core_main_registry_app.components.custom_resource.models import CustomResource
-from core_main_app.components.template.models import Template
+from core_main_registry_app.constants import CUSTOM_RESOURCE_TYPE
 
 
 class CustomResourceFixtures(FixtureInterface):
     """ Custom Resource Fixture
     """
+
+    custom_resource = None
+    template = None
+    custom_resource_collection = None
+
     def insert_data(self):
-        pass
+        self.template = CustomResourceFixtures.create_and_save_template()
+        self.custom_resource = CustomResourceFixtures.create_custom_resource(template=self.template, slug="test")
+        self.custom_resource_collection = [self.custom_resource]
 
     @staticmethod
     def create_and_save_template():
@@ -23,8 +31,33 @@ class CustomResourceFixtures(FixtureInterface):
         return template
 
     @staticmethod
-    def create_custom_resource():
-        return CustomResource()
+    def create_custom_resource(template=None,
+                               name_in_schema="",
+                               title="",
+                               description="",
+                               slug="",
+                               type=CUSTOM_RESOURCE_TYPE.RESOURCE,
+                               icon="",
+                               icon_color="",
+                               display_icon=False,
+                               role_choice="",
+                               role_type="",
+                               sort=0):
+        if template is None:
+            template = CustomResourceFixtures.create_and_save_template()
+
+        return CustomResource(template=template,
+                              name_in_schema=name_in_schema,
+                              title=title,
+                              description=description,
+                              slug=slug,
+                              type=type,
+                              icon=icon,
+                              icon_color=icon_color,
+                              display_icon=display_icon,
+                              role_choice=role_choice,
+                              role_type=role_type,
+                              sort=sort).save()
 
     @staticmethod
     def get_dict_custom_resource_minus_sort():

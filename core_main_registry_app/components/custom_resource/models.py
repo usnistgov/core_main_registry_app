@@ -1,9 +1,11 @@
 """ Custom Resource model
 """
 
-from django_mongoengine import fields, Document
 from django.utils.text import slugify
+from django_mongoengine import fields, Document
+from mongoengine import errors as mongoengine_errors
 
+from core_main_app.commons import exceptions
 from core_main_app.components.template.models import Template
 from core_main_registry_app.constants import CUSTOM_RESOURCE_TYPE
 
@@ -55,3 +57,22 @@ class CustomResource(Document):
 
         """
         return CustomResource.objects(template=template, type=type).all()
+
+    @staticmethod
+    def get_custom_resource_by_template_and_slug(template, slug):
+        """ Get custom resource by template and slug.
+
+        Args:
+            template:
+            slug:
+
+        Returns:
+
+        """
+        try:
+            return CustomResource.objects.get(template=template, slug=slug)
+        except mongoengine_errors.DoesNotExist as e:
+            raise exceptions.DoesNotExist(str(e))
+        except Exception as ex:
+            raise exceptions.ModelError(str(ex))
+

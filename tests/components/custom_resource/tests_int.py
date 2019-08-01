@@ -1,6 +1,7 @@
 """ Integration Test for Custom Resource API
 """
 from django.utils.text import slugify
+from mock import patch
 from mongoengine.errors import ValidationError
 
 from core_main_app.commons import exceptions as exceptions
@@ -99,3 +100,25 @@ class TestGetAllByTemplate(MongoIntegrationBaseTestCase):
         result = custom_resource_api.get_all_by_template(template)
         # Assert
         self.assertEquals(length, len(result))
+
+
+class TestGetByCurrentTemplateAndSlug(MongoIntegrationBaseTestCase):
+
+    fixture = fixtureCustomResource
+
+    @patch('core_main_registry_app.components.custom_resource.api._get_current_template')
+    def test_get_by_current_template_and_slug_returns_custom_resource(self, _get_current_template):
+        # Arrange
+        _get_current_template.return_value = self.fixture.template
+        # Act
+        custom_resource = custom_resource_api.get_by_current_template_and_slug(self.fixture.custom_resource.slug)
+        # Assert
+        self.assertTrue(isinstance(custom_resource, CustomResource))
+
+    @patch('core_main_registry_app.components.custom_resource.api._get_current_template')
+    def test_get_by_current_template_and__incorrect_slug_raises_error(self, _get_current_template):
+        # Arrange
+        _get_current_template.return_value = self.fixture.template
+        # Act
+        with self.assertRaises(exceptions.DoesNotExist):
+            custom_resource_api.get_by_current_template_and_slug("incorrect slug")
