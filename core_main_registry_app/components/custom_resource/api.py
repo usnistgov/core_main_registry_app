@@ -187,3 +187,14 @@ def get_by_current_template_and_slug(slug):
 
     """
     return CustomResource.get_custom_resource_by_template_and_slug(_get_current_template(), slug)
+
+
+def delete_custom_resources_by_template(template):
+    """ Delete all custom resources related to a template.
+
+    Args:
+        template:
+
+    Returns:
+    """
+    CustomResource.delete_custom_resources_by_template(template)

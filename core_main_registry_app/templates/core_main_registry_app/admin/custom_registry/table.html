@@ -1,0 +1,29 @@
+{% extends 'core_main_app/_render/admin/theme/tools/box.html' %}
+
+{% block box_title %}Configuration list{% endblock %}
+
+{% block box_tools %} {% endblock %}
+
+{% block box_body %}
+<table class="table table-bordered table-striped table-hover">
+    <tr>
+        <th>#</th>
+        <th>Template</th>
+        <th>Number of resources</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for obj in data.objects %}
+        <tr>
+            <td>{{ forloop.counter }} </td>
+            <td>{{ obj.template_name }} {% if obj.is_current %} (current) {% endif %}</td>
+            <td>{{ obj.count }}</td>
+            <td>
+                <a class="btn btn-default upload-btn" href="{% url 'admin:core_main_registry_app_template_custom_resource' obj.template_id %}">
+                    <i class="fa fa-upload"></i> Upload new configuration
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

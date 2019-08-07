@@ -77,3 +77,13 @@ class CustomResource(Document):
         except Exception as ex:
             raise exceptions.ModelError(str(ex))
 
+    @staticmethod
+    def delete_custom_resources_by_template(template):
+        """ Delete all custom resources related to a template.
+
+        Args:
+            template:
+        Returns:
+        """
+        CustomResource.objects(template=template).delete()
+

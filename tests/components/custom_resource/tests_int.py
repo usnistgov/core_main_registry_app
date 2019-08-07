@@ -154,3 +154,16 @@ class TestGetByCurrentTemplateAndSlug(MongoIntegrationBaseTestCase):
         # Act
         with self.assertRaises(exceptions.DoesNotExist):
             custom_resource_api.get_by_current_template_and_slug("incorrect slug")
+
+
+class TestDeleteCustomResourcesByTemplate(MongoIntegrationBaseTestCase):
+
+    fixture = fixtureCustomResource
+
+    def test_delete_custom_resources_by_template_return_0(self):
+        # Act
+        self.fixture.insert_data()
+        custom_resource_api.delete_custom_resources_by_template(self.fixture.template)
+        result = custom_resource_api.get_all_by_template(self.fixture.template)
+        # Assert
+        self.assertEquals(0, len(result))

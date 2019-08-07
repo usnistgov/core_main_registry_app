@@ -2,6 +2,7 @@
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.contrib.admin.views.decorators import staff_member_required
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic.base import RedirectView
 
@@ -57,6 +58,12 @@ admin_urls = [
             administration=True,
             template="core_main_app/admin/workspaces/edit_rights.html"),
         name='core_main_edit_rights_workspace'),
+    url(r'^custom-registry$', staff_member_required(registry_admin_views.CustomRegistry.as_view()),
+        name='core_main_registry_app_custom_registry'),
+    url(r'^template/(?P<template_id>\w+)/custom-resource',
+        staff_member_required(registry_admin_views.UploadCustomResource.as_view()),
+        name='core_main_registry_app_template_custom_resource'),
+
 ]
 
 urls = admin.site.get_urls()
