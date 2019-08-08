@@ -7,13 +7,13 @@ import string
 import pytz
 
 import core_main_app.components.data.api as data_api
-from core_main_app.commons import exceptions as exceptions
-from core_main_app.components.data.models import Data
-from core_main_app.components.workspace import api as workspace_api
 from core_main_app.access_control.decorators import access_control
+from core_main_app.commons import exceptions as exceptions
+from core_main_app.components.workspace import api as workspace_api
 from core_main_app.utils.labels import get_data_label
 from core_main_registry_app.commons.constants import DataStatus
 from core_main_registry_app.components.data.access_control import can_publish_data
+from core_main_registry_app.system.api import is_local_id_already_used
 from core_main_registry_app.utils.role.extraction import role_extraction
 from xml_utils.xsd_tree.xsd_tree import XSDTree
 
@@ -85,18 +85,6 @@ def get_status(data):
         return data.dict_content['Resource']['@status']
     except Exception as e:
         raise exceptions.ModelError(str(e))
-
-
-def is_local_id_already_used(local_id):
-    """ Check if the local id given already exist in db
-
-    Args:
-        local_id:
-
-    Returns:
-
-    """
-    return len(Data.execute_query({'dict_content.Resource.@localid': str(local_id)})) > 0
 
 
 def generate_unique_local_id(length_id):
