@@ -7,6 +7,7 @@ import core_main_app.rest.xsl_transformation.views as xslTransformationList_view
 from core_main_app.rest.data import views as data_views
 from core_main_app.rest.template import views as template_views
 from core_main_app.rest.template_version_manager import views as template_version_manager_views
+from core_main_registry_app.rest.template_version_manager import views as registry_template_version_manager_views
 from core_main_app.rest.workspace import views as workspace_views
 from core_main_registry_app.rest.data import views as registry_data_views
 
@@ -24,7 +25,7 @@ urlpatterns = [
         name='core_main_app_rest_template_version'),
 
     url(r'^template/version/(?P<pk>\w+)/current/$',
-        template_version_manager_views.CurrentTemplateVersion.as_view(),
+        registry_template_version_manager_views.CurrentTemplateVersion.as_view(),
         name='core_main_app_rest_template_version_current'),
 
     url(r'^template/version/(?P<pk>\w+)/disable/$',

@@ -7,6 +7,7 @@ from core_main_app.components.data import api as data_api
 from core_main_app.utils.rendering import render
 from core_main_app.views.common import ajax as common_ajax, views as common_views
 from core_main_app.views.user import views as user_views, ajax as user_ajax
+from core_main_registry_app.views.admin import ajax as admin_ajax
 
 schema_view = get_swagger_view(title="REST API")
 
@@ -28,7 +29,7 @@ urlpatterns = [
         name='core_main_app_disable_template_version'),
     url(r'^template/version/restore', common_ajax.restore_template_version_from_version_manager,
         name='core_main_app_restore_template_version'),
-    url(r'^template/version/current', common_ajax.set_current_template_version_from_version_manager,
+    url(r'^template/version/current', admin_ajax.set_current_template_version_from_version_manager,
         name='core_main_app_set_current_template_version'),
 
     url(r'^xslt$', common_views.XSLTView.as_view(), name='core_main_app_xslt'),
