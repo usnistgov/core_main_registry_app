@@ -4,19 +4,20 @@ import json
 import logging
 from os.path import join
 
+from django.contrib.staticfiles import finders
+
 from core_main_app.commons import exceptions
+from core_main_app.components.template import api as template_api
 from core_main_app.components.template.models import Template
 from core_main_app.components.template_version_manager import api as template_version_manager_api
 from core_main_app.components.template_version_manager.models import TemplateVersionManager
 from core_main_app.components.version_manager import api as version_manager_api
 from core_main_app.utils.file import read_file_content
-from django.contrib.staticfiles import finders
-
+from core_main_registry_app.components.custom_resource import api as custom_resource_api
 from core_main_registry_app.components.template import api as template_registry_api
-from core_main_app.components.template import api as template_api
 from core_main_registry_app.settings import REGISTRY_XSD_FILENAME, CUSTOM_REGISTRY_FILE_PATH
 from core_main_registry_app.utils.refinement import refinement
-from core_main_registry_app.components.custom_resource import api as custom_resource_api
+from core_main_registry_app.utils.refinement import watch as refinement_watch
 
 logger = logging.getLogger("core_main_registry_app.discover")
 
@@ -34,6 +35,8 @@ def init_registry():
         _init_refinements()
         # Init Custom Registry
         _init_custom_registry()
+        # init watcher
+        refinement_watch.init()
     except Exception as e:
         logger.error("Impossible to init the registry: {0}".format(str(e)))
 
