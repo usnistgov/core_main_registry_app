@@ -49,6 +49,9 @@ urlpatterns = [
     url(r'^change-workspace', user_ajax.LoadFormChangeWorkspace.as_view(
         show_global_workspace=False
     ), name='core_main_change_workspace'),
+    url(r'^assign-data-workspace',
+        user_ajax.AssignView.as_view(api=data_api),
+        name='core_main_assign_data_workspace'),
     url(r'^assign-workspace', user_ajax.AssignView.as_view(api=data_api), name='core_main_assign_workspace'),
 
     url(r'^add-user-form', user_ajax.load_add_user_form, name='core_main_edit_rights_users_form'),
