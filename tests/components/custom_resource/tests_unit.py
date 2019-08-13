@@ -177,6 +177,14 @@ class TestIsTypeAll(TestCase):
         # Assert
         self.assertTrue(custom_resource_api._is_type_all(resource))
 
+    def test_is_all_resource_raise_exception(self):
+        # Act
+        key = 'Organization'
+        resource = self.fixture.get_dict_custom_resource_no_type()
+        # Assert
+        with self.assertRaises(exceptions.ModelError):
+            custom_resource_api._is_type_all(resource)
+
 
 class TestCheckCurate(TestCase):
 

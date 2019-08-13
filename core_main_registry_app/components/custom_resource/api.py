@@ -87,7 +87,10 @@ def _is_type_all(resource):
      resource:
     Returns:
     """
-    return resource['type'] == CUSTOM_RESOURCE_TYPE.ALL
+    try:
+        return resource['type'] == CUSTOM_RESOURCE_TYPE.ALL
+    except:
+        raise exceptions.ModelError("The configuration file is not valid.")
 
 
 def _create_custom_resource_type_all(custom_resource, resource, key):
