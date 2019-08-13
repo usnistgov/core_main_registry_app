@@ -2,11 +2,11 @@
 """
 import logging
 
-from django.conf import settings
-
 from core_main_app.commons import exceptions as exceptions
 from core_main_app.components.template import api as template_api
 from core_main_app.components.version_manager import api as version_manager_api
+from django.conf import settings
+
 from core_main_registry_app.components.custom_resource.models import CustomResource
 from core_main_registry_app.constants import CUSTOM_RESOURCE_TYPE
 from core_main_registry_app.settings import REGISTRY_XSD_FILENAME
@@ -201,3 +201,44 @@ def delete_custom_resources_by_template(template):
     Returns:
     """
     CustomResource.delete_custom_resources_by_template(template)
+
+
+def save_list(list_custom_resources, force_insert=False):
+    """ Save list of custom resource.
+
+    Args:
+        list_custom_resources:
+        force_insert:
+
+    Returns:
+    """
+    for custom_resource in list_custom_resources:
+        custom_resource.save(force_insert=force_insert)
+
+
+def replace_custom_resources_by_template(template, data):
+    """ Replace all custom resources by the one in data.
+    Rollback if error.
+
+    Args:
+        template:
+        data:
+
+    Returns:
+    """
+    old_custom_resources = []
+    try:
+        # old custom resources
+        old_custom_resources = list(get_all_by_template(template))
+
+        # delete old custom resources
+        delete_custom_resources_by_template(template)
+
+        # create new custom resources
+        parse_and_save(data, template)
+
+    except Exception as e:
+        # rollback old custom resource
+        save_list(old_custom_resources, True)
+        raise e
+

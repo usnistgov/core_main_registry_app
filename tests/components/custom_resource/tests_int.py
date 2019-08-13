@@ -167,3 +167,56 @@ class TestDeleteCustomResourcesByTemplate(MongoIntegrationBaseTestCase):
         result = custom_resource_api.get_all_by_template(self.fixture.template)
         # Assert
         self.assertEquals(0, len(result))
+
+
+class TestSaveList(MongoIntegrationBaseTestCase):
+
+    fixture = fixtureCustomResource
+
+    def test_save_list(self):
+        # Act
+        template = self.fixture.create_and_save_template()
+        custom_resource1 = CustomResource(template=template, title="title1", type="resource", icon="icon", sort=0)
+        custom_resource2 = CustomResource(template=template, title="title2", type="resource", icon="icon", sort=1)
+        list_custom = [custom_resource1, custom_resource2]
+        custom_resource_api.save_list(list_custom)
+        result = custom_resource_api.get_all_by_template(template)
+        # Assert
+        self.assertEquals(len(list_custom), len(result))
+
+
+class TestReplaceCustomResourceByTemplate(MongoIntegrationBaseTestCase):
+
+    fixture = fixtureCustomResource
+
+    def test_replace_custom_resources_by_template_return_ok(self):
+        # Check
+        template = self.fixture.create_and_save_template()
+        result = custom_resource_api.get_all_by_template(template)
+        self.assertEquals(0, len(result))
+        # Act
+        custom_resource_api.replace_custom_resources_by_template(template, self.fixture.get_dict_all_custom_resource())
+        result = custom_resource_api.get_all_by_template(template)
+        # Assert
+        self.assertEquals(10, len(result))
+
+    def test_replace_custom_resources_by_template_check_old(self):
+        # Check
+        template = self.fixture.create_and_save_template()
+        custom_resource_api.parse_and_save(self.fixture.get_dict_custom_resource_all_resource(), template)
+        result = custom_resource_api.get_all_by_template(template)
+        old_cr = list(result)[0]
+        self.assertEquals(1, len(result))
+        # Act
+        custom_resource_api.replace_custom_resources_by_template(template, self.fixture.get_dict_all_custom_resource())
+        result = custom_resource_api.get_all_by_template(template)
+        # Assert
+        self.assertFalse(old_cr in result)
+
+    def test_replace_custom_resources_by_template_return_raise(self):
+        # Act
+        template = self.fixture.create_and_save_template()
+        # Assert
+        with self.assertRaises(exceptions.ModelError):
+            custom_resource_api.replace_custom_resources_by_template(template,
+                                                                     self.fixture.get_dict_custom_resource_no_title())

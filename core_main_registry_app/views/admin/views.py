@@ -90,12 +90,8 @@ class UploadCustomResource(View):
             # get the file from the form
             upload_file = request.FILES['json_file'].read().decode('utf-8')
 
-            # delete custom resources
-            custom_resource_api.delete_custom_resources_by_template(template)
-
-            # create new custom resources
             data = json.loads(upload_file)
-            custom_resource_api.parse_and_save(data, template)
+            custom_resource_api.replace_custom_resources_by_template(template, data)
 
             return HttpResponseRedirect(reverse("admin:core_main_registry_app_custom_registry"))
         except Exception as e:
