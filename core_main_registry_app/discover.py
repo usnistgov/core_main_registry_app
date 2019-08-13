@@ -15,7 +15,7 @@ from core_main_app.components.version_manager import api as version_manager_api
 from core_main_app.utils.file import read_file_content
 from core_main_registry_app.components.custom_resource import api as custom_resource_api
 from core_main_registry_app.components.template import api as template_registry_api
-from core_main_registry_app.settings import REGISTRY_XSD_FILENAME, CUSTOM_REGISTRY_FILE_PATH
+from core_main_registry_app.settings import REGISTRY_XSD_FILEPATH, CUSTOM_REGISTRY_FILE_PATH, REGISTRY_XSD_FILENAME
 from core_main_registry_app.utils.refinement import refinement
 from core_main_registry_app.utils.refinement import watch as refinement_watch
 
@@ -47,13 +47,16 @@ def _add_template():
     Returns:
 
     """
+    xsd_filepath = REGISTRY_XSD_FILEPATH
     xsd_filename = REGISTRY_XSD_FILENAME
     if xsd_filename == '':
         raise Exception('Please configure the REGISTRY_XSD_FILENAME setting in your project.')
+    if xsd_filepath == '':
+        raise Exception('Please configure the REGISTRY_XSD_FILEPATH setting in your project.')
     try:
         version_manager_api.get_active_global_version_manager_by_title(xsd_filename)
     except exceptions.DoesNotExist:
-        default_xsd_path = finders.find(join('core_main_registry_app', 'xsd', xsd_filename))
+        default_xsd_path = finders.find(xsd_filepath)
         xsd_data = read_file_content(default_xsd_path)
         template = Template(filename=xsd_filename, content=xsd_data)
         template_version_manager = TemplateVersionManager(title=xsd_filename)
