@@ -4,7 +4,6 @@ ul.fancytree-container{
 
 span.fancytree-title{
     white-space: normal;
-    width: 12em;
     font-size: 14pt;
     font-family: 'Source Sans Pro', sans-serif;
 }
@@ -13,4 +12,8 @@ ul.fancytree-container{
     width: 17em;
     border: none;
     position: relative;
+}
+
+span.fancytree-icon, span.fancytree-checkbox, span.fancytree-expander, span.fancytree-custom-icon {
+    margin-top: 6px;
 }
