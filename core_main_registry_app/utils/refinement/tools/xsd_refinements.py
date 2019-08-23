@@ -166,7 +166,7 @@ def _get_simple_type_or_complex_type_info(xml_doc_tree, target_ns_prefix, elemen
                                                  format(LXML_SCHEMA_NAMESPACE, target_ns_prefix +
                                                         element.attrib['name']))
         if len(to_search_element) == 0:
-            logger.warning("Impossible to find the element using the enumeration ({0})"
+            logger.debug("No element using the enumeration ({0})"
                            .format(str(len(element))))
             element = _find_extension(xml_doc_tree, target_ns_prefix, element)
         elif len(to_search_element) > 1:
@@ -199,7 +199,7 @@ def _get_extension_info(xml_doc_tree, element, query=None):
                                                  format(LXML_SCHEMA_NAMESPACE,
                                                         element.attrib['base']))
         if len(to_search_element) == 0:
-            logger.warning("Impossible to find the element using the enumeration ({0})"
+            logger.debug("No element using the enumeration ({0})"
                            .format(str(len(element))))
         elif len(to_search_element) > 1:
             logger.error("More than one element using the enumeration ({0})"
@@ -230,7 +230,7 @@ def _find_extension(xml_doc_tree, target_ns_prefix, element):
                                                  format(LXML_SCHEMA_NAMESPACE,
                                                  target_ns_prefix + element.attrib['name']))
         if len(to_search_element) == 0:
-            logger.warning("Impossible to find the enumeration ({0})".format(str(len(element))))
+            logger.debug("The enumeration ({0}) was not found".format(str(len(element))))
         elif len(to_search_element) > 1:
             logger.error("More than one enumeration using the element ({0})"
                          .format(str(len(element))))
