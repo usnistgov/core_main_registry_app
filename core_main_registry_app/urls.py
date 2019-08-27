@@ -8,7 +8,7 @@ from core_main_app.utils.rendering import render
 from core_main_app.views.common import ajax as common_ajax, views as common_views
 from core_main_app.views.user import views as user_views, ajax as user_ajax
 from core_main_registry_app.views.admin import ajax as admin_ajax
-
+from core_main_registry_app.views.user import views as registry_user_views
 schema_view = get_swagger_view(title="REST API")
 
 # FIXME: Check needed URLs for registry and remove the others.
@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^locked', common_views.defender_error_page, name='core_main_app_locked'),
 
     url(r'^rest/', include('core_main_registry_app.rest.urls')),
-    url(r'^data',  common_views.ViewData.as_view(), name='core_main_app_data_detail'),
+    url(r'^data',  registry_user_views.RegistryViewData.as_view(), name='core_main_app_data_detail'),
 
     url(r'^template/versions/(?P<version_manager_id>\w+)', user_views.manage_template_versions,
         name='core_main_app_manage_template_versions'),
