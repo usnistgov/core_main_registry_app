@@ -1,7 +1,6 @@
 """
 Refinements creation.
 """
-from core_main_registry_app.constants import UNSPECIFIED_CATEGORY
 from core_main_registry_app.utils.refinement.tools import xsd_refinements
 
 
@@ -62,20 +61,10 @@ def _create_sub_categories(key, leaves, refinement, parent=None):
         category_api.create_and_save(name=key.title, path=key.path, value=key.value,
                                      parent=parent, refinement=refinement)
     elif len(leaves) > 0:
-        # If we need an unspecified category.
-        if UNSPECIFIED_CATEGORY:
-            # Create the category.
-            parent = category_api.create_and_save(name=key.title, path=key.path,
-                                                  value=key.value_as_category(),
-                                                  parent=parent, refinement=refinement)
-            # Create the unspecified category and set the previous category as its parent.
-            category_api.create_and_save(name="unspecified " + key.title, path=key.path,
-                                         value=key.value, parent=parent,
-                                         refinement=refinement)
-        else:
-            # Create the category and become a parent.
-            parent = category_api.create_and_save(name=key.title, path=key.path, value=key.value,
-                                                  parent=parent, refinement=refinement)
+
+        # Create the category and become a parent.
+        parent = category_api.create_and_save(name=key.title, path=key.path, value=key.value,
+                                              parent=parent, refinement=refinement)
         # For each children.
         for key, value in sorted(leaves.items()):
             # Create sub categories.
