@@ -1,8 +1,14 @@
 """ Handle refinement signals
 """
+from logging import getLogger
+
+from billiard.exceptions import SoftTimeLimitExceeded
+
 from core_main_app.components.template.models import Template
-from core_main_registry_app.utils.refinement.refinement import init_refinements
+from core_main_registry_app.tasks import init_refinement_task
 from signals_utils.signals.mongo import connector, signals
+
+logger = getLogger(__name__)
 
 
 def init():
@@ -18,4 +24,10 @@ def post_save_template(sender, document, **kwargs):
         document: template object.
         **kwargs:
     """
-    init_refinements(document)
+    try:
+        # start asynchronous task
+        init_refinement_task.delay(str(document.id))
+    except (TimeoutError, SoftTimeLimitExceeded) as ex:
+        logger.error("Timeout while generating refinements: {0}".format(str(ex)))
+    except Exception as ex:
+        logger.error("Error happened while generating refinements: {0}".format(str(ex)))
