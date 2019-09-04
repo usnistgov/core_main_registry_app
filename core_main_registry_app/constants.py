@@ -1,12 +1,11 @@
 """
 Constants for core main registry app
 """
-from core_main_app.utils.enum import enum
+from enum import Enum
 
 # Create an unspecified category when 2+ levels.
 UNSPECIFIED_CATEGORY = True
 # Path to status
 PATH_STATUS = "Resource.@status"
 
-CUSTOM_RESOURCE_TYPE = enum(RESOURCE='resource',
-                            ALL='all')
+CUSTOM_RESOURCE_TYPE = Enum('CUSTOM_RESOURCE_TYPE', {'RESOURCE': 'resource', 'ALL': 'all'})

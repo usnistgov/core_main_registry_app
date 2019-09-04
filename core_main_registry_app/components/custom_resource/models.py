@@ -20,7 +20,7 @@ class CustomResource(Document):
     title = fields.StringField(unique_with='template')
     slug = fields.StringField()
     description = fields.StringField(blank=True)
-    type = fields.StringField(blank=False, choices=(CUSTOM_RESOURCE_TYPE.RESOURCE, CUSTOM_RESOURCE_TYPE.ALL))
+    type = fields.StringField(blank=False, choices=(CUSTOM_RESOURCE_TYPE.RESOURCE.value, CUSTOM_RESOURCE_TYPE.ALL.value))
     icon = fields.StringField(blank=False)
     icon_color = fields.StringField(blank=True)
     display_icon = fields.BooleanField(blank=True)

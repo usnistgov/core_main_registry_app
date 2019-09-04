@@ -36,7 +36,7 @@ class CustomResourceFixtures(FixtureInterface):
                                title="",
                                description="",
                                slug="",
-                               type=CUSTOM_RESOURCE_TYPE.RESOURCE,
+                               type=CUSTOM_RESOURCE_TYPE.RESOURCE.value,
                                icon="",
                                icon_color="",
                                display_icon=False,

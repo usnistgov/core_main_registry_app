@@ -26,7 +26,7 @@ class TestCreateAllResourceCustomResource(TestCase):
         custom_resource = custom_resource_api._create_custom_resource_type_all(
             self.fixture.create_custom_resource(), self.fixture.get_dict_custom_resource_all_resource()[key], key)
         # Assert
-        self.assertEquals(custom_resource.type, CUSTOM_RESOURCE_TYPE.ALL)
+        self.assertEquals(custom_resource.type, CUSTOM_RESOURCE_TYPE.ALL.value)
 
     def test_create_all_resource_custom_resource_return_icon(self):
         # Act
@@ -63,7 +63,7 @@ class TestCreateCustomResource(TestCase):
         custom_resource = custom_resource_api._create_custom_resource(
             self.fixture.create_custom_resource(), self.fixture.get_dict_custom_resource()[key], key)
         # Assert
-        self.assertEquals(custom_resource.type, CUSTOM_RESOURCE_TYPE.RESOURCE)
+        self.assertEquals(custom_resource.type, CUSTOM_RESOURCE_TYPE.RESOURCE.value)
 
     def test_create_custom_resource_return_name_in_schema(self):
         # Act
@@ -148,13 +148,13 @@ class TestIsCustomResourceTypeResource(TestCase):
 
     def test_is_all_resource_return_type_resource(self):
         # Act
-        custom_resource = CustomResource(type=CUSTOM_RESOURCE_TYPE.RESOURCE)
+        custom_resource = CustomResource(type=CUSTOM_RESOURCE_TYPE.RESOURCE.value)
         # Assert
         self.assertTrue(custom_resource_api._is_custom_resource_type_resource(custom_resource))
 
     def test_is_all_resource_return_type_all(self):
         # Act
-        custom_resource = CustomResource(type=CUSTOM_RESOURCE_TYPE.ALL)
+        custom_resource = CustomResource(type=CUSTOM_RESOURCE_TYPE.ALL.value)
         # Assert
         self.assertFalse(custom_resource_api._is_custom_resource_type_resource(custom_resource))
 
@@ -205,7 +205,7 @@ class TestCheckCurate(TestCase):
 
     def test_check_curate_is_resource_return_except(self):
         # Act
-        custom_resource = CustomResource(type=CUSTOM_RESOURCE_TYPE.RESOURCE)
+        custom_resource = CustomResource(type=CUSTOM_RESOURCE_TYPE.RESOURCE.value)
         # Assert
         with mock.patch.object(settings, 'INSTALLED_APPS', ['core_curate_app']):
             with self.assertRaises(exceptions.ModelError):
@@ -213,7 +213,7 @@ class TestCheckCurate(TestCase):
 
     def test_check_curate_is_resource_with_role_type_return_except(self):
         # Act
-        custom_resource = CustomResource(type=CUSTOM_RESOURCE_TYPE.RESOURCE, role_type="role_type")
+        custom_resource = CustomResource(type=CUSTOM_RESOURCE_TYPE.RESOURCE.value, role_type="role_type")
         # Assert
         with mock.patch.object(settings, 'INSTALLED_APPS', ['core_curate_app']):
             with self.assertRaises(exceptions.ModelError):
@@ -221,7 +221,7 @@ class TestCheckCurate(TestCase):
 
     def test_check_curate_is_resource_with_role_choice_return_except(self):
         # Act
-        custom_resource = CustomResource(type=CUSTOM_RESOURCE_TYPE.RESOURCE, role_choice="role_choice")
+        custom_resource = CustomResource(type=CUSTOM_RESOURCE_TYPE.RESOURCE.value, role_choice="role_choice")
         # Assert
         with mock.patch.object(settings, 'INSTALLED_APPS', ['core_curate_app']):
             with self.assertRaises(exceptions.ModelError):
@@ -229,7 +229,7 @@ class TestCheckCurate(TestCase):
 
     def test_check_curate_is_resource_with_all_return_none(self):
         # Act
-        custom_resource = CustomResource(type=CUSTOM_RESOURCE_TYPE.RESOURCE, role_type="role_type", role_choice="role_choice")
+        custom_resource = CustomResource(type=CUSTOM_RESOURCE_TYPE.RESOURCE.value, role_type="role_type", role_choice="role_choice")
         # Assert
         with mock.patch.object(settings, 'INSTALLED_APPS', ['core_curate_app']):
             self.assertIsNone(custom_resource_api._check_curate(custom_resource))

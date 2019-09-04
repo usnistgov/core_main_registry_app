@@ -77,7 +77,7 @@ def _is_custom_resource_type_resource(custom_resource):
         custom_resource:
     Returns:
     """
-    return custom_resource.type == CUSTOM_RESOURCE_TYPE.RESOURCE
+    return custom_resource.type == CUSTOM_RESOURCE_TYPE.RESOURCE.value
 
 
 def _is_type_all(resource):
@@ -88,7 +88,7 @@ def _is_type_all(resource):
     Returns:
     """
     try:
-        return resource['type'] == CUSTOM_RESOURCE_TYPE.ALL
+        return resource['type'] == CUSTOM_RESOURCE_TYPE.ALL.value
     except:
         raise exceptions.ModelError("The configuration file is not valid.")
 
@@ -101,7 +101,7 @@ def _create_custom_resource_type_all(custom_resource, resource, key):
      resource:
     Returns:
     """
-    custom_resource.type = CUSTOM_RESOURCE_TYPE.ALL
+    custom_resource.type = CUSTOM_RESOURCE_TYPE.ALL.value
     custom_resource.name_in_schema = key
     custom_resource.title = _get_value(resource, "title")
     custom_resource.icon = _get_value(resource, "icon")
@@ -120,7 +120,7 @@ def _create_custom_resource(custom_resource, resource, key):
      key:
     Returns:
     """
-    custom_resource.type = CUSTOM_RESOURCE_TYPE.RESOURCE
+    custom_resource.type = CUSTOM_RESOURCE_TYPE.RESOURCE.value
     custom_resource.name_in_schema = key
     custom_resource.title = _get_value(resource, "title")
     custom_resource.description = _get_value(resource, "description")
@@ -162,7 +162,7 @@ def get_current_custom_resource_type_all():
 
         Returns: custom registry collection
     """
-    list = CustomResource.get_custom_resource_by_template_and_type(_get_current_template(), CUSTOM_RESOURCE_TYPE.ALL)
+    list = CustomResource.get_custom_resource_by_template_and_type(_get_current_template(), CUSTOM_RESOURCE_TYPE.ALL.value)
     if len(list) > 1:
         raise exceptions.ModelError("Multiple custom resources with type 'all' were found.")
     elif len(list) == 0:
