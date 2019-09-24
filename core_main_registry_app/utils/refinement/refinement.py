@@ -62,8 +62,10 @@ def _create_sub_categories(key, leaves, refinement, parent=None):
                                      parent=parent, refinement=refinement)
     elif len(leaves) > 0:
 
+        value = key.value if "unspecified" in key.title else key.value_as_category()
+
         # Create the category and become a parent.
-        parent = category_api.create_and_save(name=key.title, path=key.path, value=key.value,
+        parent = category_api.create_and_save(name=key.title, path=key.path, value=value,
                                               parent=parent, refinement=refinement)
         # For each children.
         for key, value in sorted(leaves.items()):
