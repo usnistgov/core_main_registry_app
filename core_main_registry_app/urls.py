@@ -1,7 +1,8 @@
 """ Url router for the core main registry app
 """
 from django.conf.urls import url, include
-from rest_framework_swagger.views import get_swagger_view
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 
 from core_main_app.components.data import api as data_api
 from core_main_app.utils.rendering import render
@@ -9,7 +10,13 @@ from core_main_app.views.common import ajax as common_ajax, views as common_view
 from core_main_app.views.user import views as user_views, ajax as user_ajax
 from core_main_registry_app.views.admin import ajax as admin_ajax
 from core_main_registry_app.views.user import views as registry_user_views
-schema_view = get_swagger_view(title="REST API")
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="REST API",
+      default_version='v1',
+   ),
+)
 
 # FIXME: Check needed URLs for registry and remove the others.
 
@@ -63,7 +70,7 @@ urlpatterns = [
     url(r'^add-group-form', user_ajax.load_add_group_form, name='core_main_edit_rights_groups_form'),
     url(r'^add-group-right-to-workspace', user_ajax.add_group_right_to_workspace,
         name='core_main_add_group_right_to_workspace'),
-    url(r'^docs/api$', schema_view, name='swagger_view'),
+    url(r'^docs/api$', schema_view.with_ui('swagger', cache_timeout=0), name='swagger_view'),
     url(r'^tz_detect/', include('tz_detect.urls')),
     url(r'^password_reset/$', user_views.custom_reset_password, name='password_reset'),
     url(r'^password_reset/done/$', user_views.custom_password_reset_done, name='password_reset_done'),
