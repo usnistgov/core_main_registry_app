@@ -91,7 +91,7 @@ class FancyTreeWidget(Widget):
             return data.getlist(name)
         return data.get(name, None)
 
-    def render(self, name, value, attrs=None, choices=(), renderer=None):
+    def render(self, name, value, attrs=None, choices=()):
         if value is None:
             value = []
         if not isinstance(value, (list, tuple)):

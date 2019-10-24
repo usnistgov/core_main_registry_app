@@ -1,6 +1,6 @@
 """ Menu configuration for core_main_registry_app.
 """
-from django.urls import reverse
+from django.core.urlresolvers import reverse
 from menu import Menu, MenuItem
 
 # Remove 'Upload New Template' option from menu
