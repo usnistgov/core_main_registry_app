@@ -4,7 +4,7 @@
 import logging
 import json
 from django.contrib.admin.views.decorators import staff_member_required
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http.response import HttpResponseRedirect
 from django.utils.html import escape as html_escape
 from django.views.generic import View
