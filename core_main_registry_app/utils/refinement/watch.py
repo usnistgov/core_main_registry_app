@@ -26,7 +26,8 @@ def post_save_template(sender, document, **kwargs):
     """
     try:
         # start asynchronous task
-        init_refinement_task.delay(str(document.id))
+        if kwargs['created']:
+            init_refinement_task.delay(str(document.id))
     except (TimeoutError, SoftTimeLimitExceeded) as ex:
         logger.error("Timeout while generating refinements: {0}".format(str(ex)))
     except Exception as ex:
