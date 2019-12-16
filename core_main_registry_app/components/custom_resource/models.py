@@ -78,6 +78,24 @@ class CustomResource(Document):
             raise exceptions.ModelError(str(ex))
 
     @staticmethod
+    def get_by_role_for_current_template(template, role):
+        """ Get custom resource by role for current template.
+
+        Args:
+            template:
+            role:
+
+        Returns:
+
+        """
+        try:
+            return CustomResource.objects.get(template=template, role_choice=role)
+        except mongoengine_errors.DoesNotExist as e:
+            raise exceptions.DoesNotExist(str(e))
+        except Exception as ex:
+            raise exceptions.ModelError(str(ex))
+
+    @staticmethod
     def delete_custom_resources_by_template(template):
         """ Delete all custom resources related to a template.
 

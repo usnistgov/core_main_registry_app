@@ -134,6 +134,20 @@ class TestGetAllByTemplate(MongoIntegrationBaseTestCase):
         self.assertEquals(length, len(result))
 
 
+class TestGetByRoleForCurrentTemplate(MongoIntegrationBaseTestCase):
+
+    fixture = fixtureCustomResource
+
+    @patch('core_main_registry_app.components.custom_resource.api._get_current_template')
+    def test_get_by_role_for_current_template_returns_custom_resource(self, _get_current_template):
+        # Arrange
+        _get_current_template.return_value = self.fixture.template
+        # Act
+        custom_resource = custom_resource_api.get_by_role_for_current_template(self.fixture.custom_resource.role_choice)
+        # Assert
+        self.assertTrue(isinstance(custom_resource, CustomResource))
+
+
 class TestGetByCurrentTemplateAndSlug(MongoIntegrationBaseTestCase):
 
     fixture = fixtureCustomResource

@@ -192,6 +192,18 @@ def get_by_current_template_and_slug(slug):
     return CustomResource.get_custom_resource_by_template_and_slug(_get_current_template(), slug)
 
 
+def get_by_role_for_current_template(role):
+    """ Get the custom resource by template and slug
+
+        Args:
+            role:
+
+        Returns:
+
+        """
+    return CustomResource.get_by_role_for_current_template(_get_current_template(), role)
+
+
 def delete_custom_resources_by_template(template):
     """ Delete all custom resources related to a template.
 
