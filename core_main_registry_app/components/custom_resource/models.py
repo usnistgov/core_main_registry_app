@@ -90,7 +90,10 @@ class CustomResource(Document):
         """
         try:
             list_custom_resources = CustomResource.objects(template=template, role_choice=role).all()
-            return list_custom_resources[0] if len(list_custom_resources) > 0 else []
+            if len(list_custom_resources) > 0:
+                return list_custom_resources[0]
+            else:
+                raise exceptions.ModelError("Can't find the custom resource with the given role: "+role)
         except mongoengine_errors.DoesNotExist as e:
             raise exceptions.DoesNotExist(str(e))
         except Exception as ex:
