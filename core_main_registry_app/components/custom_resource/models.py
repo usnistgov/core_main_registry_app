@@ -89,7 +89,8 @@ class CustomResource(Document):
 
         """
         try:
-            return CustomResource.objects.get(template=template, role_choice=role)
+            list_custom_resources = CustomResource.objects(template=template, role_choice=role).all()
+            return list_custom_resources[0] if len(list_custom_resources) > 0 else []
         except mongoengine_errors.DoesNotExist as e:
             raise exceptions.DoesNotExist(str(e))
         except Exception as ex:
