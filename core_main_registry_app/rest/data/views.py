@@ -1,6 +1,7 @@
 """ REST views for the registry Data API
 """
-
+from django.http import Http404
+from django.utils.decorators import method_decorator
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -9,6 +10,7 @@ from core_main_app.commons import exceptions
 from core_main_app.components.data import api as data_api
 from core_main_app.rest.data.views import DataDetail
 from core_main_app.access_control.exceptions import AccessControlError
+from core_main_app.utils.decorators import api_staff_member_required
 from core_main_registry_app.components.data import api as registry_data_api
 
 
@@ -56,8 +58,9 @@ class DataDetailRegistry(DataDetail):
     """ Retrieve or update a data
     """
 
+    @method_decorator(api_staff_member_required())
     def delete(self, request, pk):
-        """ Data cannot be deleted
+        """ Delete a Data
 
         Args:
 
@@ -66,11 +69,35 @@ class DataDetailRegistry(DataDetail):
 
         Returns:
 
+            - code: 204
+              content: Deletion succeed
             - code: 403
-              content: Data cannot be deleted
+              content: Access forbidden
+            - code: 404
+              content: Object was not found
+            - code: 500
+              content: Internal server error
         """
-        content = {'message': 'Data cannot be deleted.'}
-        return Response(content, status=status.HTTP_403_FORBIDDEN)
+        try:
+
+            if request.user.is_superuser:
+                # Get object
+                data_object = self.get_object(request, pk)
+
+                # delete object
+                data_api.delete(data_object, request.user)
+            else:
+                content = {'message': 'You must have superuser right to delete data.'}
+                return Response(content, status=status.HTTP_403_FORBIDDEN)
+
+            # Return response
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Http404:
+            content = {'message': 'Data not found.'}
+            return Response(content, status=status.HTTP_404_NOT_FOUND)
+        except Exception as api_exception:
+            content = {'message': str(api_exception)}
+            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def patch(self, request, pk):
         """ Data cannot be updated
