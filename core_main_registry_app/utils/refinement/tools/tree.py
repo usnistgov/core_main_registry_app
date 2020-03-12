@@ -4,7 +4,7 @@ Tree representation of refinement.
 
 from collections import OrderedDict
 
-from core_main_registry_app.constants import UNSPECIFIED_CATEGORY
+from core_main_registry_app.constants import UNSPECIFIED_CATEGORY, CATEGORY_SUFFIX, UNSPECIFIED_LABEL
 
 
 class TreeInfo(object):
@@ -35,11 +35,7 @@ class TreeInfo(object):
         return self.title < other.title
 
     def value_as_category(self):
-        return "{0}_{1}".format(self.value, TreeInfo.get_category_label())
-
-    @staticmethod
-    def get_category_label():
-        return "_category"
+        return "{0}{1}".format(self.value, CATEGORY_SUFFIX)
 
 
 def build_tree(tree, element_name, element_display_name, enums, dot_query):
@@ -78,7 +74,7 @@ def build_tree(tree, element_name, element_display_name, enums, dot_query):
             # check if we are in the unspecified case
             if len(levels)-1 == i and _check_case_unspecified(enums, enum, i, level):
                 # Case unspecified: create a new node for the unspecified node
-                title = "unspecified " + level if UNSPECIFIED_CATEGORY else level
+                title = "{0} {1}".format(UNSPECIFIED_LABEL, level) if UNSPECIFIED_CATEGORY else level
                 g = TreeInfo(xsd_name=level,
                              title=title,
                              path=dot_query,
