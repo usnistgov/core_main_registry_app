@@ -91,21 +91,32 @@ def get_refinement_selected_values_from_query(query):
     """
     # create a list of key (category), value_list (selected values)
     category_values_list = {}
-    # if the query have the key '$and', there is refinement selected
-    if '$and' in query:
-        for element_or in query['$and']:
-            # go through all '$or' => where refinement are
-            for element in element_or['$or']:
-                for key, value in list(element.items()):
-                    # we only want path which does not contain '#text' at the end of it
-                    if not key.endswith('#text'):
-                        for selected_value in value['$in']:
-                            # then we build our list and we don't want categories ending with '__category'
-                            if not selected_value.endswith('__category'):
-                                if key in category_values_list:
-                                    category_values_list[key].append(selected_value)
-                                else:
-                                    category_values_list.update({key: [selected_value]})
+    return_value = {}
+
+    # No "$and" means no refinement selected
+    if '$and' not in query:
+        return {}
+
+    for element_or in query['$and']:
+        if "$or" not in element_or.keys():
+            continue
+
+        # Go through all '$or' => where refinement are
+        for element in element_or['$or']:
+            for key, value in list(element.items()):
+                if key.endswith("#text"):  # Do not parse path ending with "#text"
+                    continue
+
+                for selected_value in value['$in']:
+                    # Do not parse categories ending with '__category'
+                    if selected_value.endswith('__category'):
+                        continue
+
+                    # Build category value list
+                    if key in category_values_list:
+                        category_values_list[key].append(selected_value)
+                    else:
+                        category_values_list.update({key: [selected_value]})
 
     # get global template.
     template = template_registry_api.get_current_registry_template()
@@ -118,18 +129,23 @@ def get_refinement_selected_values_from_query(query):
         # prepare the query
         q_list.append(Q(path=key) & Q(refinement_id__in=refinements_ids) & Q(value__in=values))
 
-    return_value = {}
+    if len(q_list) == 0:  # No refinement found
+        return return_value
+
     # if refinement are found, we build the structure
-    if len(q_list) > 0:
-        categories = category_api.get_all().filter((reduce(operator.or_, q_list)))
-        # now we have to build a list of {refinement name: category ids, }
-        for category in categories:
-            key = category.refinement.slug
-            display_name = category.refinement.name
-            if key in return_value:
-                return_value[key][display_name].append({"id": category.id, "value": category.value})
-            else:
-                return_value.update({key: {display_name: [{"id": category.id, "value": category.value}]}})
+    categories = category_api.get_all().filter((reduce(operator.or_, q_list)))
+    # now we have to build a list of {refinement name: category ids, }
+    for category in categories:
+        key = category.refinement.slug
+        display_name = category.refinement.name
+        if key in return_value:
+            return_value[key][display_name].append(
+                {"id": category.id, "value": category.value}
+            )
+        else:
+            return_value.update(
+                {key: {display_name: [{"id": category.id, "value": category.value}]}}
+            )
     # return the structure
     return return_value
 
