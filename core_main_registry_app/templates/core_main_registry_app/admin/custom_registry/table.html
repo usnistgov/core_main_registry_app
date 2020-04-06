@@ -19,7 +19,7 @@
             <td>{{ obj.template_name }} {% if obj.is_current %} (current) {% endif %}</td>
             <td>{{ obj.count }}</td>
             <td>
-                <a class="btn btn-default upload-btn" href="{% url 'admin:core_main_registry_app_template_custom_resource' obj.template_id %}">
+                <a class="btn btn-secondary upload-btn" href="{% url 'admin:core_main_registry_app_template_custom_resource' obj.template_id %}">
                     <i class="fa fa-upload"></i> Upload new configuration
                 </a>
             </td>
