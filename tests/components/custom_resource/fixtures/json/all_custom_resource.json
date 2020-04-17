@@ -99,7 +99,7 @@
   },
   "Software": {
     "title": "Software",
-    "icon": "fa-tachometer",
+    "icon": "fa-tachometer-alt",
     "icon_color": "#79B320",
     "display_icon": true,
     "description": "A software tool or library.",
