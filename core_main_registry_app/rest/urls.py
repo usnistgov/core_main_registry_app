@@ -70,6 +70,9 @@ urlpatterns = [
     re_path(r'^data/(?P<pk>\w+)/assign/(?P<workspace_id>\w+)$', data_views.DataAssign.as_view(),
             name='core_main_app_rest_data_assign'),
 
+    re_path(r'^data/(?P<pk>\w+)/change-owner/(?P<user_id>\w+)$', data_views.DataChangeOwner.as_view(),
+            name='core_main_app_rest_data_change_owner'),
+
     re_path(r'^xslt/$', xslTransformationList_view.XslTransformationList.as_view(),
             name='core_main_app_rest_xslt'),
 
