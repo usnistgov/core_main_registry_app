@@ -19,45 +19,53 @@ class CustomResourceFixtures(FixtureInterface):
 
     def insert_data(self):
         self.template = CustomResourceFixtures.create_and_save_template()
-        self.custom_resource = CustomResourceFixtures.create_custom_resource(template=self.template, slug="test")
+        self.custom_resource = CustomResourceFixtures.create_custom_resource(
+            template=self.template, slug="test"
+        )
         self.custom_resource_collection = [self.custom_resource]
 
     @staticmethod
     def create_and_save_template():
-        template = Template(filename="Schema",
-                            content="<schema xmlns='http://www.w3.org/2001/XMLSchema'></schema>",
-                            hash="")
+        template = Template(
+            filename="Schema",
+            content="<schema xmlns='http://www.w3.org/2001/XMLSchema'></schema>",
+            hash="",
+        )
         template.save()
         return template
 
     @staticmethod
-    def create_custom_resource(template=None,
-                               name_in_schema="",
-                               title="",
-                               description="",
-                               slug="",
-                               type=CUSTOM_RESOURCE_TYPE.RESOURCE.value,
-                               icon="",
-                               icon_color="",
-                               display_icon=False,
-                               role_choice="",
-                               role_type="",
-                               sort=0):
+    def create_custom_resource(
+        template=None,
+        name_in_schema="",
+        title="",
+        description="",
+        slug="",
+        type=CUSTOM_RESOURCE_TYPE.RESOURCE.value,
+        icon="",
+        icon_color="",
+        display_icon=False,
+        role_choice="",
+        role_type="",
+        sort=0,
+    ):
         if template is None:
             template = CustomResourceFixtures.create_and_save_template()
 
-        return CustomResource(template=template,
-                              name_in_schema=name_in_schema,
-                              title=title,
-                              description=description,
-                              slug=slug,
-                              type=type,
-                              icon=icon,
-                              icon_color=icon_color,
-                              display_icon=display_icon,
-                              role_choice=role_choice,
-                              role_type=role_type,
-                              sort=sort).save()
+        return CustomResource(
+            template=template,
+            name_in_schema=name_in_schema,
+            title=title,
+            description=description,
+            slug=slug,
+            type=type,
+            icon=icon,
+            icon_color=icon_color,
+            display_icon=display_icon,
+            role_choice=role_choice,
+            role_type=role_type,
+            sort=sort,
+        ).save()
 
     @staticmethod
     def get_dict_custom_resource_minus_sort():

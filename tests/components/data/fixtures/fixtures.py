@@ -10,6 +10,7 @@ from core_main_app.utils.integration_tests.fixture_interface import FixtureInter
 class DataRegistryFixtures(FixtureInterface):
     """ Data fixtures
     """
+
     data_1 = None
     data_2 = None
     template = None
@@ -63,7 +64,7 @@ class DataRegistryFixtures(FixtureInterface):
 
 
 def _create_data(template, xml):
-    data = Data(template=template, user_id='1', dict_content=None, title='title')
+    data = Data(template=template, user_id="1", dict_content=None, title="title")
     data.xml_content = xml
     data.convert_to_dict()
     return data.save()

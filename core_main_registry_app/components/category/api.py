@@ -19,8 +19,9 @@ def create_and_save(name, path, value, parent, refinement):
     """
 
     # Save category
-    return Category.create_and_save(name=name, path=path, value=value, parent=parent,
-                                    refinement=refinement)
+    return Category.create_and_save(
+        name=name, path=path, value=value, parent=parent, refinement=refinement
+    )
 
 
 def get_all_filtered_by_refinement_id(refinement_id):
@@ -59,10 +60,11 @@ def get_all_categories_ids_by_parent_slug_and_refinement_id(parent_slug, refinem
 
     """
     # Get categories
-    categories = Category.get_all_categories_by_parent_slug_and_refinement_id(parent_slug,
-                                                                              refinement_id)
+    categories = Category.get_all_categories_by_parent_slug_and_refinement_id(
+        parent_slug, refinement_id
+    )
     # Return a list of category ids
-    return list(categories.values_list('id', flat=True))
+    return list(categories.values_list("id", flat=True))
 
 
 def get_all():
@@ -84,4 +86,8 @@ def get_all_categories_ids_from_name_and_refinement_id(name, refinement_id):
     Returns:
 
     """
-    return list(Category.get_all_categories_ids_from_name_and_refinement_id(name, refinement_id).values_list('id', flat=True))
+    return list(
+        Category.get_all_categories_ids_from_name_and_refinement_id(
+            name, refinement_id
+        ).values_list("id", flat=True)
+    )

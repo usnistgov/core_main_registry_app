@@ -18,18 +18,22 @@ def init_refinements(template):
 
     try:
         # Check if refinements already exist.
-        if not refinement_api.check_refinements_already_exist_by_template_hash(template.hash):
+        if not refinement_api.check_refinements_already_exist_by_template_hash(
+            template.hash
+        ):
             refinements_trees = xsd_refinements.loads_refinements_trees(template)
             # Create refinements.
             for root, tree in list(refinements_trees.items()):
-                refinement = refinement_api.create_and_save(name=root.title,
-                                                            xsd_name=root.xsd_name,
-                                                            template_hash=template.hash)
+                refinement = refinement_api.create_and_save(
+                    name=root.title, xsd_name=root.xsd_name, template_hash=template.hash
+                )
                 # Create categories.
                 create_categories(tree, refinement)
     except Exception as e:
-        raise Exception("Impossible to init the refinements. An error occurred while retrieving "
-                        "the template: {0}".format(str(e)))
+        raise Exception(
+            "Impossible to init the refinements. An error occurred while retrieving "
+            "the template: {0}".format(str(e))
+        )
 
 
 def create_categories(tree, refinement):
@@ -59,15 +63,25 @@ def _create_sub_categories(key, leaves, refinement, parent=None):
 
     # No children. Only create the category.
     if len(leaves) == 0:
-        category_api.create_and_save(name=key.title, path=key.path, value=key.value,
-                                     parent=parent, refinement=refinement)
+        category_api.create_and_save(
+            name=key.title,
+            path=key.path,
+            value=key.value,
+            parent=parent,
+            refinement=refinement,
+        )
     elif len(leaves) > 0:
 
         value = key.value if UNSPECIFIED_LABEL in key.title else key.value_as_category()
 
         # Create the category and become a parent.
-        parent = category_api.create_and_save(name=key.title, path=key.path, value=value,
-                                              parent=parent, refinement=refinement)
+        parent = category_api.create_and_save(
+            name=key.title,
+            path=key.path,
+            value=value,
+            parent=parent,
+            refinement=refinement,
+        )
         # For each children.
         for key, value in sorted(leaves.items()):
             # Create sub categories.

@@ -17,8 +17,8 @@ def set_current_template_version_from_version_manager(request):
 
     """
     try:
-        version_manager_api.set_current(template_api.get(request.GET['id']))
+        version_manager_api.set_current(template_api.get(request.GET["id"]))
     except Exception as e:
-        return HttpResponseBadRequest(str(e), content_type='application/javascript')
+        return HttpResponseBadRequest(str(e), content_type="application/javascript")
 
-    return HttpResponse(content_type='application/javascript')
+    return HttpResponse(content_type="application/javascript")

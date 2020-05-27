@@ -13,73 +13,71 @@ from core_main_app.utils.tests_tools.RequestMock import RequestMock
 class TestDataDetailDeletePermissions(SimpleTestCase):
     def test_anonymous_returns_http_403(self):
         response = RequestMock.do_request_delete(
-            data_rest_views.DataDetailRegistry.as_view(),
-            None,
-            param={"pk": 0}
+            data_rest_views.DataDetailRegistry.as_view(), None, param={"pk": 0}
         )
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     @patch.object(data_api, "delete")
     @patch.object(data_api, "get_by_id")
-    def test_authenticated_returns_http_403(self, mock_data_api_get_by_id, mock_data_api_delete):
+    def test_authenticated_returns_http_403(
+        self, mock_data_api_get_by_id, mock_data_api_delete
+    ):
         mock_data_api_get_by_id.return_value = None
         mock_data_api_delete.return_value = None
 
-        mock_user = create_mock_user('1')
+        mock_user = create_mock_user("1")
 
         response = RequestMock.do_request_delete(
-            data_rest_views.DataDetailRegistry.as_view(),
-            mock_user,
-            param={"pk": 0}
+            data_rest_views.DataDetailRegistry.as_view(), mock_user, param={"pk": 0}
         )
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     @patch.object(data_api, "delete")
     @patch.object(data_api, "get_by_id")
-    def test_staff_returns_http_403(self, mock_data_api_get_by_id, mock_data_api_delete):
+    def test_staff_returns_http_403(
+        self, mock_data_api_get_by_id, mock_data_api_delete
+    ):
         mock_data_api_get_by_id.return_value = None
         mock_data_api_delete.return_value = None
 
-        mock_user = create_mock_user('1', is_staff=True)
+        mock_user = create_mock_user("1", is_staff=True)
 
         response = RequestMock.do_request_delete(
-            data_rest_views.DataDetailRegistry.as_view(),
-            mock_user,
-            param={"pk": 0}
+            data_rest_views.DataDetailRegistry.as_view(), mock_user, param={"pk": 0}
         )
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     @patch.object(data_api, "delete")
     @patch.object(data_api, "get_by_id")
-    def test_superuser_returns_http_403(self, mock_data_api_get_by_id, mock_data_api_delete):
+    def test_superuser_returns_http_403(
+        self, mock_data_api_get_by_id, mock_data_api_delete
+    ):
         mock_data_api_get_by_id.return_value = None
         mock_data_api_delete.return_value = None
 
-        mock_user = create_mock_user('1', is_superuser=True)
+        mock_user = create_mock_user("1", is_superuser=True)
 
         response = RequestMock.do_request_delete(
-            data_rest_views.DataDetailRegistry.as_view(),
-            mock_user,
-            param={"pk": 0}
+            data_rest_views.DataDetailRegistry.as_view(), mock_user, param={"pk": 0}
         )
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     @patch.object(data_api, "delete")
     @patch.object(data_api, "get_by_id")
-    def test_superuser_and_staff_returns_http_204(self, mock_data_api_get_by_id, mock_data_api_delete):
+    def test_superuser_and_staff_returns_http_204(
+        self, mock_data_api_get_by_id, mock_data_api_delete
+    ):
         mock_data_api_get_by_id.return_value = None
         mock_data_api_delete.return_value = None
 
-        mock_user = create_mock_user('1', is_staff=True, is_superuser=True)
+        mock_user = create_mock_user("1", is_staff=True, is_superuser=True)
 
         response = RequestMock.do_request_delete(
-            data_rest_views.DataDetailRegistry.as_view(),
-            mock_user,
-            param={"pk": 0}
+            data_rest_views.DataDetailRegistry.as_view(), mock_user, param={"pk": 0}
         )
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)

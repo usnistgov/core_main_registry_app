@@ -12,4 +12,4 @@ def is_local_id_already_used(local_id):
     Returns:
 
     """
-    return Data.objects(__raw__={'dict_content.Resource.@localid': str(local_id)})
+    return Data.objects(__raw__={"dict_content.Resource.@localid": str(local_id)})

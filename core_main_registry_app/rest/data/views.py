@@ -14,7 +14,7 @@ from core_main_app.utils.decorators import api_staff_member_required
 from core_main_registry_app.components.data import api as registry_data_api
 
 
-@api_view(['PATCH'])
+@api_view(["PATCH"])
 def publish_data(request, pk):
     """ Publish a data
 
@@ -44,13 +44,13 @@ def publish_data(request, pk):
         # Return response
         return Response(status=status.HTTP_200_OK)
     except exceptions.DoesNotExist:
-        content = {'message': 'Data not found.'}
+        content = {"message": "Data not found."}
         return Response(content, status=status.HTTP_404_NOT_FOUND)
     except AccessControlError as ace:
-        content = {'message': str(ace)}
+        content = {"message": str(ace)}
         return Response(content, status=status.HTTP_403_FORBIDDEN)
     except Exception as api_exception:
-        content = {'message': str(api_exception)}
+        content = {"message": str(api_exception)}
         return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
@@ -87,16 +87,16 @@ class DataDetailRegistry(DataDetail):
                 # delete object
                 data_api.delete(data_object, request.user)
             else:
-                content = {'message': 'You must have superuser right to delete data.'}
+                content = {"message": "You must have superuser right to delete data."}
                 return Response(content, status=status.HTTP_403_FORBIDDEN)
 
             # Return response
             return Response(status=status.HTTP_204_NO_CONTENT)
         except Http404:
-            content = {'message': 'Data not found.'}
+            content = {"message": "Data not found."}
             return Response(content, status=status.HTTP_404_NOT_FOUND)
         except Exception as api_exception:
-            content = {'message': str(api_exception)}
+            content = {"message": str(api_exception)}
             return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def patch(self, request, pk):
@@ -112,5 +112,5 @@ class DataDetailRegistry(DataDetail):
             - code: 403
               content: Data cannot be updated
         """
-        content = {'message': 'Data cannot be updated.'}
+        content = {"message": "Data cannot be updated."}
         return Response(content, status=status.HTTP_403_FORBIDDEN)

@@ -17,7 +17,9 @@ def create_and_save(name, xsd_name, template_hash):
     """
 
     # Save refinement
-    return Refinement.create_and_save(name=name, xsd_name=xsd_name, template_hash=template_hash)
+    return Refinement.create_and_save(
+        name=name, xsd_name=xsd_name, template_hash=template_hash
+    )
 
 
 def get_all():
@@ -64,4 +66,6 @@ def get_by_template_hash_and_by_slug(template_hash, slug):
     Returns: Refinement collection
 
     """
-    return Refinement.get_by_template_hash_and_by_slug(template_hash=template_hash, slug=slug)
+    return Refinement.get_by_template_hash_and_by_slug(
+        template_hash=template_hash, slug=slug
+    )

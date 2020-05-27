@@ -47,20 +47,22 @@ def get_doc(node, values, count_mode):
         doc = {"title": name, "key": node.pk}
 
     if str(node.pk) in values:
-        doc['selected'] = True
-        doc['expand'] = True
+        doc["selected"] = True
+        doc["expand"] = True
     return doc
 
 
 def recursive_node_to_dict(node, values, count_mode):
     result = get_doc(node, values, count_mode)
-    children = [recursive_node_to_dict(c, values, count_mode) for c in node.get_children()]
+    children = [
+        recursive_node_to_dict(c, values, count_mode) for c in node.get_children()
+    ]
     if children:
-        expand = [c for c in children if c.get('selected', False)]
+        expand = [c for c in children if c.get("selected", False)]
         if expand:
             result["expand"] = True
         result["folder"] = True
-        result['children'] = children
+        result["children"] = children
     return result
 
 
@@ -70,7 +72,9 @@ def get_tree(nodes, values, count_mode):
 
 
 class FancyTreeWidget(Widget):
-    def __init__(self, attrs=None, choices=(), queryset=None, select_mode=3, count_mode=False):
+    def __init__(
+        self, attrs=None, choices=(), queryset=None, select_mode=3, count_mode=False
+    ):
         """
 
         Args:
@@ -96,38 +100,51 @@ class FancyTreeWidget(Widget):
             value = []
         if not isinstance(value, (list, tuple)):
             value = [value]
-        has_id = attrs and 'id' in attrs
+        has_id = attrs and "id" in attrs
         final_attrs = self.build_attrs(attrs)
         if has_id:
-            output = [u'<div id="%s" name="%s"></div>' % (attrs['id'], self.choices.field.label)]
-            id_attr = u' id="%s_checkboxes"' % (attrs['id'])
+            output = [
+                '<div id="%s" name="%s"></div>'
+                % (attrs["id"], self.choices.field.label)
+            ]
+            id_attr = ' id="%s_checkboxes"' % (attrs["id"])
         else:
-            output = [u'<div name="%s"></div>' % self.choices.field.label]
-            id_attr = u''
-        output.append(u'<ul style="display: none;" class="fancytree_checkboxes"%s>' % id_attr)
+            output = ['<div name="%s"></div>' % self.choices.field.label]
+            id_attr = ""
+        output.append(
+            '<ul style="display: none;" class="fancytree_checkboxes"%s>' % id_attr
+        )
         str_values = set([force_text(v) for v in value])
         for i, (option_value, option_label) in enumerate(chain(self.choices, choices)):
             if has_id:
-                final_attrs = dict(final_attrs, id='%s_%s' % (attrs['id'], option_value))
-                label_for = u' for="%s"' % final_attrs['id']
+                final_attrs = dict(
+                    final_attrs, id="%s_%s" % (attrs["id"], option_value)
+                )
+                label_for = ' for="%s"' % final_attrs["id"]
             else:
-                label_for = ''
+                label_for = ""
 
-            cb = forms.CheckboxInput(final_attrs, check_test=lambda value: value in str_values)
+            cb = forms.CheckboxInput(
+                final_attrs, check_test=lambda value: value in str_values
+            )
             option_value = force_text(option_value)
             rendered_cb = cb.render(name, option_value)
             option_label = conditional_escape(force_text(option_label))
             output.append(
-                u'<li><label%s>%s %s</label></li>' % (label_for, rendered_cb, option_label)
+                "<li><label%s>%s %s</label></li>"
+                % (label_for, rendered_cb, option_label)
             )
-        output.append(u'</ul>')
-        output.append(u'<script type="text/javascript">')
-        js_data_var = 'fancytree_data_%s' % (attrs['id'].replace('-', '_'))
+        output.append("</ul>")
+        output.append('<script type="text/javascript">')
+        js_data_var = "fancytree_data_%s" % (attrs["id"].replace("-", "_"))
         if has_id:
-            output.append(u'var %s = %s;' % (
-                js_data_var,
-                json.dumps(get_tree(self.queryset, str_values, self.count_mode))
-            ))
+            output.append(
+                "var %s = %s;"
+                % (
+                    js_data_var,
+                    json.dumps(get_tree(self.queryset, str_values, self.count_mode)),
+                )
+            )
             output.append(
                 """
                 var defer_initFancyTree = function() {
@@ -220,29 +237,39 @@ class FancyTreeWidget(Widget):
                 };
                 onjQueryReady(defer_initFancyTree);
 
-                """ % {
-                    'id': attrs['id'],
-                    'js_var': js_data_var,
-                    'debug': settings.DEBUG and 1 or 0,
-                    'select_mode': self.select_mode,
-                    'fancytree': static("core_main_registry_app/libs/fancytree/jquery.fancytree.js"),
-                    'fancytree_glyph': static("core_main_registry_app/libs/fancytree/jquery.fancytree.glyph.js"),
-                    'fancytree_wide': static("core_main_registry_app/libs/fancytree/jquery.fancytree.wide.js"),
-                    'fancytree_customtag': static("core_main_registry_app/libs/fancytree/jquery.fancytree.customtag.js"),
-                    'fancytree_dnd': static("core_main_registry_app/libs/fancytree/jquery.fancytree.dnd.js"),
+                """
+                % {
+                    "id": attrs["id"],
+                    "js_var": js_data_var,
+                    "debug": settings.DEBUG and 1 or 0,
+                    "select_mode": self.select_mode,
+                    "fancytree": static(
+                        "core_main_registry_app/libs/fancytree/jquery.fancytree.js"
+                    ),
+                    "fancytree_glyph": static(
+                        "core_main_registry_app/libs/fancytree/jquery.fancytree.glyph.js"
+                    ),
+                    "fancytree_wide": static(
+                        "core_main_registry_app/libs/fancytree/jquery.fancytree.wide.js"
+                    ),
+                    "fancytree_customtag": static(
+                        "core_main_registry_app/libs/fancytree/jquery.fancytree.customtag.js"
+                    ),
+                    "fancytree_dnd": static(
+                        "core_main_registry_app/libs/fancytree/jquery.fancytree.dnd.js"
+                    ),
                 }
-            );
-        output.append(u'</script>')
-        return mark_safe(u'\n'.join(output))
+            )
+        output.append("</script>")
+        return mark_safe("\n".join(output))
 
     class Media(object):
 
-        js = (
-            'core_explore_common_app/common/js/tools.js',
-        )
+        js = ("core_explore_common_app/common/js/tools.js",)
 
         css = {
-            'all': ('core_main_registry_app/libs/fancytree/skin-bootstrap/ui.fancytree.css',
-                    'core_main_registry_app/user/css/fancytree/fancytree.custom.css',
-                    )
+            "all": (
+                "core_main_registry_app/libs/fancytree/skin-bootstrap/ui.fancytree.css",
+                "core_main_registry_app/user/css/fancytree/fancytree.custom.css",
+            )
         }

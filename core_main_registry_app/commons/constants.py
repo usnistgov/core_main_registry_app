@@ -3,6 +3,6 @@
 
 
 class DataStatus(object):
-    ACTIVE = 'active'
-    INACTIVE = 'inactive'
-    DELETED = 'deleted'
+    ACTIVE = "active"
+    INACTIVE = "inactive"
+    DELETED = "deleted"

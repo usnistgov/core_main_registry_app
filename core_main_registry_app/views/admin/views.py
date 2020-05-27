@@ -10,7 +10,9 @@ from django.utils.html import escape as html_escape
 from django.views.generic import View
 
 from core_main_app.components.template import api as template_api
-from core_main_app.components.template_version_manager import api as template_version_manager_api
+from core_main_app.components.template_version_manager import (
+    api as template_version_manager_api,
+)
 from core_main_app.utils.rendering import admin_render
 from core_main_registry_app.components.custom_resource import api as custom_resource_api
 from core_main_registry_app.views.admin.forms import UploadCustomResourcesForm
@@ -32,19 +34,21 @@ def manage_templates(request):
     templates = template_version_manager_api.get_global_version_managers()
 
     context = {
-        'object_name': 'Template',
-        'available': [template for template in templates if not template.is_disabled],
-        'disabled': [template for template in templates if template.is_disabled]
+        "object_name": "Template",
+        "available": [template for template in templates if not template.is_disabled],
+        "disabled": [template for template in templates if template.is_disabled],
     }
 
     assets = {}
     modals = []
 
-    return admin_render(request,
-                        'core_main_app/admin/templates/list.html',
-                        assets=assets,
-                        context=context,
-                        modals=modals)
+    return admin_render(
+        request,
+        "core_main_app/admin/templates/list.html",
+        assets=assets,
+        context=context,
+        modals=modals,
+    )
 
 
 class UploadCustomResource(View):
@@ -52,22 +56,22 @@ class UploadCustomResource(View):
     """
 
     form_class = UploadCustomResourcesForm
-    template_name = 'core_main_registry_app/admin/custom_registry/upload.html'
-    object_name = 'Custom Resources'
+    template_name = "core_main_registry_app/admin/custom_registry/upload.html"
+    object_name = "Custom Resources"
 
     def __init__(self, **kwargs):
         super(UploadCustomResource, self).__init__(**kwargs)
         self.context = {}
-        self.context.update({'object_name': self.object_name})
+        self.context.update({"object_name": self.object_name})
 
     def get(self, request, *args, **kwargs):
-        self.context.update({'upload_form': self.form_class()})
+        self.context.update({"upload_form": self.form_class()})
         return admin_render(request, self.template_name, context=self.context)
 
     def post(self, request, *args, **kwargs):
-        template_id = kwargs.pop('template_id')
+        template_id = kwargs.pop("template_id")
         form = self.form_class(request.POST, request.FILES)
-        self.context.update({'upload_form': form})
+        self.context.update({"upload_form": form})
 
         if form.is_valid():
             return self._save_custom_resources(request, template_id)
@@ -88,14 +92,16 @@ class UploadCustomResource(View):
             template = template_api.get(template_id)
 
             # get the file from the form
-            upload_file = request.FILES['json_file'].read().decode('utf-8')
+            upload_file = request.FILES["json_file"].read().decode("utf-8")
 
             data = json.loads(upload_file)
             custom_resource_api.replace_custom_resources_by_template(template, data)
 
-            return HttpResponseRedirect(reverse("admin:core_main_registry_app_custom_registry"))
+            return HttpResponseRedirect(
+                reverse("admin:core_main_registry_app_custom_registry")
+            )
         except Exception as e:
-            self.context.update({'errors': html_escape(str(e))})
+            self.context.update({"errors": html_escape(str(e))})
             return admin_render(request, self.template_name, context=self.context)
 
 
@@ -105,7 +111,9 @@ class CustomRegistry(View):
 
     def get(self, request, *args, **kwargs):
         data_context_list = []
-        global_template_version_manager = template_version_manager_api.get_global_version_managers()
+        global_template_version_manager = (
+            template_version_manager_api.get_global_version_managers()
+        )
         if len(global_template_version_manager) == 1:
             template_version_manager = list(global_template_version_manager)[0]
             # get the current version
@@ -117,10 +125,14 @@ class CustomRegistry(View):
                 # get all the template's custom resources
                 custom_resources = custom_resource_api.get_all_by_template(template)
                 # append to list for the context
-                data_context_list.append({'template_name': template.display_name,
-                                          'count': custom_resources.count(),
-                                          'template_id': str(template.id),
-                                          'is_current': current_template_version == str(template.id)})
+                data_context_list.append(
+                    {
+                        "template_name": template.display_name,
+                        "count": custom_resources.count(),
+                        "template_id": str(template.id),
+                        "is_current": current_template_version == str(template.id),
+                    }
+                )
         else:
             logger.error("We should only have one template.")
 
@@ -130,10 +142,12 @@ class CustomRegistry(View):
             "js": [],
         }
 
-        context = {
-            "objects": data_context_list,
-            "object_name": "Custom Resources"
-        }
+        context = {"objects": data_context_list, "object_name": "Custom Resources"}
 
-        return admin_render(request, "core_main_registry_app/admin/custom_registry/list.html", modals=modals,
-                            assets=assets, context=context)
+        return admin_render(
+            request,
+            "core_main_registry_app/admin/custom_registry/list.html",
+            modals=modals,
+            assets=assets,
+            context=context,
+        )

@@ -10,7 +10,8 @@ from core_main_registry_app import discover
 class InitApp(AppConfig):
     """ Core main registry app application settings
     """
-    name = 'core_main_registry_app'
+
+    name = "core_main_registry_app"
 
     def ready(self):
         """ Run when the app is ready.
@@ -18,6 +19,6 @@ class InitApp(AppConfig):
         Returns:
 
         """
-        if 'migrate' not in sys.argv:
+        if "migrate" not in sys.argv:
             # Init registry
             discover.init_registry()

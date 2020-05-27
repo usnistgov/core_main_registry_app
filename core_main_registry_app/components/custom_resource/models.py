@@ -17,16 +17,19 @@ class CustomResource(Document):
 
     template = fields.ReferenceField(Template, blank=False)
     name_in_schema = fields.StringField(blank=True)
-    title = fields.StringField(unique_with='template')
+    title = fields.StringField(unique_with="template")
     slug = fields.StringField()
     description = fields.StringField(blank=True)
-    type = fields.StringField(blank=False, choices=(CUSTOM_RESOURCE_TYPE.RESOURCE.value, CUSTOM_RESOURCE_TYPE.ALL.value))
+    type = fields.StringField(
+        blank=False,
+        choices=(CUSTOM_RESOURCE_TYPE.RESOURCE.value, CUSTOM_RESOURCE_TYPE.ALL.value),
+    )
     icon = fields.StringField(blank=False)
     icon_color = fields.StringField(blank=True)
     display_icon = fields.BooleanField(blank=True)
     role_choice = fields.StringField(blank=True)
     role_type = fields.StringField(blank=True)
-    sort = fields.IntField(unique_with='template', min_value=0)
+    sort = fields.IntField(unique_with="template", min_value=0)
     refinements = fields.ListField(fields.StringField(), blank=True)
 
     def save(self, *args, **kwargs):
@@ -89,11 +92,15 @@ class CustomResource(Document):
 
         """
         try:
-            list_custom_resources = CustomResource.objects(template=template, role_choice=role).all()
+            list_custom_resources = CustomResource.objects(
+                template=template, role_choice=role
+            ).all()
             if len(list_custom_resources) > 0:
                 return list_custom_resources[0]
             else:
-                raise exceptions.ModelError("Can't find the custom resource with the given role: "+role)
+                raise exceptions.ModelError(
+                    "Can't find the custom resource with the given role: " + role
+                )
         except mongoengine_errors.DoesNotExist as e:
             raise exceptions.DoesNotExist(str(e))
         except Exception as ex:
@@ -108,4 +115,3 @@ class CustomResource(Document):
         Returns:
         """
         CustomResource.objects(template=template).delete()
-

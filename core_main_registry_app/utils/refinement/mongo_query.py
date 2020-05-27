@@ -49,29 +49,34 @@ def build_refinements_query(refinements):
                     else:
                         queries[dot_notation] = [value]
                 except (exceptions.DoesNotExist, Exception) as e:
-                    logger.warning("Impossible to find the category ({0}): {1}."
-                                   .format(str(len(category_id)), str(e)))
+                    logger.warning(
+                        "Impossible to find the category ({0}): {1}.".format(
+                            str(len(category_id)), str(e)
+                        )
+                    )
 
             for query in queries:
                 # Create the query with $in
                 key = query
-                values = ({'$in': queries[query]})
+                values = {"$in": queries[query]}
                 in_queries[key] = values
                 # Case of the element has attributes
                 in_queries[key + ".#text"] = values
 
             if len(in_queries) > 0:
                 # $or between categories belonging to the same refinement
-                or_queries.append({'$or': [{x: in_queries[x]} for x in in_queries]})
+                or_queries.append({"$or": [{x: in_queries[x]} for x in in_queries]})
 
         if len(or_queries) > 0:
             # $and between refinements
-            and_query = {'$and': or_queries}
+            and_query = {"$and": or_queries}
 
         return and_query
     except Exception as e:
-        logger.error("Something went wrong during the creation of the refinement query. Search "
-                     "won't be refined: {0}.".format(str(e)))
+        logger.error(
+            "Something went wrong during the creation of the refinement query. Search "
+            "won't be refined: {0}.".format(str(e))
+        )
         return {}
 
 
@@ -94,22 +99,22 @@ def get_refinement_selected_values_from_query(query):
     return_value = {}
 
     # No "$and" means no refinement selected
-    if '$and' not in query:
+    if "$and" not in query:
         return {}
 
-    for element_or in query['$and']:
+    for element_or in query["$and"]:
         if "$or" not in element_or.keys():
             continue
 
         # Go through all '$or' => where refinement are
-        for element in element_or['$or']:
+        for element in element_or["$or"]:
             for key, value in list(element.items()):
                 if key.endswith("#text"):  # Do not parse path ending with "#text"
                     continue
 
-                for selected_value in value['$in']:
+                for selected_value in value["$in"]:
                     # Do not parse categories ending with '__category'
-                    if selected_value.endswith('__category'):
+                    if selected_value.endswith("__category"):
                         continue
 
                     # Build category value list
@@ -127,7 +132,9 @@ def get_refinement_selected_values_from_query(query):
     q_list = []
     for key, values in list(category_values_list.items()):
         # prepare the query
-        q_list.append(Q(path=key) & Q(refinement_id__in=refinements_ids) & Q(value__in=values))
+        q_list.append(
+            Q(path=key) & Q(refinement_id__in=refinements_ids) & Q(value__in=values)
+        )
 
     if len(q_list) == 0:  # No refinement found
         return return_value
@@ -157,4 +164,4 @@ def add_not_deleted_status_criteria():
             Criteria
 
     """
-    return {PATH_STATUS: {'$ne': DataStatus.DELETED}}
+    return {PATH_STATUS: {"$ne": DataStatus.DELETED}}

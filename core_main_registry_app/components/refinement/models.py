@@ -9,8 +9,8 @@ from core_main_app.commons import exceptions as exceptions
 
 class Refinement(models.Model):
     name = models.CharField(max_length=50)
-    xsd_name = models.CharField(max_length=50, default='')
-    slug = AutoSlugField(max_length=50, overwrite=True, populate_from='name')
+    xsd_name = models.CharField(max_length=50, default="")
+    slug = AutoSlugField(max_length=50, overwrite=True, populate_from="name")
     # Cannot use a ReferenceField to template: not same database. Use the template hash instead.
     template_hash = models.CharField(max_length=255)
 
@@ -50,7 +50,9 @@ class Refinement(models.Model):
         Returns:
 
         """
-        return Refinement.objects.create(name=name, xsd_name=xsd_name, template_hash=template_hash)
+        return Refinement.objects.create(
+            name=name, xsd_name=xsd_name, template_hash=template_hash
+        )
 
     @staticmethod
     def check_refinements_already_exist_by_template_hash(template_hash):
@@ -77,7 +79,9 @@ class Refinement(models.Model):
 
         """
         try:
-            return Refinement.objects.get(template_hash=template_hash, slug__startswith=slug)
+            return Refinement.objects.get(
+                template_hash=template_hash, slug__startswith=slug
+            )
         except Refinement.DoesNotExist as e:
             raise exceptions.DoesNotExist(str(e))
         except Exception as ex:

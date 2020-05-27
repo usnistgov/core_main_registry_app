@@ -29,7 +29,9 @@ def parse_and_save(data, current_template):
         custom_resource = CustomResource(template=current_template)
 
         if _is_type_all(resource):
-            custom_resource = _create_custom_resource_type_all(custom_resource, resource, key)
+            custom_resource = _create_custom_resource_type_all(
+                custom_resource, resource, key
+            )
             # TODO: make sure only one type = 'all' ?
         else:
             custom_resource = _create_custom_resource(custom_resource, resource, key)
@@ -48,11 +50,15 @@ def _check_curate(custom_resource):
         custom_resource:
     Returns:
     """
-    if _is_custom_resource_type_resource(custom_resource) and 'core_curate_app' in settings.INSTALLED_APPS and \
-            (custom_resource.role_choice is None
-             or custom_resource.role_type is None):
-        raise exceptions.ModelError("Curate app is installed. "
-                                    "You need url key, role choice and role type configured in configuration file.")
+    if (
+        _is_custom_resource_type_resource(custom_resource)
+        and "core_curate_app" in settings.INSTALLED_APPS
+        and (custom_resource.role_choice is None or custom_resource.role_type is None)
+    ):
+        raise exceptions.ModelError(
+            "Curate app is installed. "
+            "You need url key, role choice and role type configured in configuration file."
+        )
 
 
 def _get_value(dict, key):
@@ -88,7 +94,7 @@ def _is_type_all(resource):
     Returns:
     """
     try:
-        return resource['type'] == CUSTOM_RESOURCE_TYPE.ALL.value
+        return resource["type"] == CUSTOM_RESOURCE_TYPE.ALL.value
     except:
         raise exceptions.ModelError("The configuration file is not valid.")
 
@@ -162,11 +168,17 @@ def get_current_custom_resource_type_all():
 
         Returns: custom registry collection
     """
-    list = CustomResource.get_custom_resource_by_template_and_type(_get_current_template(), CUSTOM_RESOURCE_TYPE.ALL.value)
+    list = CustomResource.get_custom_resource_by_template_and_type(
+        _get_current_template(), CUSTOM_RESOURCE_TYPE.ALL.value
+    )
     if len(list) > 1:
-        raise exceptions.ModelError("Multiple custom resources with type 'all' were found.")
+        raise exceptions.ModelError(
+            "Multiple custom resources with type 'all' were found."
+        )
     elif len(list) == 0:
-        raise exceptions.DoesNotExist("The custom resource with type 'all' does not exist.")
+        raise exceptions.DoesNotExist(
+            "The custom resource with type 'all' does not exist."
+        )
     return list[0]
 
 
@@ -175,8 +187,12 @@ def _get_current_template():
 
     Returns:
     """
-    current_template_version = version_manager_api.get_active_global_version_manager_by_title(REGISTRY_XSD_FILENAME)
-    current_template = template_api.get(version_manager_api.get_current(current_template_version))
+    current_template_version = version_manager_api.get_active_global_version_manager_by_title(
+        REGISTRY_XSD_FILENAME
+    )
+    current_template = template_api.get(
+        version_manager_api.get_current(current_template_version)
+    )
     return current_template
 
 
@@ -189,7 +205,9 @@ def get_by_current_template_and_slug(slug):
     Returns:
 
     """
-    return CustomResource.get_custom_resource_by_template_and_slug(_get_current_template(), slug)
+    return CustomResource.get_custom_resource_by_template_and_slug(
+        _get_current_template(), slug
+    )
 
 
 def get_by_role_for_current_template(role):
@@ -201,7 +219,9 @@ def get_by_role_for_current_template(role):
         Returns:
 
         """
-    return CustomResource.get_by_role_for_current_template(_get_current_template(), role)
+    return CustomResource.get_by_role_for_current_template(
+        _get_current_template(), role
+    )
 
 
 def delete_custom_resources_by_template(template):
@@ -253,4 +273,3 @@ def replace_custom_resources_by_template(template, data):
         # rollback old custom resource
         save_list(old_custom_resources, True)
         raise e
-

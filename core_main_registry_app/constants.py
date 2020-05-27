@@ -8,7 +8,9 @@ UNSPECIFIED_CATEGORY = True
 # Path to status
 PATH_STATUS = "Resource.@status"
 
-CUSTOM_RESOURCE_TYPE = Enum('CUSTOM_RESOURCE_TYPE', {'RESOURCE': 'resource', 'ALL': 'all'})
+CUSTOM_RESOURCE_TYPE = Enum(
+    "CUSTOM_RESOURCE_TYPE", {"RESOURCE": "resource", "ALL": "all"}
+)
 
 CATEGORY_SUFFIX = "__category"
 UNSPECIFIED_LABEL = "unspecified"

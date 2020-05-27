@@ -10,17 +10,18 @@ from core_main_app.commons import exceptions as exceptions
 
 
 class Category(MPTTModel):
-    parent = TreeForeignKey('self', null=True, on_delete=models.CASCADE, blank=True,
-                            related_name='children')
+    parent = TreeForeignKey(
+        "self", null=True, on_delete=models.CASCADE, blank=True, related_name="children"
+    )
     name = models.CharField(max_length=50)
-    slug = AutoSlugField(max_length=50, overwrite=True, populate_from='name')
+    slug = AutoSlugField(max_length=50, overwrite=True, populate_from="name")
     path = models.CharField(max_length=255)
     value = models.CharField(max_length=255)
-    refinement = models.ForeignKey('Refinement', on_delete=models.CASCADE)
+    refinement = models.ForeignKey("Refinement", on_delete=models.CASCADE)
 
     class MPTTMeta(object):
         verbose_name_plural = "categories"
-        unique_together = (("name", "slug", "parent"), )
+        unique_together = (("name", "slug", "parent"),)
         ordering = ("tree_id", "lft")
 
     @staticmethod
@@ -49,8 +50,9 @@ class Category(MPTTModel):
         Returns:
 
         """
-        return Category.objects.create(name=name, path=path, value=value, parent=parent,
-                                       refinement=refinement)
+        return Category.objects.create(
+            name=name, path=path, value=value, parent=parent, refinement=refinement
+        )
 
     @staticmethod
     def get_by_id(category_id):
@@ -82,8 +84,9 @@ class Category(MPTTModel):
 
         """
         try:
-            return Category.objects.get(slug__startswith=parent_slug,
-                                        refinement_id=refinement_id).get_family()
+            return Category.objects.get(
+                slug__startswith=parent_slug, refinement_id=refinement_id
+            ).get_family()
         except Category.DoesNotExist as e:
             raise exceptions.DoesNotExist(str(e))
         except Exception as ex:
@@ -110,8 +113,9 @@ class Category(MPTTModel):
 
         """
         try:
-            return Category.objects.get(name=name,
-                                        refinement_id=refinement_id).get_family()
+            return Category.objects.get(
+                name=name, refinement_id=refinement_id
+            ).get_family()
         except Category.DoesNotExist as e:
             raise exceptions.DoesNotExist(str(e))
         except Exception as ex:

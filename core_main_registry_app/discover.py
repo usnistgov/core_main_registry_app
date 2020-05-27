@@ -9,13 +9,21 @@ from django.contrib.staticfiles import finders
 from core_main_app.commons import exceptions
 from core_main_app.components.template import api as template_api
 from core_main_app.components.template.models import Template
-from core_main_app.components.template_version_manager import api as template_version_manager_api
-from core_main_app.components.template_version_manager.models import TemplateVersionManager
+from core_main_app.components.template_version_manager import (
+    api as template_version_manager_api,
+)
+from core_main_app.components.template_version_manager.models import (
+    TemplateVersionManager,
+)
 from core_main_app.components.version_manager import api as version_manager_api
 from core_main_app.utils.file import read_file_content
 from core_main_registry_app.components.custom_resource import api as custom_resource_api
 from core_main_registry_app.components.template import api as template_registry_api
-from core_main_registry_app.settings import REGISTRY_XSD_FILEPATH, CUSTOM_REGISTRY_FILE_PATH, REGISTRY_XSD_FILENAME
+from core_main_registry_app.settings import (
+    REGISTRY_XSD_FILEPATH,
+    CUSTOM_REGISTRY_FILE_PATH,
+    REGISTRY_XSD_FILENAME,
+)
 from core_main_registry_app.utils.refinement import refinement
 from core_main_registry_app.utils.refinement import watch as refinement_watch
 
@@ -49,10 +57,14 @@ def _add_template():
     """
     xsd_filepath = REGISTRY_XSD_FILEPATH
     xsd_filename = REGISTRY_XSD_FILENAME
-    if xsd_filename == '':
-        raise Exception('Please configure the REGISTRY_XSD_FILENAME setting in your project.')
-    if xsd_filepath == '':
-        raise Exception('Please configure the REGISTRY_XSD_FILEPATH setting in your project.')
+    if xsd_filename == "":
+        raise Exception(
+            "Please configure the REGISTRY_XSD_FILENAME setting in your project."
+        )
+    if xsd_filepath == "":
+        raise Exception(
+            "Please configure the REGISTRY_XSD_FILEPATH setting in your project."
+        )
     try:
         version_manager_api.get_active_global_version_manager_by_title(xsd_filename)
     except exceptions.DoesNotExist:
@@ -84,8 +96,12 @@ def _init_custom_registry():
     """
 
     try:
-        current_template_version = version_manager_api.get_active_global_version_manager_by_title(REGISTRY_XSD_FILENAME)
-        current_template = template_api.get(version_manager_api.get_current(current_template_version))
+        current_template_version = version_manager_api.get_active_global_version_manager_by_title(
+            REGISTRY_XSD_FILENAME
+        )
+        current_template = template_api.get(
+            version_manager_api.get_current(current_template_version)
+        )
     except:
         raise Exception("Can't get the current template.")
 
@@ -93,8 +109,10 @@ def _init_custom_registry():
         logger.info("Custom resources related to current template already exist.")
     else:
         json_path = CUSTOM_REGISTRY_FILE_PATH
-        if json_path == '':
-            raise Exception('Please configure the CUSTOM_REGISTRY_FILE_PATH setting in your project.')
+        if json_path == "":
+            raise Exception(
+                "Please configure the CUSTOM_REGISTRY_FILE_PATH setting in your project."
+            )
 
         try:
             default_json_path = finders.find(json_path)
@@ -102,4 +120,6 @@ def _init_custom_registry():
                 data = json.load(json_file)
                 custom_resource_api.parse_and_save(data, current_template)
         except Exception as e:
-            logger.error("Impossible to use the custom registry json file: {0}".format(str(e)))
+            logger.error(
+                "Impossible to use the custom registry json file: {0}".format(str(e))
+            )
