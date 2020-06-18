@@ -18,11 +18,13 @@ from core_main_registry_app.views.admin import views as registry_admin_views
 admin_urls = [
     re_path(
         r"^login/message/$",
-        WebPageView.as_view(
-            api=login_page_api,
-            get_redirect="core_main_app/admin/web_page/login_page.html",
-            post_redirect="admin:core_main_app_login_page",
-            web_page_type=WEB_PAGE_TYPES["login"],
+        staff_member_required(
+            WebPageView.as_view(
+                api=login_page_api,
+                get_redirect="core_main_app/admin/web_page/login_page.html",
+                post_redirect="admin:core_main_app_login_page",
+                web_page_type=WEB_PAGE_TYPES["login"],
+            )
         ),
         name="core_main_app_login_page",
     ),
@@ -30,9 +32,11 @@ admin_urls = [
     re_path(r"^logout", RedirectView.as_view(url=reverse_lazy("core_main_app_logout"))),
     re_path(
         r"^data",
-        common_views.ViewData.as_view(
-            administration=True,
-            template="core_main_registry_app/admin/data/view_data.html",
+        staff_member_required(
+            common_views.ViewData.as_view(
+                administration=True,
+                template="core_main_registry_app/admin/data/view_data.html",
+            )
         ),
         name="core_main_app_data_detail",
     ),
@@ -53,11 +57,13 @@ admin_urls = [
     ),
     re_path(
         r"^template/xslt/(?P<template_id>\w+)",
-        common_views.TemplateXSLRenderingView.as_view(
-            rendering=admin_render,
-            template_name="core_main_app/admin/templates_xslt/main.html",
-            save_redirect="admin:core_main_app_manage_template_versions",
-            back_to_url="admin:core_main_app_manage_template_versions",
+        staff_member_required(
+            common_views.TemplateXSLRenderingView.as_view(
+                rendering=admin_render,
+                template_name="core_main_app/admin/templates_xslt/main.html",
+                save_redirect="admin:core_main_app_manage_template_versions",
+                back_to_url="admin:core_main_app_manage_template_versions",
+            )
         ),
         name="core_main_app_template_xslt",
     ),
@@ -72,10 +78,14 @@ admin_urls = [
         staff_member_required(admin_ajax.EditXSLTView.as_view()),
         name="core_main_app_edit_xslt",
     ),
-    re_path(r"^xslt$", admin_views.XSLTView.as_view(), name="core_main_app_xslt"),
+    re_path(
+        r"^xslt$",
+        staff_member_required(admin_views.XSLTView.as_view()),
+        name="core_main_app_xslt",
+    ),
     re_path(
         r"^xslt/upload$",
-        admin_views.UploadXSLTView.as_view(),
+        staff_member_required(admin_views.UploadXSLTView.as_view()),
         name="core_main_app_upload_xslt",
     ),
     re_path(
@@ -85,9 +95,11 @@ admin_urls = [
     ),
     re_path(
         r"^edit-rights/(?P<workspace_id>\w+)$",
-        common_views.EditWorkspaceRights.as_view(
-            administration=True,
-            template="core_main_app/admin/workspaces/edit_rights.html",
+        staff_member_required(
+            common_views.EditWorkspaceRights.as_view(
+                administration=True,
+                template="core_main_app/admin/workspaces/edit_rights.html",
+            )
         ),
         name="core_main_edit_rights_workspace",
     ),
