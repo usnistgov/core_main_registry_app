@@ -214,6 +214,11 @@ urlpatterns = [
         workspace_views.remove_group_write_right_to_workspace,
         name="core_main_app_rest_workspace_remove_group_write",
     ),
+    re_path(
+        r"^admin/data/$",
+        data_views.AdminDataList.as_view(),
+        name="core_main_app_rest_admin_data_list",
+    ),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
