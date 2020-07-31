@@ -109,7 +109,8 @@ def get_refinement_selected_values_from_query(query):
         # Go through all '$or' => where refinement are
         for element in element_or["$or"]:
             for key, value in list(element.items()):
-                if key.endswith("#text"):  # Do not parse path ending with "#text"
+                # Do not parse path ending with "#text" and parse only "$in"
+                if key.endswith("#text") or "$in" not in value:
                     continue
 
                 for selected_value in value["$in"]:
@@ -147,7 +148,7 @@ def get_refinement_selected_values_from_query(query):
         display_name = category.refinement.name
         if key in return_value:
             return_value[key][display_name].append(
-                {"id": category.id, "value": category.value}
+                {"id": category.id, "value": category.value.split(":")[0]}
             )
         else:
             return_value.update(
