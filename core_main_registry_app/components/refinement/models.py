@@ -19,7 +19,7 @@ class Refinement(models.Model):
 
     @staticmethod
     def get_all():
-        """ Get all refinements.
+        """Get all refinements.
 
         Returns: Refinement collection
 
@@ -28,7 +28,7 @@ class Refinement(models.Model):
 
     @staticmethod
     def get_all_filtered_by_template_hash(template_hash):
-        """ Get all refinements by template hash.
+        """Get all refinements by template hash.
 
         Args:
             template_hash:
@@ -40,7 +40,7 @@ class Refinement(models.Model):
 
     @staticmethod
     def create_and_save(name, xsd_name, template_hash):
-        """ Create and save a refinement.
+        """Create and save a refinement.
 
         Args:
             name:
@@ -56,7 +56,7 @@ class Refinement(models.Model):
 
     @staticmethod
     def check_refinements_already_exist_by_template_hash(template_hash):
-        """ Check if the refinements have already been generated for the template.
+        """Check if the refinements have already been generated for the template.
 
         Args:
             template_hash:
@@ -69,7 +69,7 @@ class Refinement(models.Model):
 
     @staticmethod
     def get_by_template_hash_and_by_slug(template_hash, slug):
-        """ Get refinement by template hash and by slug.
+        """Get refinement by template hash and by slug.
 
         Args:
             template_hash:

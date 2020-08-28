@@ -19,7 +19,7 @@ logger = logging.getLogger("core_main_registry_app.utils.refinement.mongo_query"
 
 
 def build_refinements_query(refinements):
-    """ Build the refinements query.
+    """Build the refinements query.
 
     Args:
         refinements:
@@ -81,7 +81,7 @@ def build_refinements_query(refinements):
 
 
 def get_refinement_selected_values_from_query(query):
-    """ get the refinement selected values from a json query
+    """get the refinement selected values from a json query
 
     Args:
         query:
@@ -161,8 +161,8 @@ def get_refinement_selected_values_from_query(query):
 def add_not_deleted_status_criteria():
     """Adds a criteria on status. Status should not be deleted.
 
-        Returns:
-            Criteria
+    Returns:
+        Criteria
 
     """
     return {PATH_STATUS: {"$ne": DataStatus.DELETED}}

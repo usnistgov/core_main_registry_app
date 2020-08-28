@@ -5,7 +5,7 @@ from core_main_app.commons import exceptions as exceptions
 
 
 def role_extraction(dict_content):
-    """ Extract role from dict content.
+    """Extract role from dict content.
 
     Args:
         dict_content

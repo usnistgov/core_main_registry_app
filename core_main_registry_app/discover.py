@@ -31,7 +31,7 @@ logger = logging.getLogger("core_main_registry_app.discover")
 
 
 def init_registry():
-    """ Init the registry. Add the registry template.
+    """Init the registry. Add the registry template.
 
     Returns:
 
@@ -50,7 +50,7 @@ def init_registry():
 
 
 def _add_template():
-    """ Add the registry template.
+    """Add the registry template.
 
     Returns:
 
@@ -78,8 +78,7 @@ def _add_template():
 
 
 def _init_refinements():
-    """ Init the refinements.
-    """
+    """Init the refinements."""
     try:
         # Get global template.
         template = template_registry_api.get_current_registry_template()
@@ -90,14 +89,16 @@ def _init_refinements():
 
 
 def _init_custom_registry():
-    """ Init the custom registry.
+    """Init the custom registry.
 
     Returns:
     """
 
     try:
-        current_template_version = version_manager_api.get_active_global_version_manager_by_title(
-            REGISTRY_XSD_FILENAME
+        current_template_version = (
+            version_manager_api.get_active_global_version_manager_by_title(
+                REGISTRY_XSD_FILENAME
+            )
         )
         current_template = template_api.get(
             version_manager_api.get_current(current_template_version)

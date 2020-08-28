@@ -8,13 +8,12 @@ from core_main_registry_app import discover
 
 
 class InitApp(AppConfig):
-    """ Core main registry app application settings
-    """
+    """Core main registry app application settings"""
 
     name = "core_main_registry_app"
 
     def ready(self):
-        """ Run when the app is ready.
+        """Run when the app is ready.
 
         Returns:
 

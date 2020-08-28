@@ -10,7 +10,7 @@ from core_main_registry_app.utils.refinement.refinement import init_refinements
 
 @shared_task
 def init_refinement_task(template_id):
-    """ Asynchronous tasks init refinement
+    """Asynchronous tasks init refinement
 
     Args:
         template_id:

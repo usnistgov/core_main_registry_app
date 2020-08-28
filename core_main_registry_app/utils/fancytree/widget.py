@@ -22,7 +22,7 @@ except ImportError:
 
 
 def get_doc(node, values, count_mode):
-    """ Represent a node.
+    """Represent a node.
 
     Args:
         node:

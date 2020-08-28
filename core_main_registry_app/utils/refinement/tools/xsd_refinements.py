@@ -23,7 +23,7 @@ logger = logging.getLogger(
 
 
 def loads_refinements_trees(template):
-    """ Load refinements for the given template.
+    """Load refinements for the given template.
 
     Args:
         template:
@@ -111,7 +111,7 @@ def loads_refinements_trees(template):
 
 
 def _get_flatten_schema(template):
-    """ Get the flatten schema of the given template.
+    """Get the flatten schema of the given template.
 
     Args:
         template:
@@ -126,7 +126,7 @@ def _get_flatten_schema(template):
 
 
 def _get_target_namespace_prefix(ref_xml_schema_content, xml_doc_tree):
-    """ Get the target namespace prefix.
+    """Get the target namespace prefix.
 
     Args:
         ref_xml_schema_content:
@@ -142,7 +142,7 @@ def _get_target_namespace_prefix(ref_xml_schema_content, xml_doc_tree):
 
 
 def _get_element_info(element, xml_doc_tree, target_ns_prefix):
-    """ Get the element label.
+    """Get the element label.
 
     Args:
         element:
@@ -179,7 +179,7 @@ def _get_element_info(element, xml_doc_tree, target_ns_prefix):
 def _get_simple_type_or_complex_type_info(
     xml_doc_tree, target_ns_prefix, element, query=None
 ):
-    """ Get simple type / complex type information.
+    """Get simple type / complex type information.
 
     Args:
         xml_doc_tree:
@@ -222,7 +222,7 @@ def _get_simple_type_or_complex_type_info(
 
 
 def _get_extension_info(xml_doc_tree, element, query=None):
-    """ Get extension information.
+    """Get extension information.
 
     Args:
         xml_doc_tree:
@@ -261,7 +261,7 @@ def _get_extension_info(xml_doc_tree, element, query=None):
 
 
 def _find_extension(xml_doc_tree, target_ns_prefix, element):
-    """ Find the element extension.
+    """Find the element extension.
 
     Args:
         xml_doc_tree:

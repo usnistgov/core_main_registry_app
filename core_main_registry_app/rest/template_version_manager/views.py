@@ -17,13 +17,12 @@ from core_main_registry_app.components.version_manager import api as version_man
 
 
 class CurrentTemplateVersion(AbstractStatusTemplateVersion):
-    """ Update status to current
-    """
+    """Update status to current"""
 
     permission_classes = (IsAuthenticated,)
 
     def status_update(self, template_object):
-        """ Update status to current
+        """Update status to current
 
         Args:
 

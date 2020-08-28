@@ -8,15 +8,17 @@ from core_main_registry_app.settings import REGISTRY_XSD_FILENAME
 
 
 def get_current_registry_template():
-    """ Get the current template used for the registry.
+    """Get the current template used for the registry.
 
     Returns:
         Template:
 
     """
     try:
-        template_version = version_manager_api.get_active_global_version_manager_by_title(
-            REGISTRY_XSD_FILENAME
+        template_version = (
+            version_manager_api.get_active_global_version_manager_by_title(
+                REGISTRY_XSD_FILENAME
+            )
         )
         return template_api.get(version_manager_api.get_current(template_version))
     except Exception as e:

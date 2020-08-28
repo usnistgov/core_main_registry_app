@@ -4,7 +4,7 @@ from core_main_app.components.data.models import Data
 
 
 def is_local_id_already_used(local_id):
-    """ Check if the local id given already exist in db
+    """Check if the local id given already exist in db
 
     Args:
         local_id:

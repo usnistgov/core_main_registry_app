@@ -5,7 +5,7 @@ from core_main_app.access_control.api import check_can_write
 
 
 def can_publish_data(func, data, user):
-    """ Can user publish data.
+    """Can user publish data.
 
     Args:
         func:

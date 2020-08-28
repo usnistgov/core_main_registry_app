@@ -26,7 +26,7 @@ class Category(MPTTModel):
 
     @staticmethod
     def get_all_filtered_by_refinement_id(refinement_id):
-        """ Get all categories filtered by refinement id.
+        """Get all categories filtered by refinement id.
 
         Parameters:
                 refinement_id:
@@ -38,7 +38,7 @@ class Category(MPTTModel):
 
     @staticmethod
     def create_and_save(name, path, value, parent, refinement):
-        """ Create and save a category.
+        """Create and save a category.
 
         Args:
             name:
@@ -56,7 +56,7 @@ class Category(MPTTModel):
 
     @staticmethod
     def get_by_id(category_id):
-        """ Get category by its id.
+        """Get category by its id.
 
         Parameters:
             category_id:
@@ -74,7 +74,7 @@ class Category(MPTTModel):
 
     @staticmethod
     def get_all_categories_by_parent_slug_and_refinement_id(parent_slug, refinement_id):
-        """ Get all categories by parent_slug and refinement.
+        """Get all categories by parent_slug and refinement.
 
         Args:
             parent_slug:
@@ -94,7 +94,7 @@ class Category(MPTTModel):
 
     @staticmethod
     def get_all():
-        """ Get all categories.
+        """Get all categories.
 
         Returns: Category collection
 
@@ -103,7 +103,7 @@ class Category(MPTTModel):
 
     @staticmethod
     def get_all_categories_ids_from_name_and_refinement_id(name, refinement_id):
-        """ Get all categories by name and refinement id.
+        """Get all categories by name and refinement id.
 
         Args:
             name:

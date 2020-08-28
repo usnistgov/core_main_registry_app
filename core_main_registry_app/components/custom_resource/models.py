@@ -39,7 +39,7 @@ class CustomResource(Document):
 
     @staticmethod
     def get_all_by_template(template):
-        """ Get all custom resource by template.
+        """Get all custom resource by template.
 
         Args:
             template:
@@ -51,7 +51,7 @@ class CustomResource(Document):
 
     @staticmethod
     def get_custom_resource_by_template_and_type(template, type):
-        """ Get custom resource by template and type.
+        """Get custom resource by template and type.
 
         Args:
             template:
@@ -64,7 +64,7 @@ class CustomResource(Document):
 
     @staticmethod
     def get_custom_resource_by_template_and_slug(template, slug):
-        """ Get custom resource by template and slug.
+        """Get custom resource by template and slug.
 
         Args:
             template:
@@ -82,7 +82,7 @@ class CustomResource(Document):
 
     @staticmethod
     def get_by_role_for_current_template(template, role):
-        """ Get custom resource by role for current template.
+        """Get custom resource by role for current template.
 
         Args:
             template:
@@ -108,7 +108,7 @@ class CustomResource(Document):
 
     @staticmethod
     def delete_custom_resources_by_template(template):
-        """ Delete all custom resources related to a template.
+        """Delete all custom resources related to a template.
 
         Args:
             template:

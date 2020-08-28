@@ -9,7 +9,7 @@ from core_main_registry_app.components.version_manager import api as version_man
 
 
 def set_current_template_version_from_version_manager(request):
-    """ Set the current version of a template.
+    """Set the current version of a template.
 
     Args:
         request:

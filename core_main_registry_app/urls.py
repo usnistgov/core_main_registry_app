@@ -12,7 +12,12 @@ from core_main_app.views.common import ajax as common_ajax, views as common_view
 from core_main_app.views.user import views as user_views, ajax as user_ajax
 from core_main_registry_app.views.admin import ajax as admin_ajax
 
-schema_view = get_schema_view(openapi.Info(title="REST API", default_version="v1",),)
+schema_view = get_schema_view(
+    openapi.Info(
+        title="REST API",
+        default_version="v1",
+    ),
+)
 
 # FIXME: Check needed URLs for registry and remove the others.
 
@@ -22,6 +27,11 @@ urlpatterns = [
     re_path(r"^logout", user_views.custom_logout, name="core_main_app_logout"),
     re_path(r"^locked", common_views.defender_error_page, name="core_main_app_locked"),
     re_path(r"^rest/", include("core_main_registry_app.rest.urls")),
+    re_path(
+        r"^data",
+        common_views.ViewData.as_view(),
+        name="core_main_app_data_detail",
+    ),
     re_path(
         r"^template/versions/(?P<version_manager_id>\w+)",
         user_views.manage_template_versions,

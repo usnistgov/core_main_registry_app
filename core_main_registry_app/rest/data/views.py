@@ -16,7 +16,7 @@ from core_main_registry_app.components.data import api as registry_data_api
 
 @api_view(["PATCH"])
 def publish_data(request, pk):
-    """ Publish a data
+    """Publish a data
 
     Args:
 
@@ -55,12 +55,11 @@ def publish_data(request, pk):
 
 
 class DataDetailRegistry(DataDetail):
-    """ Retrieve or update a data
-    """
+    """Retrieve or update a data"""
 
     @method_decorator(api_staff_member_required())
     def delete(self, request, pk):
-        """ Delete a Data
+        """Delete a Data
 
         Args:
 
@@ -100,7 +99,7 @@ class DataDetailRegistry(DataDetail):
             return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def patch(self, request, pk):
-        """ Data cannot be updated
+        """Data cannot be updated
 
         Args:
 

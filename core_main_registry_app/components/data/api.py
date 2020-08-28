@@ -19,7 +19,7 @@ from xml_utils.xsd_tree.xsd_tree import XSDTree
 
 
 def get_role(data):
-    """ Get the list of role saved in the data's dict content
+    """Get the list of role saved in the data's dict content
 
     Args:
         data:
@@ -32,7 +32,7 @@ def get_role(data):
 
 @access_control(can_publish_data)
 def publish(data, user):
-    """ Assign data to a workspace.
+    """Assign data to a workspace.
 
     Args:
         data:
@@ -47,7 +47,7 @@ def publish(data, user):
 
 
 def set_status(data, status, user):
-    """ Set the status of a data
+    """Set the status of a data
 
     Args:
         data:
@@ -79,7 +79,7 @@ def set_status(data, status, user):
 
 
 def get_status(data):
-    """ Get the status saved in the data's dict content
+    """Get the status saved in the data's dict content
 
     Args:
         data:
@@ -94,7 +94,7 @@ def get_status(data):
 
 
 def generate_unique_local_id(length_id):
-    """ Generate an unique ID with the given length
+    """Generate an unique ID with the given length
 
     Args:
         length_id:

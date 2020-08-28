@@ -10,8 +10,7 @@ from core_main_registry_app.constants import CUSTOM_RESOURCE_TYPE
 
 
 class CustomResourceFixtures(FixtureInterface):
-    """ Custom Resource Fixture
-    """
+    """Custom Resource Fixture"""
 
     custom_resource = None
     template = None

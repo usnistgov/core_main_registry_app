@@ -6,12 +6,12 @@ from core_main_registry_app.utils.refinement.tools import xsd_refinements
 
 
 def init_refinements(template):
-    """ Init the refinements for the given template. Categories used as refinement (search page...).
+    """Init the refinements for the given template. Categories used as refinement (search page...).
 
-        Args:
-            template:
+    Args:
+        template:
 
-        Returns:
+    Returns:
 
     """
     from core_main_registry_app.components.refinement import api as refinement_api
@@ -37,7 +37,7 @@ def init_refinements(template):
 
 
 def create_categories(tree, refinement):
-    """ Create the refinement categories.
+    """Create the refinement categories.
 
     Args:
         tree: Tree of categories.
@@ -50,7 +50,7 @@ def create_categories(tree, refinement):
 
 
 def _create_sub_categories(key, leaves, refinement, parent=None):
-    """ Create all sub categories.
+    """Create all sub categories.
 
     Args:
         key:

@@ -15,7 +15,7 @@ logger = logging.getLogger("core_main_registry_app.components.custom_resource.ap
 
 
 def parse_and_save(data, current_template):
-    """ Parse the data to create custom resources and save them.
+    """Parse the data to create custom resources and save them.
 
     Args:
      data: dict
@@ -44,7 +44,7 @@ def parse_and_save(data, current_template):
 
 
 def _check_curate(custom_resource):
-    """ Check if we have all information from configuration file for curate.
+    """Check if we have all information from configuration file for curate.
 
     Args:
         custom_resource:
@@ -62,7 +62,7 @@ def _check_curate(custom_resource):
 
 
 def _get_value(dict, key):
-    """ Get the value from the dict with the key.
+    """Get the value from the dict with the key.
 
     Args:
      dict:
@@ -77,7 +77,7 @@ def _get_value(dict, key):
 
 
 def _is_custom_resource_type_resource(custom_resource):
-    """ Is the custom resource a resource.
+    """Is the custom resource a resource.
 
     Args:
         custom_resource:
@@ -87,7 +87,7 @@ def _is_custom_resource_type_resource(custom_resource):
 
 
 def _is_type_all(resource):
-    """ Check if type of  resource is 'all'.
+    """Check if type of  resource is 'all'.
 
     Args:
      resource:
@@ -100,7 +100,7 @@ def _is_type_all(resource):
 
 
 def _create_custom_resource_type_all(custom_resource, resource, key):
-    """ Create a custom resource for 'all resource'.
+    """Create a custom resource for 'all resource'.
 
     Args:
      custom_resource:
@@ -118,7 +118,7 @@ def _create_custom_resource_type_all(custom_resource, resource, key):
 
 
 def _create_custom_resource(custom_resource, resource, key):
-    """ Create a custom resource.
+    """Create a custom resource.
 
     Args:
      custom_resource:
@@ -141,32 +141,32 @@ def _create_custom_resource(custom_resource, resource, key):
 
 
 def get_all_by_template(template):
-    """ Return all custom resource by template.
+    """Return all custom resource by template.
 
-        Args:
-             template:
+    Args:
+         template:
 
-        Returns: custom registry collection
+    Returns: custom registry collection
     """
     return CustomResource.get_all_by_template(template)
 
 
 def get_all_of_current_template():
-    """ Return all custom resource of the current template.
+    """Return all custom resource of the current template.
 
-        Args:
+    Args:
 
-        Returns: custom registry collection
+    Returns: custom registry collection
     """
     return get_all_by_template(_get_current_template())
 
 
 def get_current_custom_resource_type_all():
-    """ Return the custom resource of the current template with type 'all'.
+    """Return the custom resource of the current template with type 'all'.
 
-        Args:
+    Args:
 
-        Returns: custom registry collection
+    Returns: custom registry collection
     """
     list = CustomResource.get_custom_resource_by_template_and_type(
         _get_current_template(), CUSTOM_RESOURCE_TYPE.ALL.value
@@ -183,12 +183,14 @@ def get_current_custom_resource_type_all():
 
 
 def _get_current_template():
-    """ Get the current template.
+    """Get the current template.
 
     Returns:
     """
-    current_template_version = version_manager_api.get_active_global_version_manager_by_title(
-        REGISTRY_XSD_FILENAME
+    current_template_version = (
+        version_manager_api.get_active_global_version_manager_by_title(
+            REGISTRY_XSD_FILENAME
+        )
     )
     current_template = template_api.get(
         version_manager_api.get_current(current_template_version)
@@ -197,7 +199,7 @@ def _get_current_template():
 
 
 def get_by_current_template_and_slug(slug):
-    """ Get the custom resource by template and slug
+    """Get the custom resource by template and slug
 
     Args:
         slug:
@@ -211,21 +213,21 @@ def get_by_current_template_and_slug(slug):
 
 
 def get_by_role_for_current_template(role):
-    """ Get the custom resource by template and slug
+    """Get the custom resource by template and slug
 
-        Args:
-            role:
+    Args:
+        role:
 
-        Returns:
+    Returns:
 
-        """
+    """
     return CustomResource.get_by_role_for_current_template(
         _get_current_template(), role
     )
 
 
 def delete_custom_resources_by_template(template):
-    """ Delete all custom resources related to a template.
+    """Delete all custom resources related to a template.
 
     Args:
         template:
@@ -236,7 +238,7 @@ def delete_custom_resources_by_template(template):
 
 
 def save_list(list_custom_resources, force_insert=False):
-    """ Save list of custom resource.
+    """Save list of custom resource.
 
     Args:
         list_custom_resources:
@@ -249,7 +251,7 @@ def save_list(list_custom_resources, force_insert=False):
 
 
 def replace_custom_resources_by_template(template, data):
-    """ Replace all custom resources by the one in data.
+    """Replace all custom resources by the one in data.
     Rollback if error.
 
     Args:

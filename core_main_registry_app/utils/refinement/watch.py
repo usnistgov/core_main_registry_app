@@ -12,13 +12,12 @@ logger = getLogger(__name__)
 
 
 def init():
-    """ Connect to template object events.
-    """
+    """Connect to template object events."""
     connector.connect(post_save_template, signals.post_save, sender=Template)
 
 
 def post_save_template(sender, document, **kwargs):
-    """ Method executed after saving of a Template object.
+    """Method executed after saving of a Template object.
     Args:
         sender:
         document: template object.

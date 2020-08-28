@@ -52,8 +52,7 @@ def manage_templates(request):
 
 
 class UploadCustomResource(View):
-    """ Upload custom resource admin view.
-    """
+    """Upload custom resource admin view."""
 
     form_class = UploadCustomResourcesForm
     template_name = "core_main_registry_app/admin/custom_registry/upload.html"
@@ -106,8 +105,7 @@ class UploadCustomResource(View):
 
 
 class CustomRegistry(View):
-    """ Custom registry admin view.
-    """
+    """Custom registry admin view."""
 
     def get(self, request, *args, **kwargs):
         data_context_list = []

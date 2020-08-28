@@ -43,7 +43,7 @@ class TreeInfo(object):
 
 
 def build_tree(tree, element_name, element_display_name, enums, dot_query):
-    """ Create a tree of refinements.
+    """Create a tree of refinements.
 
     Args:
         tree:
@@ -96,7 +96,7 @@ def build_tree(tree, element_name, element_display_name, enums, dot_query):
 
 
 def _check_case_unspecified(enums, current_enum, i, current_level):
-    """ Check if we can find the case of the unspecified.
+    """Check if we can find the case of the unspecified.
 
     Args:
         enums: list of enums
