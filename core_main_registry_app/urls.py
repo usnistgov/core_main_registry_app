@@ -146,4 +146,9 @@ urlpatterns = [
         user_views.custom_password_reset_complete,
         name="password_reset_complete",
     ),
+    re_path(
+        r"^change-data-display",
+        user_ajax.change_data_display,
+        name="core_main_add_change_data_display",
+    ),
 ]
