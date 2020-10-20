@@ -126,6 +126,11 @@
                         <xsl:when test="contains($name, 'URL')">
                             <a target="_blank" href="{$value}"><xsl:value-of select="$value"/></a>
                         </xsl:when>
+                        <xsl:when test="$name='localid' and $value=''">
+                            <i>
+                                The Local ID will be automatically generated.
+                            </i>
+                        </xsl:when>
                         <xsl:otherwise>
                             <xsl:value-of select="$value"/>
                         </xsl:otherwise>
