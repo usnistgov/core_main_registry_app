@@ -1,16 +1,15 @@
 """ Url router for the core main registry app
 """
-from django.contrib.auth.decorators import login_required
-from drf_yasg.views import get_schema_view
-from drf_yasg import openapi
 from django.conf.urls import include
+from django.contrib.auth.decorators import login_required
 from django.urls import re_path
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
 
 from core_main_app.components.data import api as data_api
 from core_main_app.utils.rendering import render
-from core_main_app.views.common import ajax as common_ajax, views as common_views
+from core_main_app.views.common import views as common_views
 from core_main_app.views.user import views as user_views, ajax as user_ajax
-from core_main_registry_app.views.admin import ajax as admin_ajax
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -38,27 +37,6 @@ urlpatterns = [
         name="core_main_app_manage_template_versions",
     ),
     re_path(
-        r"^template/version/disable",
-        common_ajax.disable_template_version_from_version_manager,
-        name="core_main_app_disable_template_version",
-    ),
-    re_path(
-        r"^template/version/restore",
-        common_ajax.restore_template_version_from_version_manager,
-        name="core_main_app_restore_template_version",
-    ),
-    re_path(
-        r"^template/version/current",
-        admin_ajax.set_current_template_version_from_version_manager,
-        name="core_main_app_set_current_template_version",
-    ),
-    re_path(r"^xslt$", common_views.XSLTView.as_view(), name="core_main_app_xslt"),
-    re_path(
-        r"^xslt/upload$",
-        login_required(common_views.UploadXSLTView.as_view()),
-        name="core_main_app_upload_xslt",
-    ),
-    re_path(
         r"^template/xslt/(?P<template_id>\w+)",
         login_required(
             common_views.TemplateXSLRenderingView.as_view(
@@ -73,11 +51,6 @@ urlpatterns = [
         r"^edit-rights/(?P<workspace_id>\w+)$",
         login_required(common_views.EditWorkspaceRights.as_view()),
         name="core_main_edit_rights_workspace",
-    ),
-    re_path(
-        r"^create-workspace",
-        user_ajax.create_workspace,
-        name="core_main_create_workspace",
     ),
     re_path(
         r"^change-workspace",
