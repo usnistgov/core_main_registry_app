@@ -31,7 +31,9 @@ def manage_templates(request):
 
     """
     # get all current templates
-    templates = template_version_manager_api.get_global_version_managers()
+    templates = template_version_manager_api.get_global_version_managers(
+        request=request
+    )
 
     context = {
         "object_name": "Template",
@@ -88,7 +90,7 @@ class UploadCustomResource(View):
         """
         try:
             # get the template
-            template = template_api.get(template_id)
+            template = template_api.get(template_id, request=request)
 
             # get the file from the form
             upload_file = request.FILES["json_file"].read().decode("utf-8")
@@ -110,7 +112,7 @@ class CustomRegistry(View):
     def get(self, request, *args, **kwargs):
         data_context_list = []
         global_template_version_manager = (
-            template_version_manager_api.get_global_version_managers()
+            template_version_manager_api.get_global_version_managers(request=request)
         )
         if len(global_template_version_manager) == 1:
             template_version_manager = list(global_template_version_manager)[0]
@@ -119,7 +121,7 @@ class CustomRegistry(View):
             # for each template versions
             for version in template_version_manager.versions:
                 # get the template
-                template = template_api.get(version)
+                template = template_api.get(version, request=request)
                 # get all the template's custom resources
                 custom_resources = custom_resource_api.get_all_by_template(template)
                 # append to list for the context

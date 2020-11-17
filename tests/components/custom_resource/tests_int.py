@@ -8,6 +8,8 @@ from core_main_app.commons import exceptions as exceptions
 from core_main_app.utils.integration_tests.integration_base_test_case import (
     MongoIntegrationBaseTestCase,
 )
+from core_main_app.utils.tests_tools.MockUser import create_mock_user
+from core_main_app.utils.tests_tools.RequestMock import create_mock_request
 from core_main_registry_app.components.custom_resource import api as custom_resource_api
 from core_main_registry_app.components.custom_resource.models import CustomResource
 from core_main_registry_app.constants import CUSTOM_RESOURCE_TYPE
@@ -175,10 +177,12 @@ class TestGetByRoleForCurrentTemplate(MongoIntegrationBaseTestCase):
         self, _get_current_template
     ):
         # Arrange
+        mock_user = create_mock_user("1", is_superuser=True)
+        mock_request = create_mock_request(user=mock_user)
         _get_current_template.return_value = self.fixture.template
         # Act
         custom_resource = custom_resource_api.get_by_role_for_current_template(
-            self.fixture.custom_resource.role_choice
+            self.fixture.custom_resource.role_choice, request=mock_request
         )
         # Assert
         self.assertTrue(isinstance(custom_resource, CustomResource))
@@ -195,10 +199,12 @@ class TestGetByCurrentTemplateAndSlug(MongoIntegrationBaseTestCase):
         self, _get_current_template
     ):
         # Arrange
+        mock_user = create_mock_user("1", is_superuser=True)
+        mock_request = create_mock_request(user=mock_user)
         _get_current_template.return_value = self.fixture.template
         # Act
         custom_resource = custom_resource_api.get_by_current_template_and_slug(
-            self.fixture.custom_resource.slug
+            self.fixture.custom_resource.slug, request=mock_request
         )
         # Assert
         self.assertTrue(isinstance(custom_resource, CustomResource))
@@ -210,10 +216,14 @@ class TestGetByCurrentTemplateAndSlug(MongoIntegrationBaseTestCase):
         self, _get_current_template
     ):
         # Arrange
+        mock_user = create_mock_user("1", is_superuser=True)
+        mock_request = create_mock_request(user=mock_user)
         _get_current_template.return_value = self.fixture.template
         # Act
         with self.assertRaises(exceptions.DoesNotExist):
-            custom_resource_api.get_by_current_template_and_slug("incorrect slug")
+            custom_resource_api.get_by_current_template_and_slug(
+                "incorrect slug", mock_request
+            )
 
 
 class TestDeleteCustomResourcesByTemplate(MongoIntegrationBaseTestCase):

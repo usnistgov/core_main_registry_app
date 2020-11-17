@@ -9,6 +9,7 @@ from core_main_app.utils.integration_tests.integration_base_test_case import (
     MongoIntegrationBaseTestCase,
 )
 from core_main_app.utils.tests_tools.MockUser import create_mock_user
+from core_main_app.utils.tests_tools.RequestMock import create_mock_request
 from core_main_registry_app.commons.constants import DataStatus
 from tests.components.data.fixtures.fixtures import DataRegistryFixtures
 
@@ -39,11 +40,12 @@ class TestDataSetStatus(MongoIntegrationBaseTestCase):
     def test_data_set_status_to_inactive_should_always_work(self, mock_convert_to_file):
         # Arrange
         user = create_mock_user("1", True, True)
+        mock_request = create_mock_request(user=user)
         status = data_registry_api.get_status(self.fixture.data_1)
         self.assertTrue(status == DataStatus.ACTIVE)
         # Act
         data = data_registry_api.set_status(
-            self.fixture.data_1, DataStatus.INACTIVE, user
+            self.fixture.data_1, DataStatus.INACTIVE, mock_request
         )
         status = data_registry_api.get_status(data)
         # Assert
@@ -55,8 +57,11 @@ class TestDataSetStatus(MongoIntegrationBaseTestCase):
     ):
         # Arrange
         user = create_mock_user("1", True, True)
+        mock_request = create_mock_request(user=user)
         status = data_registry_api.get_status(self.fixture.data_1)
         self.assertTrue(status == DataStatus.ACTIVE)
         # Act Assert
         with self.assertRaises(exceptions.ModelError):
-            data_registry_api.set_status(self.fixture.data_1, DataStatus.DELETED, user)
+            data_registry_api.set_status(
+                self.fixture.data_1, DataStatus.DELETED, mock_request
+            )

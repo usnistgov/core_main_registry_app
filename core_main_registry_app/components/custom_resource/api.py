@@ -151,78 +151,84 @@ def get_all_by_template(template):
     return CustomResource.get_all_by_template(template)
 
 
-def get_all_of_current_template():
+def get_all_of_current_template(request):
     """Return all custom resource of the current template.
 
     Args:
 
     Returns: custom registry collection
     """
-    return get_all_by_template(_get_current_template())
+    return get_all_by_template(_get_current_template(request=request))
 
 
-def get_current_custom_resource_type_all():
+def get_current_custom_resource_type_all(request):
     """Return the custom resource of the current template with type 'all'.
 
     Args:
+        request
 
     Returns: custom registry collection
     """
-    list = CustomResource.get_custom_resource_by_template_and_type(
-        _get_current_template(), CUSTOM_RESOURCE_TYPE.ALL.value
+    custom_resources = CustomResource.get_custom_resource_by_template_and_type(
+        _get_current_template(request=request), CUSTOM_RESOURCE_TYPE.ALL.value
     )
-    if len(list) > 1:
+    if len(custom_resources) > 1:
         raise exceptions.ModelError(
             "Multiple custom resources with type 'all' were found."
         )
-    elif len(list) == 0:
+    elif len(custom_resources) == 0:
         raise exceptions.DoesNotExist(
             "The custom resource with type 'all' does not exist."
         )
-    return list[0]
+    return custom_resources[0]
 
 
-def _get_current_template():
+def _get_current_template(request):
     """Get the current template.
+
+    Args:
+        request:
 
     Returns:
     """
     current_template_version = (
         version_manager_api.get_active_global_version_manager_by_title(
-            REGISTRY_XSD_FILENAME
+            REGISTRY_XSD_FILENAME, request=request
         )
     )
     current_template = template_api.get(
-        version_manager_api.get_current(current_template_version)
+        current_template_version.current, request=request
     )
     return current_template
 
 
-def get_by_current_template_and_slug(slug):
+def get_by_current_template_and_slug(slug, request):
     """Get the custom resource by template and slug
 
     Args:
         slug:
+        request:
 
     Returns:
 
     """
     return CustomResource.get_custom_resource_by_template_and_slug(
-        _get_current_template(), slug
+        _get_current_template(request=request), slug
     )
 
 
-def get_by_role_for_current_template(role):
+def get_by_role_for_current_template(role, request):
     """Get the custom resource by template and slug
 
     Args:
         role:
+        request:
 
     Returns:
 
     """
     return CustomResource.get_by_role_for_current_template(
-        _get_current_template(), role
+        _get_current_template(request=request), role
     )
 
 

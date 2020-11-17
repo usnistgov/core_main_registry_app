@@ -80,11 +80,12 @@ def build_refinements_query(refinements):
         return {}
 
 
-def get_refinement_selected_values_from_query(query):
+def get_refinement_selected_values_from_query(query, request):
     """get the refinement selected values from a json query
 
     Args:
         query:
+        request:
 
     Returns:
         {
@@ -125,7 +126,7 @@ def get_refinement_selected_values_from_query(query):
                         category_values_list.update({key: [selected_value]})
 
     # get global template.
-    template = template_registry_api.get_current_registry_template()
+    template = template_registry_api.get_current_registry_template(request=request)
     # get refinements.
     refinements = refinement_api.get_all_filtered_by_template_hash(template.hash)
     refinements_ids = [x.id for x in refinements]

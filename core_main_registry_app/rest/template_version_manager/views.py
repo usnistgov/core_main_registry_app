@@ -32,4 +32,4 @@ class CurrentTemplateVersion(AbstractStatusTemplateVersion):
 
             TemplateVersion
         """
-        return version_manager_api.set_current(template_object)
+        return version_manager_api.set_current(template_object, request=self.request)

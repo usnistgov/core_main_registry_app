@@ -45,7 +45,7 @@ class TestCurrentTemplateVersionPatchPermission(SimpleTestCase):
     ):
         version_manager_set_current.return_value = {}
         version_manager_get_from_version.return_value = {}
-        template_get_by_id.return_value = {}
+        template_get_by_id.return_value = Template(user=None)
 
         mock_user = create_mock_user("1", is_staff=True)
 

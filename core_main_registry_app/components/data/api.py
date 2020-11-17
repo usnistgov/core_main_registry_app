@@ -46,13 +46,13 @@ def publish(data, user):
     return data.save()
 
 
-def set_status(data, status, user):
+def set_status(data, status, request):
     """Set the status of a data
 
     Args:
         data:
         status:
-        user:
+        request:
 
     Returns: Data
 
@@ -75,7 +75,7 @@ def set_status(data, status, user):
     # update the xml content
     data.xml_content = XSDTree.tostring(xml_tree)
     # upsert the data
-    return data_api.upsert(data, user)
+    return data_api.upsert(data, request=request)
 
 
 def get_status(data):

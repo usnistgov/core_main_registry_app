@@ -8,6 +8,8 @@ from mock.mock import patch
 
 from core_main_app.commons import exceptions as exceptions
 from core_main_app.components.template.models import Template
+from core_main_app.utils.tests_tools.MockUser import create_mock_user
+from core_main_app.utils.tests_tools.RequestMock import create_mock_request
 from core_main_registry_app.components.custom_resource import api as custom_resource_api
 from core_main_registry_app.components.custom_resource.models import CustomResource
 from core_main_registry_app.constants import CUSTOM_RESOURCE_TYPE
@@ -301,12 +303,16 @@ class TestGetByCurrentTemplateAndSlug(TestCase):
         self, get_current, get_custom_resource_by_template_and_slug
     ):
         # Arrange
+        mock_user = create_mock_user("1", is_superuser=True)
+        mock_request = create_mock_request(user=mock_user)
         get_custom_resource_by_template_and_slug.return_value = CustomResource()
         get_current.return_value = Template()
         # Assert
         self.assertTrue(
             isinstance(
-                custom_resource_api.get_by_current_template_and_slug("test"),
+                custom_resource_api.get_by_current_template_and_slug(
+                    "test", request=mock_request
+                ),
                 CustomResource,
             )
         )
@@ -316,9 +322,13 @@ class TestGetByCurrentTemplateAndSlug(TestCase):
         self, get_custom_resource_by_template_and_slug
     ):
         # Arrange
+        mock_user = create_mock_user("1", is_superuser=True)
+        mock_request = create_mock_request(user=mock_user)
         get_custom_resource_by_template_and_slug.side_effect = exceptions.DoesNotExist(
             "error"
         )
         # Assert
         with self.assertRaises(exceptions.DoesNotExist):
-            custom_resource_api.get_by_current_template_and_slug("test")
+            custom_resource_api.get_by_current_template_and_slug(
+                "test", request=mock_request
+            )
