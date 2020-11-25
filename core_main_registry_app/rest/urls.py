@@ -9,6 +9,7 @@ from core_main_app.rest.template import views as template_views
 from core_main_app.rest.template_version_manager import (
     views as template_version_manager_views,
 )
+from core_main_app.rest.user import views as user_views
 from core_main_app.rest.workspace import views as workspace_views
 from core_main_registry_app.rest.data import views as registry_data_views
 from core_main_registry_app.rest.template_version_manager import (
@@ -233,6 +234,14 @@ urlpatterns = [
         r"^workspace/(?P<pk>\w+)/remove_write_right_to_group/(?P<group_id>\w+)/$",
         workspace_views.remove_group_write_right_to_workspace,
         name="core_main_app_rest_workspace_remove_group_write",
+    ),
+    re_path(
+        r"^user/(?P<pk>[\w-]+)/$",
+        user_views.UserDetail.as_view(),
+        name="core_main_app_user_detail",
+    ),
+    re_path(
+        r"^user/$", user_views.UserList.as_view(), name="core_main_app_user_detail"
     ),
     re_path(
         r"^admin/data/$",
