@@ -6,16 +6,14 @@ import logging
 from django.contrib.staticfiles import finders
 
 from core_main_app.commons import exceptions
-from core_main_app.components.template_version_manager.models import (
-    TemplateVersionManager,
-)
+from core_main_app.system import api as system_api
 from core_main_app.utils.file import read_file_content
-from core_main_app.utils.requests_utils.access_control import SYSTEM_REQUEST
 from core_main_registry_app.settings import (
     REGISTRY_XSD_FILEPATH,
     CUSTOM_REGISTRY_FILE_PATH,
     REGISTRY_XSD_FILENAME,
 )
+from core_main_registry_app.system import api as registry_system_api
 
 logger = logging.getLogger("core_main_registry_app.discover")
 
@@ -47,11 +45,6 @@ def _add_template():
     Returns:
 
     """
-    from core_main_app.components.template.models import Template
-    from core_main_app.components.template_version_manager import (
-        api as template_version_manager_api,
-    )
-    from core_main_app.components.version_manager import api as version_manager_api
 
     xsd_filepath = REGISTRY_XSD_FILEPATH
     xsd_filename = REGISTRY_XSD_FILENAME
@@ -64,31 +57,22 @@ def _add_template():
             "Please configure the REGISTRY_XSD_FILEPATH setting in your project."
         )
     try:
-        version_manager_api.get_active_global_version_manager_by_title(
-            xsd_filename, request=SYSTEM_REQUEST
-        )
+        system_api.get_active_global_version_manager_by_title(xsd_filename)
     except exceptions.DoesNotExist:
         default_xsd_path = finders.find(xsd_filepath)
         xsd_data = read_file_content(default_xsd_path)
-        template = Template(filename=xsd_filename, content=xsd_data)
-        template_version_manager = TemplateVersionManager(title=xsd_filename)
-        template_version_manager_api.insert(
-            template_version_manager, template, request=SYSTEM_REQUEST
-        )
+        registry_system_api.insert_registry_schema(xsd_filename, xsd_data)
     except Exception as e:
         logger.error("Impossible to add the template: {0}".format(str(e)))
 
 
 def _init_refinements():
     """Init the refinements."""
-    from core_main_registry_app.components.template import api as template_registry_api
     from core_main_registry_app.utils.refinement import refinement
 
     try:
         # Get global template.
-        template = template_registry_api.get_current_registry_template(
-            request=SYSTEM_REQUEST
-        )
+        template = registry_system_api.get_current_registry_template()
         # Init.
         refinement.init_refinements(template)
     except Exception as e:
@@ -100,20 +84,16 @@ def _init_custom_registry():
 
     Returns:
     """
-    from core_main_app.components.template import api as template_api
-    from core_main_app.components.version_manager import api as version_manager_api
     from core_main_registry_app.components.custom_resource import (
         api as custom_resource_api,
     )
 
     try:
         current_template_version = (
-            version_manager_api.get_active_global_version_manager_by_title(
-                REGISTRY_XSD_FILENAME, request=SYSTEM_REQUEST
-            )
+            system_api.get_active_global_version_manager_by_title(REGISTRY_XSD_FILENAME)
         )
-        current_template = template_api.get(
-            current_template_version.current, request=SYSTEM_REQUEST
+        current_template = system_api.get_template_by_id(
+            current_template_version.current
         )
     except:
         raise Exception("Can't get the current template.")

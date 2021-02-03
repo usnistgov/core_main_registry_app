@@ -5,7 +5,6 @@ Management of the refinements' Tree from a schema.
 import logging
 from collections import OrderedDict
 
-from core_main_app.utils.requests_utils.access_control import SYSTEM_REQUEST
 from core_main_app.utils.xsd_flattener.xsd_flattener_database_url import (
     XSDFlattenerDatabaseOrURL,
 )
@@ -120,9 +119,7 @@ def _get_flatten_schema(template):
     Returns:
 
     """
-    return XSDFlattenerDatabaseOrURL(
-        template.content, request=SYSTEM_REQUEST
-    ).get_flat()
+    return XSDFlattenerDatabaseOrURL(template.content, request=None).get_flat()
 
 
 def _get_target_namespace_prefix(ref_xml_schema_content, xml_doc_tree):

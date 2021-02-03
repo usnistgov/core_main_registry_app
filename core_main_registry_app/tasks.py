@@ -4,8 +4,7 @@ from __future__ import absolute_import, unicode_literals
 
 from celery import shared_task
 
-from core_main_app.components.template import api as template_api
-from core_main_app.utils.requests_utils.access_control import SYSTEM_REQUEST
+from core_main_app.system import api as system_api
 from core_main_registry_app.utils.refinement.refinement import init_refinements
 
 
@@ -19,5 +18,5 @@ def init_refinement_task(template_id):
     Returns:
 
     """
-    template = template_api.get(template_id, request=SYSTEM_REQUEST)
+    template = system_api.get_template_by_id(template_id)
     init_refinements(template)
