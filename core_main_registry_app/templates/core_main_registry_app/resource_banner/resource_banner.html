@@ -3,10 +3,10 @@
         {% if custom_resource.display_icon %}
             {% if data.display_not_resource and not custom_resource.type == data.type_resource or custom_resource.type == data.type_resource %}
                 <div id="cnt_{{custom_resource.slug}}" class="resource-container">
-                    <i class="fa {{custom_resource.icon}} fa-5x" aria-hidden="true" style="color: {{custom_resource.icon_color}}"></i>
+                    <i class="fas {{custom_resource.icon}} fa-5x" aria-hidden="true" style="color: {{custom_resource.icon_color}}"></i>
                     <p>{{custom_resource.title}}</p>
                     <div class="tick">
-                         <i class="fa fa-check-circle-o fa-2x" aria-hidden="true"></i>
+                         <i class="fas fa-check-circle-o fa-2x" aria-hidden="true"></i>
                     </div>
                 </div>
             {% endif %}
