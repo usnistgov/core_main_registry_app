@@ -20,6 +20,6 @@ def set_current(version, request):
     """
     if custom_resource_api.get_all_by_template(version).count() == 0:
         raise exceptions.ApiError(
-            "Please set custom resources to template before setting it to current."
+            "Please link a Custom Resources file to this template before setting it to current."
         )
     version_manager_api.set_current(version, request=request)
