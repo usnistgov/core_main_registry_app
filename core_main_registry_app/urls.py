@@ -1,5 +1,6 @@
 """ Url router for the core main registry app
 """
+from django.conf import settings
 from django.conf.urls import include
 from django.contrib.auth.decorators import login_required
 from django.urls import re_path
@@ -22,8 +23,6 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     re_path(r"^$", user_views.homepage, name="core_main_app_homepage"),
-    re_path(r"^login", user_views.custom_login, name="core_main_app_login"),
-    re_path(r"^logout", user_views.custom_logout, name="core_main_app_logout"),
     re_path(r"^locked", common_views.defender_error_page, name="core_main_app_locked"),
     re_path(r"^rest/", include("core_main_registry_app.rest.urls")),
     re_path(
@@ -125,3 +124,27 @@ urlpatterns = [
         name="core_main_add_change_data_display",
     ),
 ]
+
+if settings.ENABLE_SAML2_SSO_AUTH:
+    from djangosaml2 import views as saml2_views
+
+    urlpatterns.append(re_path(r"saml2/", include("djangosaml2.urls")))
+    urlpatterns.append(
+        re_path(
+            r"^saml2/login", saml2_views.LoginView.as_view(), name="core_main_app_login"
+        )
+    )
+    urlpatterns.append(
+        re_path(
+            r"^saml2/logout",
+            saml2_views.LogoutInitView.as_view(),
+            name="core_main_app_logout",
+        )
+    )
+else:
+    urlpatterns.append(
+        re_path(r"^login", user_views.custom_login, name="core_main_app_login")
+    )
+    urlpatterns.append(
+        re_path(r"^logout", user_views.custom_logout, name="core_main_app_logout")
+    )
