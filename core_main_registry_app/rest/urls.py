@@ -236,12 +236,14 @@ urlpatterns = [
         name="core_main_app_rest_workspace_remove_group_write",
     ),
     re_path(
-        r"^user/(?P<pk>[\w-]+)/$",
-        user_views.UserDetail.as_view(),
-        name="core_main_app_user_detail",
+        r"^user/$",
+        user_views.UserListCreateView.as_view(),
+        name="core_main_app_user_list_create",
     ),
     re_path(
-        r"^user/$", user_views.UserList.as_view(), name="core_main_app_user_detail"
+        r"^user/(?P<pk>[\w-]+)/$",
+        user_views.UserRetrieveUpdateView.as_view(),
+        name="core_main_app_user_retrieve_update",
     ),
     re_path(
         r"^admin/data/$",
