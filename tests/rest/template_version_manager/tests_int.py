@@ -41,7 +41,7 @@ class TestCurrentTemplateVersion(MongoIntegrationBaseTestCase):
         response = RequestMock.do_request_patch(
             views.CurrentTemplateVersion.as_view(),
             user,
-            param={"pk": "507f1f77bcf86cd799439011"},
+            param={"pk": -1},
         )
 
         # Assert

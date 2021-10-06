@@ -19,6 +19,9 @@ class Category(MPTTModel):
     value = models.CharField(max_length=255)
     refinement = models.ForeignKey("Refinement", on_delete=models.CASCADE)
 
+    class Meta:
+        verbose_name_plural = "Categories"
+
     class MPTTMeta(object):
         verbose_name_plural = "categories"
         unique_together = (("name", "slug", "parent"),)

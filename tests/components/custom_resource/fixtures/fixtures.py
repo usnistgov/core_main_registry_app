@@ -37,11 +37,11 @@ class CustomResourceFixtures(FixtureInterface):
     def create_custom_resource(
         template=None,
         name_in_schema="",
-        title="",
+        title="title",
         description="",
         slug="",
         type=CUSTOM_RESOURCE_TYPE.RESOURCE.value,
-        icon="",
+        icon="fa-database",
         icon_color="",
         display_icon=False,
         role_choice="",
@@ -51,7 +51,7 @@ class CustomResourceFixtures(FixtureInterface):
         if template is None:
             template = CustomResourceFixtures.create_and_save_template()
 
-        return CustomResource(
+        custom_resource = CustomResource(
             template=template,
             name_in_schema=name_in_schema,
             title=title,
@@ -64,7 +64,9 @@ class CustomResourceFixtures(FixtureInterface):
             role_choice=role_choice,
             role_type=role_type,
             sort=sort,
-        ).save()
+        )
+        custom_resource.save()
+        return custom_resource
 
     @staticmethod
     def get_dict_custom_resource_minus_sort():

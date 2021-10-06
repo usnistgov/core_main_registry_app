@@ -92,13 +92,11 @@ def _init_custom_registry():
         current_template_version = (
             system_api.get_active_global_version_manager_by_title(REGISTRY_XSD_FILENAME)
         )
-        current_template = system_api.get_template_by_id(
-            current_template_version.current
-        )
+        current_template = current_template_version.current_version
     except:
         raise Exception("Can't get the current template.")
 
-    if len(custom_resource_api.get_all_by_template(current_template)) > 0:
+    if custom_resource_api.get_all_by_template(current_template).count() > 0:
         logger.info("Custom resources related to current template already exist.")
     else:
         json_path = CUSTOM_REGISTRY_FILE_PATH

@@ -107,7 +107,7 @@ def generate_unique_local_id(length_id):
         random.choice(string.ascii_uppercase + string.digits) for _ in range(length_id)
     )
     # we make sure this local id does not exist in db
-    while is_local_id_already_used(local_id):
+    while is_local_id_already_used(local_id).count() > 0:
         # otherwise we generate one until then
         local_id = "".join(
             random.choice(string.ascii_uppercase + string.digits)

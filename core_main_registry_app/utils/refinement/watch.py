@@ -3,30 +3,30 @@
 from logging import getLogger
 
 from billiard.exceptions import SoftTimeLimitExceeded
+from django.db.models.signals import post_save
 
 from core_main_app.components.template.models import Template
 from core_main_registry_app.tasks import init_refinement_task
-from signals_utils.signals.mongo import connector, signals
 
 logger = getLogger(__name__)
 
 
 def init():
     """Connect to template object events."""
-    connector.connect(post_save_template, signals.post_save, sender=Template)
+    post_save.connect(post_save_template, sender=Template)
 
 
-def post_save_template(sender, document, **kwargs):
+def post_save_template(sender, instance, **kwargs):
     """Method executed after saving of a Template object.
     Args:
         sender:
-        document: template object.
+        instance: template object.
         **kwargs:
     """
     try:
         # start asynchronous task
         if kwargs["created"]:
-            init_refinement_task.delay(str(document.id))
+            init_refinement_task.delay(str(instance.id))
     except (TimeoutError, SoftTimeLimitExceeded) as ex:
         logger.error("Timeout while generating refinements: {0}".format(str(ex)))
     except Exception as ex:

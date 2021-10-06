@@ -55,15 +55,16 @@ class DataRegistryFixtures(FixtureInterface):
         with open(mock_xsl_path, "r") as xsd_file:
             xsd = xsd_file.read()
 
-        template = Template()
-        template.content = xsd
-        template.hash = ""
-        template.filename = "res-md.xsd"
-        self.template = template.save()
+        self.template = Template()
+        self.template.content = xsd
+        self.template.hash = ""
+        self.template.filename = "res-md.xsd"
+        self.template.save()
 
 
 def _create_data(template, xml):
     data = Data(template=template, user_id="1", dict_content=None, title="title")
     data.xml_content = xml
     data.convert_to_dict()
-    return data.save()
+    data.save()
+    return data

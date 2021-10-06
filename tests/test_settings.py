@@ -1,5 +1,3 @@
-from core_main_app.utils.databases.mongoengine_database import Database
-
 SECRET_KEY = "fake-key"
 
 INSTALLED_APPS = [
@@ -13,7 +11,9 @@ INSTALLED_APPS = [
     # Extra apps
     "defender",
     # Local apps
+    "core_main_app",
     "core_main_registry_app",
+    "core_parser_app",
     "tests",
 ]
 
@@ -56,8 +56,4 @@ DATABASES = {
 
 PASSWORD_HASHERS = ("django.contrib.auth.hashers.UnsaltedMD5PasswordHasher",)
 
-MOCK_DATABASE_NAME = "db_mock"
-MOCK_DATABASE_HOST = "mongomock://localhost"
-
-database = Database(MOCK_DATABASE_HOST, MOCK_DATABASE_NAME)
-database.connect()
+USE_TZ = True

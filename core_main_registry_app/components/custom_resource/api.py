@@ -2,11 +2,13 @@
 """
 import logging
 
-from core_main_app.commons import exceptions as exceptions
-from core_main_app.components.template import api as template_api
-from core_main_app.components.version_manager import api as version_manager_api
 from django.conf import settings
 
+from core_main_app.commons import exceptions as exceptions
+from core_main_app.components.template import api as template_api
+from core_main_app.components.template_version_manager import (
+    api as template_version_manager_api,
+)
 from core_main_registry_app.components.custom_resource.models import CustomResource
 from core_main_registry_app.constants import CUSTOM_RESOURCE_TYPE
 from core_main_registry_app.settings import REGISTRY_XSD_FILENAME
@@ -192,11 +194,11 @@ def _get_current_template(request):
     Returns:
     """
     current_template_version = (
-        version_manager_api.get_active_global_version_manager_by_title(
+        template_version_manager_api.get_active_global_version_manager_by_title(
             REGISTRY_XSD_FILENAME, request=request
         )
     )
-    current_template = template_api.get(
+    current_template = template_api.get_by_id(
         current_template_version.current, request=request
     )
     return current_template

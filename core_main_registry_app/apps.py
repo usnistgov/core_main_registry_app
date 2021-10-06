@@ -4,8 +4,6 @@ import sys
 
 from django.apps import AppConfig
 
-from core_main_registry_app import discover
-
 
 class InitApp(AppConfig):
     """Core main registry app application settings"""
@@ -19,5 +17,7 @@ class InitApp(AppConfig):
 
         """
         if "migrate" not in sys.argv:
+            from core_main_registry_app import discover
+
             # Init registry
             discover.init_registry()

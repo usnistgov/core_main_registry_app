@@ -1,11 +1,12 @@
 """
     Admin views
 """
-import logging
 import json
+import logging
+
 from django.contrib.admin.views.decorators import staff_member_required
-from django.urls import reverse
 from django.http.response import HttpResponseRedirect
+from django.urls import reverse
 from django.utils.html import escape as html_escape
 from django.views.generic import View
 
@@ -90,7 +91,7 @@ class UploadCustomResource(View):
         """
         try:
             # get the template
-            template = template_api.get(template_id, request=request)
+            template = template_api.get_by_id(template_id, request=request)
 
             # get the file from the form
             upload_file = request.FILES["json_file"].read().decode("utf-8")
@@ -99,7 +100,7 @@ class UploadCustomResource(View):
             custom_resource_api.replace_custom_resources_by_template(template, data)
 
             return HttpResponseRedirect(
-                reverse("admin:core_main_registry_app_custom_registry")
+                reverse("core-admin:core_main_registry_app_custom_registry")
             )
         except Exception as e:
             self.context.update({"errors": html_escape(str(e))})
@@ -121,7 +122,7 @@ class CustomRegistry(View):
             # for each template versions
             for version in template_version_manager.versions:
                 # get the template
-                template = template_api.get(version, request=request)
+                template = template_api.get_by_id(version, request=request)
                 # get all the template's custom resources
                 custom_resources = custom_resource_api.get_all_by_template(template)
                 # append to list for the context

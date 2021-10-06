@@ -1,8 +1,8 @@
 """ Integration Test for Custom Resource API
 """
+from django.core.exceptions import ValidationError
 from django.utils.text import slugify
 from mock import patch
-from mongoengine.errors import ValidationError
 
 from core_main_app.commons import exceptions as exceptions
 from core_main_app.utils.integration_tests.integration_base_test_case import (

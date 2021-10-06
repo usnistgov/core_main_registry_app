@@ -5,9 +5,9 @@ from mock.mock import patch
 from rest_framework import status
 
 from core_main_app.components.data import api as data_api
-from core_main_registry_app.rest.data import views as data_rest_views
 from core_main_app.utils.tests_tools.MockUser import create_mock_user
 from core_main_app.utils.tests_tools.RequestMock import RequestMock
+from core_main_registry_app.rest.data import views as data_rest_views
 
 
 class TestDataDetailDeletePermissions(SimpleTestCase):

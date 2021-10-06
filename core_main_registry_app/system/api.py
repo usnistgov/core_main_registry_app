@@ -1,15 +1,17 @@
 """ System api to access data without access control neither API rules
 """
+from django.db.models import Q
+
+from core_main_app.commons import exceptions as exceptions
 from core_main_app.components.data.models import Data
 from core_main_app.components.template.models import Template
 from core_main_app.components.template_version_manager.models import (
     TemplateVersionManager,
 )
 from core_main_app.components.version_manager.utils import get_latest_version_name
-from core_main_app.utils.xml import is_schema_valid, get_hash
 from core_main_app.system import api as main_system_api
+from core_main_app.utils.xml import is_schema_valid, get_hash
 from core_main_registry_app.settings import REGISTRY_XSD_FILENAME
-from core_main_app.commons import exceptions as exceptions
 
 
 def is_local_id_already_used(local_id):
@@ -21,7 +23,7 @@ def is_local_id_already_used(local_id):
     Returns:
 
     """
-    return Data.objects(__raw__={"dict_content.Resource.@localid": str(local_id)})
+    return Data.objects.filter(Q(**{"dict_content__Resource__@localid": str(local_id)}))
 
 
 def insert_registry_schema(xsd_filename, xsd_content):
@@ -30,21 +32,22 @@ def insert_registry_schema(xsd_filename, xsd_content):
     is_schema_valid(xsd_content)
     template = Template(
         filename=xsd_filename, hash=get_hash(xsd_content), content=xsd_content
-    ).save()
-    template_version_manager = TemplateVersionManager(title=xsd_filename)
+    )
+    template.save()
     # save the template in database
     try:
         from core_main_app.components.version_manager import api as version_manager_api
 
+        template_version_manager = TemplateVersionManager(title=xsd_filename)
+        template_version_manager.save()
         # insert the initial template in the version manager
-        template_version_manager.insert(template)
-        template_version_manager.set_current_version(template)
-        # insert the version manager in database
-        template_version_manager.save_version_manager()
-        # get template display name
-        display_name = get_latest_version_name(template_version_manager)
+        template.version_manager = template_version_manager
+        # set current version
+        if len(template_version_manager.versions) == 0:
+            template.is_current = True
         # update saved template
-        template.display_name = display_name
+        template.display_name = get_latest_version_name(template_version_manager)
+        # save template
         template.save()
         # return version manager
         return template_version_manager
