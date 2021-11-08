@@ -153,7 +153,13 @@ def get_refinement_selected_values_from_query(query, request):
             )
         else:
             return_value.update(
-                {key: {display_name: [{"id": category.id, "value": category.value}]}}
+                {
+                    key: {
+                        display_name: [
+                            {"id": category.id, "value": category.value.split(":")[0]}
+                        ]
+                    }
+                }
             )
     # return the structure
     return return_value
