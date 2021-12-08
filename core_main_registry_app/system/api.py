@@ -39,7 +39,7 @@ def insert_registry_schema(xsd_filename, xsd_content):
         from core_main_app.components.version_manager import api as version_manager_api
 
         template_version_manager = TemplateVersionManager(title=xsd_filename)
-        template_version_manager.save()
+        template_version_manager.save_version_manager()
         # insert the initial template in the version manager
         template.version_manager = template_version_manager
         # set current version

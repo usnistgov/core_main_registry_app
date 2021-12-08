@@ -37,7 +37,7 @@ class CustomResource(models.Model):
     role_choice = models.CharField(blank=True, default=None, null=True, max_length=200)
     role_type = models.CharField(blank=True, default=None, null=True, max_length=200)
     sort = models.PositiveIntegerField()
-    refinements = models.JSONField(blank=True, default=list())
+    refinements = models.JSONField(blank=True, default=list)
 
     class Meta:
         unique_together = (("title", "template"), ("sort", "template"))
