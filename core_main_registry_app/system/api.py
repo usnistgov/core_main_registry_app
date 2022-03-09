@@ -9,6 +9,7 @@ from core_main_app.components.template_version_manager.models import (
     TemplateVersionManager,
 )
 from core_main_app.components.version_manager.utils import get_latest_version_name
+from core_main_app.settings import MONGODB_INDEXING
 from core_main_app.system import api as main_system_api
 from core_main_app.utils.xml import is_schema_valid, get_hash
 from core_main_registry_app.settings import REGISTRY_XSD_FILENAME
@@ -23,6 +24,12 @@ def is_local_id_already_used(local_id):
     Returns:
 
     """
+    if MONGODB_INDEXING:
+        from core_main_app.components.mongo.models import MongoData
+
+        return MongoData.objects(
+            __raw__={"dict_content.Resource.@localid": str(local_id)}
+        )
     return Data.objects.filter(Q(**{"dict_content__Resource__@localid": str(local_id)}))
 
 

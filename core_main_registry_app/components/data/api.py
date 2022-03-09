@@ -27,7 +27,7 @@ def get_role(data):
     Returns:
 
     """
-    return role_extraction(data.dict_content)
+    return role_extraction(data.get_dict_content())
 
 
 @access_control(can_publish_data)
@@ -88,7 +88,7 @@ def get_status(data):
 
     """
     try:
-        return data.dict_content["Resource"]["@status"]
+        return data.get_dict_content()["Resource"]["@status"]
     except Exception as e:
         raise exceptions.ModelError(str(e))
 
