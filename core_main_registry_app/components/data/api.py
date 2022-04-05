@@ -41,6 +41,9 @@ def publish(data, user):
     Returns:
 
     """
+    # Check if  data has already been published
+    if data.workspace is not None and data.workspace.is_public:
+        raise exceptions.ApiError(get_data_label() + " already published")
     data.workspace = workspace_api.get_global_workspace()
     data.last_modification_date = datetime.datetime.now(pytz.utc)
     return data.save()
