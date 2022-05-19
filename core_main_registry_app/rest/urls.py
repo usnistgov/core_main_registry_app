@@ -15,6 +15,7 @@ from core_main_registry_app.rest.data import views as registry_data_views
 from core_main_registry_app.rest.template_version_manager import (
     views as registry_template_version_manager_views,
 )
+from core_main_registry_app.settings import ENABLE_BLOB_ENDPOINTS
 
 urlpatterns = [
     re_path(
@@ -253,3 +254,46 @@ urlpatterns = [
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
+
+if ENABLE_BLOB_ENDPOINTS:
+    from core_main_app.rest.blob import views as blob_views
+
+    urlpatterns.extend(
+        [
+            re_path(
+                r"^admin/blob/$",
+                blob_views.BlobListAdmin.as_view(),
+                name="core_main_app_rest_blob_list_admin",
+            ),
+            re_path(
+                r"^blob/$",
+                blob_views.BlobList.as_view(),
+                name="core_main_app_rest_blob_list",
+            ),
+            re_path(
+                r"^blobs/delete/$",
+                blob_views.BlobDeleteList.as_view(),
+                name="core_main_app_rest_blob_delete_list",
+            ),
+            re_path(
+                r"^blob/(?P<pk>\w+)/$",
+                blob_views.BlobDetail.as_view(),
+                name="core_main_app_rest_blob_detail",
+            ),
+            re_path(
+                r"^blob/download/(?P<pk>\w+)/$",
+                blob_views.BlobDownload.as_view(),
+                name="core_main_app_rest_blob_download",
+            ),
+            re_path(
+                r"^blob/(?P<pk>\w+)/assign/(?P<workspace_id>\w+)$",
+                blob_views.BlobAssign.as_view(),
+                name="core_main_app_rest_blob_assign",
+            ),
+            re_path(
+                r"^blob/(?P<pk>\w+)/change-owner/(?P<user_id>\w+)$",
+                blob_views.BlobChangeOwner.as_view(),
+                name="core_main_app_rest_blob_change_owner",
+            ),
+        ]
+    )
