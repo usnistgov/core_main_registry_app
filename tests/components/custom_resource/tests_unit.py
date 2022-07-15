@@ -230,7 +230,6 @@ class TestIsTypeAll(TestCase):
 
     def test_is_all_resource_raise_exception(self):
         # Act
-        key = "Organization"
         resource = self.fixture.get_dict_custom_resource_no_type()
         # Assert
         with self.assertRaises(exceptions.ModelError):
