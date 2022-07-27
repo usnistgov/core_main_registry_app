@@ -86,3 +86,11 @@ class Refinement(models.Model):
             raise exceptions.DoesNotExist(str(e))
         except Exception as ex:
             raise exceptions.ModelError(str(ex))
+
+    def __str__(self):
+        """Refinement as string
+
+        Returns:
+
+        """
+        return self.name

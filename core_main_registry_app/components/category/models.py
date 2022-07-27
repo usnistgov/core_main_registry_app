@@ -123,3 +123,11 @@ class Category(MPTTModel):
             raise exceptions.DoesNotExist(str(e))
         except Exception as ex:
             raise exceptions.ModelError(str(ex))
+
+    def __str__(self):
+        """Category as string
+
+        Returns:
+
+        """
+        return self.name

@@ -9,6 +9,7 @@ class InitApp(AppConfig):
     """Core main registry app application settings"""
 
     name = "core_main_registry_app"
+    verbose_name = "Core Main Registry App"
 
     def ready(self):
         """Run when the app is ready.

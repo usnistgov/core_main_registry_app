@@ -8,11 +8,15 @@ from django.views.generic.base import RedirectView
 import core_main_app.components.web_page_login.api as login_page_api
 from core_main_app.admin import core_admin_site
 from core_main_app.commons.enums import WEB_PAGE_TYPES
+from core_main_app.utils.admin_site.view_only_admin import ViewOnlyAdmin
 from core_main_app.utils.rendering import admin_render
 from core_main_app.views.admin import views as admin_views, ajax as admin_ajax
 from core_main_app.views.admin.views import WebPageView
 from core_main_app.views.common import views as common_views
 from core_main_registry_app.components.category.models import Category
+from core_main_registry_app.components.custom_resource.admin_site import (
+    CustomResourceAdmin,
+)
 from core_main_registry_app.components.custom_resource.models import CustomResource
 from core_main_registry_app.components.refinement.models import Refinement
 from core_main_registry_app.views.admin import views as registry_admin_views
@@ -118,8 +122,8 @@ admin_urls = [
         name="core_main_registry_app_template_custom_resource",
     ),
 ]
-admin.site.register(CustomResource)
-admin.site.register(Category)
-admin.site.register(Refinement)
+admin.site.register(CustomResource, CustomResourceAdmin)
+admin.site.register(Category, ViewOnlyAdmin)
+admin.site.register(Refinement, ViewOnlyAdmin)
 urls = core_admin_site.get_urls()
 core_admin_site.get_urls = lambda: admin_urls + urls
