@@ -8,7 +8,6 @@ from collections import OrderedDict
 from core_main_app.utils.xsd_flattener.xsd_flattener_database_url import (
     XSDFlattenerDatabaseOrURL,
 )
-from core_main_registry_app.utils.refinement.tools import tree
 from core_parser_app.tools.parser.utils.xml import get_app_info_options
 from xml_utils.commons.constants import LXML_SCHEMA_NAMESPACE
 from xml_utils.xsd_tree.operations.namespaces import (
@@ -16,6 +15,7 @@ from xml_utils.xsd_tree.operations.namespaces import (
     get_target_namespace,
 )
 from xml_utils.xsd_tree.xsd_tree import XSDTree
+from core_main_registry_app.utils.refinement.tools import tree
 
 logger = logging.getLogger(
     "core_main_registry_app.utils.refinement.tools.xsd_refinements"
@@ -103,9 +103,9 @@ def loads_refinements_trees(template):
                         enums=enums,
                         dot_query=dot_query,
                     )
-        except Exception as e:
+        except Exception as exception:
             # Log the exception
-            logger.warning(str(e))
+            logger.warning(str(exception))
 
     return trees
 
@@ -208,10 +208,10 @@ def _get_simple_type_or_complex_type_info(
             element = to_search_element[0]
             if query is not None:
                 query.insert(0, element.attrib["name"])
-    except Exception as e:
+    except Exception as exception:
         raise Exception(
             "Impossible to get simple type / complex type information: {0}".format(
-                str(e)
+                str(exception)
             )
         )
 
@@ -249,9 +249,9 @@ def _get_extension_info(xml_doc_tree, element, query=None):
             element = to_search_element[0]
             if query is not None:
                 query.insert(0, element.attrib["name"])
-    except Exception as e:
+    except Exception as exception:
         raise Exception(
-            "Impossible to get the extension information: {0}".format(str(e))
+            "Impossible to get the extension information: {0}".format(str(exception))
         )
 
     return element
@@ -286,9 +286,9 @@ def _find_extension(xml_doc_tree, target_ns_prefix, element):
             )
         else:
             element = to_search_element[0]
-    except Exception as e:
+    except Exception as exception:
         raise Exception(
-            "Impossible to get the extension information: {0}".format(str(e))
+            "Impossible to get the extension information: {0}".format(str(exception))
         )
 
     return element

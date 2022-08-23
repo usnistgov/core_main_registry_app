@@ -11,6 +11,7 @@ from core_main_app.components.data import api as data_api
 from core_main_app.utils.rendering import render
 from core_main_app.views.common import views as common_views
 from core_main_app.views.user import views as user_views, ajax as user_ajax
+
 from core_main_registry_app.settings import ENABLE_BLOB_ENDPOINTS
 
 schema_view = get_schema_view(

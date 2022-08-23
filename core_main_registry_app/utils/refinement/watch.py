@@ -28,6 +28,6 @@ def post_save_template(sender, instance, **kwargs):
         if kwargs["created"]:
             init_refinement_task.delay(str(instance.id))
     except (TimeoutError, SoftTimeLimitExceeded) as ex:
-        logger.error("Timeout while generating refinements: {0}".format(str(ex)))
+        logger.error("Timeout while generating refinements: %s ", str(ex))
     except Exception as ex:
-        logger.error("Error happened while generating refinements: {0}".format(str(ex)))
+        logger.error("Error happened while generating refinements:  %s ", str(ex))

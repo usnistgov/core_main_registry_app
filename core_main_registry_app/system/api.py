@@ -34,7 +34,15 @@ def is_local_id_already_used(local_id):
 
 
 def insert_registry_schema(xsd_filename, xsd_content):
+    """insert registry schema.
 
+    Args:
+        xsd_filename:
+        xsd_content:
+
+    Returns:
+
+    """
     # Check if schema is valid
     is_schema_valid(xsd_content)
     template = Template(
@@ -56,9 +64,9 @@ def insert_registry_schema(xsd_filename, xsd_content):
         template.save()
         # return version manager
         return template_version_manager
-    except Exception as e:
+    except Exception as exception:
         template.delete()
-        raise e
+        raise exception
 
 
 def get_current_registry_template():
@@ -74,5 +82,5 @@ def get_current_registry_template():
             REGISTRY_XSD_FILENAME
         )
         return main_system_api.get_template_by_id(template_version.current)
-    except Exception as e:
-        raise exceptions.ModelError(str(e))
+    except Exception as exception:
+        raise exceptions.ModelError(str(exception))

@@ -62,7 +62,7 @@ class UploadCustomResource(View):
     object_name = "Custom Resources"
 
     def __init__(self, **kwargs):
-        super(UploadCustomResource, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.context = {}
         self.context.update({"object_name": self.object_name})
 
@@ -77,9 +77,9 @@ class UploadCustomResource(View):
 
         if form.is_valid():
             return self._save_custom_resources(request, template_id)
-        else:
-            # Display error from the form
-            return admin_render(request, self.template_name, context=self.context)
+
+        # Display error from the form
+        return admin_render(request, self.template_name, context=self.context)
 
     def _save_custom_resources(self, request, template_id):
         """Saves an XSLT.
@@ -102,8 +102,8 @@ class UploadCustomResource(View):
             return HttpResponseRedirect(
                 reverse("core-admin:core_main_registry_app_custom_registry")
             )
-        except Exception as e:
-            self.context.update({"errors": html_escape(str(e))})
+        except Exception as exception:
+            self.context.update({"errors": html_escape(str(exception))})
             return admin_render(request, self.template_name, context=self.context)
 
 

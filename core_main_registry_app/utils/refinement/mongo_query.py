@@ -48,11 +48,11 @@ def build_refinements_query(refinements):
                     # Create a dict with the dot notation as the key
                     else:
                         queries[dot_notation] = [value]
-                except (exceptions.DoesNotExist, Exception) as e:
+                except (exceptions.DoesNotExist, Exception) as exception:
                     logger.warning(
-                        "Impossible to find the category ({0}): {1}.".format(
-                            str(len(category_id)), str(e)
-                        )
+                        "Impossible to find the category (%s): %s.",
+                        str(len(category_id)),
+                        str(exception),
                     )
 
             for query in queries:
@@ -72,10 +72,11 @@ def build_refinements_query(refinements):
             and_query = {"$and": or_queries}
 
         return and_query
-    except Exception as e:
+    except Exception as exception:
         logger.error(
             "Something went wrong during the creation of the refinement query. Search "
-            "won't be refined: {0}.".format(str(e))
+            "won't be refined: %s.",
+            str(exception),
         )
         return {}
 

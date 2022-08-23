@@ -19,10 +19,18 @@ fixtureCustomResource = CustomResourceFixtures()
 
 
 class TestCreateAndSaveCustomResource(MongoIntegrationBaseTestCase):
+    """
+    Test Create And Save Custom Resource
+    """
 
     fixture = fixtureCustomResource
 
     def test_create_all_custom_resource_return_collection_of_custom_resource(self):
+        """test_create_all_custom_resource_return_collection_of_custom_resource
+
+        Returns:
+        """
+
         # Act
         template = self.fixture.create_and_save_template()
         custom_resource_api.parse_and_save(
@@ -33,6 +41,11 @@ class TestCreateAndSaveCustomResource(MongoIntegrationBaseTestCase):
         self.assertTrue(all(isinstance(item, CustomResource) for item in result))
 
     def test_create_custom_resource_return_slug_is_not_none(self):
+        """test_create_custom_resource_return_slug_is_not_none
+
+        Returns:
+        """
+
         # Act
         template = self.fixture.create_and_save_template()
         custom_resource_api.parse_and_save(
@@ -43,6 +56,10 @@ class TestCreateAndSaveCustomResource(MongoIntegrationBaseTestCase):
         self.assertIsNotNone(result[0].slug)
 
     def test_create_custom_resource_type_all_return_refinements_is_empty(self):
+        """test_create_custom_resource_type_all_return_refinements_is_empty
+
+        Returns:
+        """
         # Act
         template = self.fixture.create_and_save_template()
         custom_resource_api.parse_and_save(
@@ -50,9 +67,13 @@ class TestCreateAndSaveCustomResource(MongoIntegrationBaseTestCase):
         )
         result = custom_resource_api.get_all_by_template(template)
         # Assert
-        self.assertEquals(len(result[0].refinements), 0)
+        self.assertEqual(len(result[0].refinements), 0)
 
     def test_create_custom_resource_return_refinements_is_not_none(self):
+        """test_create_custom_resource_return_refinements_is_not_none
+
+        Returns:
+        """
         # Act
         template = self.fixture.create_and_save_template()
         custom_resource_api.parse_and_save(
@@ -63,6 +84,10 @@ class TestCreateAndSaveCustomResource(MongoIntegrationBaseTestCase):
         self.assertIsNotNone(result[0].refinements)
 
     def test_create_custom_resource_return_refinements_length(self):
+        """test_create_custom_resource_return_refinements_length
+
+        Returns:
+        """
         # Act
         template = self.fixture.create_and_save_template()
         custom_resource_api.parse_and_save(
@@ -70,9 +95,13 @@ class TestCreateAndSaveCustomResource(MongoIntegrationBaseTestCase):
         )
         result = custom_resource_api.get_all_by_template(template)
         # Assert
-        self.assertEquals(len(result[0].refinements), 1)
+        self.assertEqual(len(result[0].refinements), 1)
 
     def test_create_custom_resource_return_refinements_value(self):
+        """test_create_custom_resource_return_refinements_value
+
+        Returns:
+        """
         # Act
         template = self.fixture.create_and_save_template()
         custom_resource_api.parse_and_save(
@@ -80,9 +109,13 @@ class TestCreateAndSaveCustomResource(MongoIntegrationBaseTestCase):
         )
         result = custom_resource_api.get_all_by_template(template)
         # Assert
-        self.assertEquals(result[0].refinements[0], "unspecified Organization")
+        self.assertEqual(result[0].refinements[0], "unspecified Organization")
 
     def test_create_custom_resource_return_slug(self):
+        """test_create_custom_resource_return_slug
+
+        Returns:
+        """
         # Act
         template = self.fixture.create_and_save_template()
         custom_resource_api.parse_and_save(
@@ -90,9 +123,13 @@ class TestCreateAndSaveCustomResource(MongoIntegrationBaseTestCase):
         )
         result = custom_resource_api.get_all_by_template(template)
         # Assert
-        self.assertEquals(result[0].slug, slugify(result[0].title))
+        self.assertEqual(result[0].slug, slugify(result[0].title))
 
     def test_create_custom_resource_return_type(self):
+        """test_create_custom_resource_return_type
+
+        Returns:
+        """
         # Act
         template = self.fixture.create_and_save_template()
         custom_resource_api.parse_and_save(
@@ -100,9 +137,13 @@ class TestCreateAndSaveCustomResource(MongoIntegrationBaseTestCase):
         )
         result = custom_resource_api.get_all_by_template(template)
         # Assert
-        self.assertEquals(result[0].type, CUSTOM_RESOURCE_TYPE.RESOURCE.value)
+        self.assertEqual(result[0].type, CUSTOM_RESOURCE_TYPE.RESOURCE.value)
 
     def test_create_all_resource_custom_resource_return_type_is_not_none(self):
+        """test_create_all_resource_custom_resource_return_type_is_not_none
+
+        Returns:
+        """
         # Act
         template = self.fixture.create_and_save_template()
         custom_resource_api.parse_and_save(
@@ -113,6 +154,10 @@ class TestCreateAndSaveCustomResource(MongoIntegrationBaseTestCase):
         self.assertIsNotNone(all(item.type for item in result))
 
     def test_create_custom_resource_minus_sort_return_except(self):
+        """test_create_custom_resource_minus_sort_return_except
+
+        Returns:
+        """
         # Act
         template = self.fixture.create_and_save_template()
         # Assert
@@ -122,6 +167,10 @@ class TestCreateAndSaveCustomResource(MongoIntegrationBaseTestCase):
             )
 
     def test_create_custom_resource_no_title_return_except(self):
+        """test_create_custom_resource_no_title_return_except
+
+        Returns:
+        """
         # Act
         template = self.fixture.create_and_save_template()
         # Assert
@@ -131,6 +180,10 @@ class TestCreateAndSaveCustomResource(MongoIntegrationBaseTestCase):
             )
 
     def test_create_custom_resource_no_sort_return_except(self):
+        """test_create_custom_resource_no_sort_return_except
+
+        Returns:
+        """
         # Act
         template = self.fixture.create_and_save_template()
         # Assert
@@ -140,6 +193,10 @@ class TestCreateAndSaveCustomResource(MongoIntegrationBaseTestCase):
             )
 
     def test_create_custom_resource_wrong_type_return_except(self):
+        """test_create_custom_resource_wrong_type_return_except
+
+        Returns:
+        """
         # Act
         template = self.fixture.create_and_save_template()
         # Assert
@@ -151,10 +208,18 @@ class TestCreateAndSaveCustomResource(MongoIntegrationBaseTestCase):
 
 
 class TestGetAllByTemplate(MongoIntegrationBaseTestCase):
+    """
+    Test Get All By Template
+    """
 
     fixture = fixtureCustomResource
 
     def test_get_all_by_template_return_all(self):
+        """test_get_all_by_template_return_all
+
+        Returns:
+        """
+
         # Act
         length = len(self.fixture.get_dict_all_custom_resource())
         template = self.fixture.create_and_save_template()
@@ -163,10 +228,13 @@ class TestGetAllByTemplate(MongoIntegrationBaseTestCase):
         )
         result = custom_resource_api.get_all_by_template(template)
         # Assert
-        self.assertEquals(length, len(result))
+        self.assertEqual(length, len(result))
 
 
 class TestGetByRoleForCurrentTemplate(MongoIntegrationBaseTestCase):
+    """
+    Test Get By Role For Current Template
+    """
 
     fixture = fixtureCustomResource
 
@@ -176,6 +244,11 @@ class TestGetByRoleForCurrentTemplate(MongoIntegrationBaseTestCase):
     def test_get_by_role_for_current_template_returns_custom_resource(
         self, _get_current_template
     ):
+        """test_get_by_role_for_current_template_returns_custom_resource
+
+        Returns:
+        """
+
         # Arrange
         mock_user = create_mock_user("1", is_superuser=True)
         mock_request = create_mock_request(user=mock_user)
@@ -189,6 +262,9 @@ class TestGetByRoleForCurrentTemplate(MongoIntegrationBaseTestCase):
 
 
 class TestGetByCurrentTemplateAndSlug(MongoIntegrationBaseTestCase):
+    """
+    Test Get By Current Template And Slug
+    """
 
     fixture = fixtureCustomResource
 
@@ -198,6 +274,11 @@ class TestGetByCurrentTemplateAndSlug(MongoIntegrationBaseTestCase):
     def test_get_by_current_template_and_slug_returns_custom_resource(
         self, _get_current_template
     ):
+        """test_get_by_current_template_and_slug_returns_custom_resource
+
+        Returns:
+        """
+
         # Arrange
         mock_user = create_mock_user("1", is_superuser=True)
         mock_request = create_mock_request(user=mock_user)
@@ -215,6 +296,11 @@ class TestGetByCurrentTemplateAndSlug(MongoIntegrationBaseTestCase):
     def test_get_by_current_template_and__incorrect_slug_raises_error(
         self, _get_current_template
     ):
+        """test_get_by_current_template_and__incorrect_slug_raises_error
+
+        Returns:
+        """
+
         # Arrange
         mock_user = create_mock_user("1", is_superuser=True)
         mock_request = create_mock_request(user=mock_user)
@@ -227,23 +313,39 @@ class TestGetByCurrentTemplateAndSlug(MongoIntegrationBaseTestCase):
 
 
 class TestDeleteCustomResourcesByTemplate(MongoIntegrationBaseTestCase):
+    """
+    Test Delete Custom Resources By Template
+    """
 
     fixture = fixtureCustomResource
 
     def test_delete_custom_resources_by_template_return_0(self):
+        """test_delete_custom_resources_by_template_return_0
+
+        Returns:
+        """
+
         # Act
         self.fixture.insert_data()
         custom_resource_api.delete_custom_resources_by_template(self.fixture.template)
         result = custom_resource_api.get_all_by_template(self.fixture.template)
         # Assert
-        self.assertEquals(0, len(result))
+        self.assertEqual(0, len(result))
 
 
 class TestSaveList(MongoIntegrationBaseTestCase):
+    """
+    Test Save List
+    """
 
     fixture = fixtureCustomResource
 
     def test_save_list(self):
+        """test_save_list
+
+        Returns:
+        """
+
         # Act
         template = self.fixture.create_and_save_template()
         custom_resource1 = CustomResource(
@@ -256,27 +358,37 @@ class TestSaveList(MongoIntegrationBaseTestCase):
         custom_resource_api.save_list(list_custom)
         result = custom_resource_api.get_all_by_template(template)
         # Assert
-        self.assertEquals(len(list_custom), len(result))
+        self.assertEqual(len(list_custom), len(result))
 
 
 class TestReplaceCustomResourceByTemplate(MongoIntegrationBaseTestCase):
+    """
+    Test Replace Custom Resource By Template
+    """
 
     fixture = fixtureCustomResource
 
     def test_replace_custom_resources_by_template_return_ok(self):
+        """test_replace_custom_resources_by_template_return_ok"""
+
         # Check
         template = self.fixture.create_and_save_template()
         result = custom_resource_api.get_all_by_template(template)
-        self.assertEquals(0, len(result))
+        self.assertEqual(0, len(result))
         # Act
         custom_resource_api.replace_custom_resources_by_template(
             template, self.fixture.get_dict_all_custom_resource()
         )
         result = custom_resource_api.get_all_by_template(template)
         # Assert
-        self.assertEquals(10, len(result))
+        self.assertEqual(10, len(result))
 
     def test_replace_custom_resources_by_template_check_old(self):
+        """test_replace_custom_resources_by_template_check_old
+
+        Returns:
+        """
+
         # Check
         template = self.fixture.create_and_save_template()
         custom_resource_api.parse_and_save(
@@ -284,7 +396,7 @@ class TestReplaceCustomResourceByTemplate(MongoIntegrationBaseTestCase):
         )
         result = custom_resource_api.get_all_by_template(template)
         old_cr = list(result)[0]
-        self.assertEquals(1, len(result))
+        self.assertEqual(1, len(result))
         # Act
         custom_resource_api.replace_custom_resources_by_template(
             template, self.fixture.get_dict_all_custom_resource()
@@ -294,6 +406,11 @@ class TestReplaceCustomResourceByTemplate(MongoIntegrationBaseTestCase):
         self.assertFalse(old_cr in result)
 
     def test_replace_custom_resources_by_template_return_raise(self):
+        """test_replace_custom_resources_by_template_return_raise
+
+        Returns:
+        """
+
         # Act
         template = self.fixture.create_and_save_template()
         # Assert

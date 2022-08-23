@@ -2,7 +2,9 @@
 """
 
 
-class DataStatus(object):
+class DataStatus:
+    """Data Status"""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     DELETED = "deleted"

@@ -19,10 +19,14 @@ fixtureCustomResource = CustomResourceFixtures()
 
 
 class TestCreateAllResourceCustomResource(TestCase):
+    """
+    Test Create All Resource Custom Resource
+    """
 
     fixture = fixtureCustomResource
 
     def test_create_all_resource_custom_resource_return_type_all(self):
+        """test_create_all_resource_custom_resource_return_type_all"""
         # Act
         key = "all_resource"
         custom_resource = custom_resource_api._create_custom_resource_type_all(
@@ -31,9 +35,10 @@ class TestCreateAllResourceCustomResource(TestCase):
             key,
         )
         # Assert
-        self.assertEquals(custom_resource.type, CUSTOM_RESOURCE_TYPE.ALL.value)
+        self.assertEqual(custom_resource.type, CUSTOM_RESOURCE_TYPE.ALL.value)
 
     def test_create_all_resource_custom_resource_return_icon(self):
+        """test_create_all_resource_custom_resource_return_icon"""
         # Act
         key = "all_resource"
         custom_resource = custom_resource_api._create_custom_resource_type_all(
@@ -42,9 +47,10 @@ class TestCreateAllResourceCustomResource(TestCase):
             key,
         )
         # Assert
-        self.assertEquals(custom_resource.icon, "fa-globe")
+        self.assertEqual(custom_resource.icon, "fa-globe")
 
     def test_create_all_resource_custom_resource_return_icon_color(self):
+        """test_create_all_resource_custom_resource_return_icon_color"""
         # Act
         key = "all_resource"
         custom_resource = custom_resource_api._create_custom_resource_type_all(
@@ -53,9 +59,10 @@ class TestCreateAllResourceCustomResource(TestCase):
             key,
         )
         # Assert
-        self.assertEquals(custom_resource.icon_color, "#557EB9")
+        self.assertEqual(custom_resource.icon_color, "#557EB9")
 
     def test_create_all_resource_custom_resource_return_sort(self):
+        """test_create_all_resource_custom_resource_return_sort"""
         # Act
         key = "all_resource"
         custom_resource = custom_resource_api._create_custom_resource_type_all(
@@ -64,14 +71,18 @@ class TestCreateAllResourceCustomResource(TestCase):
             key,
         )
         # Assert
-        self.assertEquals(custom_resource.sort, 0)
+        self.assertEqual(custom_resource.sort, 0)
 
 
 class TestCreateCustomResource(TestCase):
+    """
+    Test Create Custom Resource
+    """
 
     fixture = fixtureCustomResource
 
     def test_create_custom_resource_return_type_resource(self):
+        """test_create_custom_resource_return_type_resource"""
         # Act
         key = "Organization"
         custom_resource = custom_resource_api._create_custom_resource(
@@ -80,9 +91,10 @@ class TestCreateCustomResource(TestCase):
             key,
         )
         # Assert
-        self.assertEquals(custom_resource.type, CUSTOM_RESOURCE_TYPE.RESOURCE.value)
+        self.assertEqual(custom_resource.type, CUSTOM_RESOURCE_TYPE.RESOURCE.value)
 
     def test_create_custom_resource_return_name_in_schema(self):
+        """test_create_custom_resource_return_name_in_schema"""
         # Act
         key = "Organization"
         custom_resource = custom_resource_api._create_custom_resource(
@@ -91,9 +103,10 @@ class TestCreateCustomResource(TestCase):
             key,
         )
         # Assert
-        self.assertEquals(custom_resource.name_in_schema, key)
+        self.assertEqual(custom_resource.name_in_schema, key)
 
     def test_create_custom_resource_return_title(self):
+        """test_create_custom_resource_return_title"""
         # Act
         key = "Organization"
         custom_resource = custom_resource_api._create_custom_resource(
@@ -102,9 +115,11 @@ class TestCreateCustomResource(TestCase):
             key,
         )
         # Assert
-        self.assertEquals(custom_resource.title, "Organization")
+        self.assertEqual(custom_resource.title, "Organization")
 
     def test_create_custom_resource_return_description(self):
+        """test_create_custom_resource_return_description"""
+
         # Act
         key = "Organization"
         custom_resource = custom_resource_api._create_custom_resource(
@@ -113,7 +128,7 @@ class TestCreateCustomResource(TestCase):
             key,
         )
         # Assert
-        self.assertEquals(
+        self.assertEqual(
             custom_resource.description,
             "a group of people that come together to contribute to or "
             "participate in a federated data operation. Organizations can "
@@ -123,6 +138,8 @@ class TestCreateCustomResource(TestCase):
         )
 
     def test_create_custom_resource_return_icon(self):
+        """test_create_custom_resource_return_icon"""
+
         # Act
         key = "Organization"
         custom_resource = custom_resource_api._create_custom_resource(
@@ -131,9 +148,11 @@ class TestCreateCustomResource(TestCase):
             key,
         )
         # Assert
-        self.assertEquals(custom_resource.icon, "fa-university")
+        self.assertEqual(custom_resource.icon, "fa-university")
 
     def test_create_custom_resource_return_icon_color(self):
+        """test_create_custom_resource_return_icon_color"""
+
         # Act
         key = "Organization"
         custom_resource = custom_resource_api._create_custom_resource(
@@ -142,9 +161,11 @@ class TestCreateCustomResource(TestCase):
             key,
         )
         # Assert
-        self.assertEquals(custom_resource.icon_color, "#2CAAE2")
+        self.assertEqual(custom_resource.icon_color, "#2CAAE2")
 
     def test_create_custom_resource_return_display_icon(self):
+        """test_create_custom_resource_return_display_icon"""
+
         # Act
         key = "Organization"
         custom_resource = custom_resource_api._create_custom_resource(
@@ -156,6 +177,8 @@ class TestCreateCustomResource(TestCase):
         self.assertTrue(custom_resource.display_icon)
 
     def test_create_custom_resource_return_role_choice(self):
+        """test_create_custom_resource_return_role_choice"""
+
         # Act
         key = "Organization"
         custom_resource = custom_resource_api._create_custom_resource(
@@ -164,9 +187,11 @@ class TestCreateCustomResource(TestCase):
             key,
         )
         # Assert
-        self.assertEquals(custom_resource.role_choice, "Organization")
+        self.assertEqual(custom_resource.role_choice, "Organization")
 
     def test_create_custom_resource_return_role_type(self):
+        """test_create_custom_resource_return_role_type"""
+
         # Act
         key = "Organization"
         custom_resource = custom_resource_api._create_custom_resource(
@@ -175,9 +200,11 @@ class TestCreateCustomResource(TestCase):
             key,
         )
         # Assert
-        self.assertEquals(custom_resource.role_type, "Organization")
+        self.assertEqual(custom_resource.role_type, "Organization")
 
     def test_create_custom_resource_return_sort(self):
+        """test_create_custom_resource_return_sort"""
+
         # Act
         key = "Organization"
         custom_resource = custom_resource_api._create_custom_resource(
@@ -186,14 +213,19 @@ class TestCreateCustomResource(TestCase):
             key,
         )
         # Assert
-        self.assertEquals(custom_resource.sort, 1)
+        self.assertEqual(custom_resource.sort, 1)
 
 
 class TestIsCustomResourceTypeResource(TestCase):
+    """
+    Test Is Custom Resource Type Resource
+    """
 
     fixture = fixtureCustomResource
 
     def test_is_all_resource_return_type_resource(self):
+        """test_is_all_resource_return_type_resource"""
+
         # Act
         custom_resource = CustomResource(type=CUSTOM_RESOURCE_TYPE.RESOURCE.value)
         # Assert
@@ -202,6 +234,8 @@ class TestIsCustomResourceTypeResource(TestCase):
         )
 
     def test_is_all_resource_return_type_all(self):
+        """test_is_all_resource_return_type_all"""
+
         # Act
         custom_resource = CustomResource(type=CUSTOM_RESOURCE_TYPE.ALL.value)
         # Assert
@@ -211,10 +245,15 @@ class TestIsCustomResourceTypeResource(TestCase):
 
 
 class TestIsTypeAll(TestCase):
+    """
+    Test Is Type All
+    """
 
     fixture = fixtureCustomResource
 
     def test_is_all_resource_return_is_resource_custom_resource(self):
+        """test_is_all_resource_return_is_resource_custom_resource"""
+
         # Act
         key = "Organization"
         resource = self.fixture.get_dict_custom_resource()[key]
@@ -222,6 +261,8 @@ class TestIsTypeAll(TestCase):
         self.assertFalse(custom_resource_api._is_type_all(resource))
 
     def test_is_all_resource_return_is_resource_all_resource(self):
+        """test_is_all_resource_return_is_resource_all_resource"""
+
         # Act
         key = "all_resource"
         resource = self.fixture.get_dict_custom_resource_all_resource()[key]
@@ -229,6 +270,8 @@ class TestIsTypeAll(TestCase):
         self.assertTrue(custom_resource_api._is_type_all(resource))
 
     def test_is_all_resource_raise_exception(self):
+        """test_is_all_resource_raise_exception"""
+
         # Act
         resource = self.fixture.get_dict_custom_resource_no_type()
         # Assert
@@ -237,16 +280,23 @@ class TestIsTypeAll(TestCase):
 
 
 class TestCheckCurate(TestCase):
+    """
+    Test Check Curate
+    """
 
     fixture = fixtureCustomResource
 
     def test_check_curate_core_curate_app_not_installed_return_none(self):
+        """test_check_curate_core_curate_app_not_installed_return_none"""
+
         # Act
         custom_resource = CustomResource()
         # Assert
         self.assertIsNone(custom_resource_api._check_curate(custom_resource))
 
     def test_check_curate_is_not_resource_return_none(self):
+        """test_check_curate_is_not_resource_return_none"""
+
         # Act
         custom_resource = CustomResource()
         # Assert
@@ -254,6 +304,8 @@ class TestCheckCurate(TestCase):
             self.assertIsNone(custom_resource_api._check_curate(custom_resource))
 
     def test_check_curate_is_resource_return_except(self):
+        """test_check_curate_is_resource_return_except"""
+
         # Act
         custom_resource = CustomResource(type=CUSTOM_RESOURCE_TYPE.RESOURCE.value)
         # Assert
@@ -262,6 +314,8 @@ class TestCheckCurate(TestCase):
                 custom_resource_api._check_curate(custom_resource)
 
     def test_check_curate_is_resource_with_role_type_return_except(self):
+        """test_check_curate_is_resource_with_role_type_return_except"""
+
         # Act
         custom_resource = CustomResource(
             type=CUSTOM_RESOURCE_TYPE.RESOURCE.value, role_type="role_type"
@@ -272,6 +326,8 @@ class TestCheckCurate(TestCase):
                 custom_resource_api._check_curate(custom_resource)
 
     def test_check_curate_is_resource_with_role_choice_return_except(self):
+        """test_check_curate_is_resource_with_role_choice_return_except"""
+
         # Act
         custom_resource = CustomResource(
             type=CUSTOM_RESOURCE_TYPE.RESOURCE.value, role_choice="role_choice"
@@ -282,6 +338,8 @@ class TestCheckCurate(TestCase):
                 custom_resource_api._check_curate(custom_resource)
 
     def test_check_curate_is_resource_with_all_return_none(self):
+        """test_check_curate_is_resource_with_all_return_none"""
+
         # Act
         custom_resource = CustomResource(
             type=CUSTOM_RESOURCE_TYPE.RESOURCE.value,
@@ -294,6 +352,10 @@ class TestCheckCurate(TestCase):
 
 
 class TestGetByCurrentTemplateAndSlug(TestCase):
+    """
+    Test Get By Current Template And Slug
+    """
+
     @patch.object(CustomResource, "get_custom_resource_by_template_and_slug")
     @patch(
         "core_main_registry_app.components.custom_resource.api._get_current_template"
@@ -301,6 +363,8 @@ class TestGetByCurrentTemplateAndSlug(TestCase):
     def test_get_returns_custom_resource(
         self, get_current, get_custom_resource_by_template_and_slug
     ):
+        """test_get_returns_custom_resource"""
+
         # Arrange
         mock_user = create_mock_user("1", is_superuser=True)
         mock_request = create_mock_request(user=mock_user)
@@ -317,9 +381,11 @@ class TestGetByCurrentTemplateAndSlug(TestCase):
         )
 
     @patch.object(CustomResource, "get_custom_resource_by_template_and_slug")
-    def test_get_absent_slug_or_template_raises_DoesNotExist(
+    def test_get_absent_slug_or_template_raises_does_not_exist(
         self, get_custom_resource_by_template_and_slug
     ):
+        """test_get_absent_slug_or_template_raises_DoesNotExist"""
+
         # Arrange
         mock_user = create_mock_user("1", is_superuser=True)
         mock_request = create_mock_request(user=mock_user)

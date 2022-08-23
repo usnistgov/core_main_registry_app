@@ -26,5 +26,5 @@ def get_current_registry_template(request):
             )
         )
         return template_api.get_by_id(template_version.current, request=request)
-    except Exception as e:
-        raise exceptions.ModelError(str(e))
+    except Exception as exception:
+        raise exceptions.ModelError(str(exception))

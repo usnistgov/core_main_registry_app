@@ -35,8 +35,8 @@ def init_registry():
         _init_custom_registry()
         # init watcher
         refinement_watch.init()
-    except Exception as e:
-        logger.error("Impossible to init the registry: {0}".format(str(e)))
+    except Exception as exception:
+        logger.error("Impossible to init the registry: %s", str(exception))
 
 
 def _add_template():
@@ -62,8 +62,8 @@ def _add_template():
         default_xsd_path = finders.find(xsd_filepath)
         xsd_data = read_file_content(default_xsd_path)
         registry_system_api.insert_registry_schema(xsd_filename, xsd_data)
-    except Exception as e:
-        logger.error("Impossible to add the template: {0}".format(str(e)))
+    except Exception as exception:
+        logger.error("Impossible to add the template:  %s", str(exception))
 
 
 def _init_refinements():
@@ -75,8 +75,8 @@ def _init_refinements():
         template = registry_system_api.get_current_registry_template()
         # Init.
         refinement.init_refinements(template)
-    except Exception as e:
-        logger.error("Impossible to init the refinements: {0}".format(str(e)))
+    except Exception as exception:
+        logger.error("Impossible to init the refinements:  %s", str(exception))
 
 
 def _init_custom_registry():
@@ -107,10 +107,10 @@ def _init_custom_registry():
 
         try:
             default_json_path = finders.find(json_path)
-            with open(default_json_path) as json_file:
+            with open(default_json_path, encoding="utf-8") as json_file:
                 data = json.load(json_file)
                 custom_resource_api.parse_and_save(data, current_template)
-        except Exception as e:
+        except Exception as exception:
             logger.error(
-                "Impossible to use the custom registry json file: {0}".format(str(e))
+                "Impossible to use the custom registry json file:  %s", str(exception)
             )

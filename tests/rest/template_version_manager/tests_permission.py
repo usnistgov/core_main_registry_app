@@ -13,10 +13,16 @@ from core_main_registry_app.rest.template_version_manager import (
 
 
 class TestCurrentTemplateVersionPatchPermission(SimpleTestCase):
+    """Test Current Template Version Patch Permission"""
+
     def setUp(self):
+        """setUp"""
+
         self.fake_id = -1
 
     def test_anonymous_returns_http_403(self):
+        """test_anonymous_returns_http_403"""
+
         response = RequestMock.do_request_patch(
             template_version_manager_views.CurrentTemplateVersion.as_view(), None
         )
@@ -24,6 +30,8 @@ class TestCurrentTemplateVersionPatchPermission(SimpleTestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_authenticated_returns_http_403(self):
+        """test_authenticated_returns_http_403"""
+
         mock_user = create_mock_user("1")
 
         response = RequestMock.do_request_patch(
@@ -41,6 +49,8 @@ class TestCurrentTemplateVersionPatchPermission(SimpleTestCase):
         template_get_by_id,
         version_manager_set_current,
     ):
+        """test_staff_returns_http_200"""
+
         version_manager_set_current.return_value = {}
         template_get_by_id.return_value = Template(user=None)
 

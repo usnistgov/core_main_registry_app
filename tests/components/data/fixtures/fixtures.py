@@ -39,9 +39,9 @@ class DataRegistryFixtures(FixtureInterface):
         xml_path = join(mock_data_path, "data.xml")
         xml_without_status_path = join(mock_data_path, "data_without_status.xml")
 
-        with open(xml_path, "r") as xml_file:
+        with open(xml_path, "r", encoding="utf-8") as xml_file:
             xml_content_with_status = xml_file.read()
-        with open(xml_without_status_path, "r") as xml_file:
+        with open(xml_without_status_path, "r", encoding="utf-8") as xml_file:
             xml_content_without_status = xml_file.read()
 
         self.data_1 = _create_data(self.template, xml_content_with_status)
@@ -58,7 +58,7 @@ class DataRegistryFixtures(FixtureInterface):
         """
         mock_data_path = join(dirname(realpath(__file__)), "data")
         mock_xsl_path = join(mock_data_path, "res-md.xsd")
-        with open(mock_xsl_path, "r") as xsd_file:
+        with open(mock_xsl_path, "r", encoding="utf-8") as xsd_file:
             xsd = xsd_file.read()
 
         self.template = Template()

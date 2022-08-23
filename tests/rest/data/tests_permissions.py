@@ -11,7 +11,11 @@ from core_main_registry_app.rest.data import views as data_rest_views
 
 
 class TestDataDetailDeletePermissions(SimpleTestCase):
+    """Test Data Detail Delete Permissions"""
+
     def test_anonymous_returns_http_403(self):
+        """test_anonymous_returns_http_403"""
+
         response = RequestMock.do_request_delete(
             data_rest_views.DataDetailRegistry.as_view(), None, param={"pk": 0}
         )
@@ -23,6 +27,8 @@ class TestDataDetailDeletePermissions(SimpleTestCase):
     def test_authenticated_returns_http_403(
         self, mock_data_api_get_by_id, mock_data_api_delete
     ):
+        """test_authenticated_returns_http_403"""
+
         mock_data_api_get_by_id.return_value = None
         mock_data_api_delete.return_value = None
 
@@ -39,6 +45,8 @@ class TestDataDetailDeletePermissions(SimpleTestCase):
     def test_staff_returns_http_403(
         self, mock_data_api_get_by_id, mock_data_api_delete
     ):
+        """test_staff_returns_http_403"""
+
         mock_data_api_get_by_id.return_value = None
         mock_data_api_delete.return_value = None
 
@@ -55,6 +63,8 @@ class TestDataDetailDeletePermissions(SimpleTestCase):
     def test_superuser_returns_http_403(
         self, mock_data_api_get_by_id, mock_data_api_delete
     ):
+        """test_superuser_returns_http_403"""
+
         mock_data_api_get_by_id.return_value = None
         mock_data_api_delete.return_value = None
 
@@ -71,6 +81,8 @@ class TestDataDetailDeletePermissions(SimpleTestCase):
     def test_superuser_and_staff_returns_http_204(
         self, mock_data_api_get_by_id, mock_data_api_delete
     ):
+        """test_superuser_and_staff_returns_http_204"""
+
         mock_data_api_get_by_id.return_value = None
         mock_data_api_delete.return_value = None
 
