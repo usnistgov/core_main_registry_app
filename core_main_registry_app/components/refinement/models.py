@@ -82,7 +82,15 @@ class Refinement(models.Model):
             return Refinement.objects.get(
                 template_hash=template_hash, slug__startswith=slug
             )
-        except Refinement.DoesNotExist as e:
-            raise exceptions.DoesNotExist(str(e))
+        except Refinement.DoesNotExist as exception:
+            raise exceptions.DoesNotExist(str(exception))
         except Exception as ex:
             raise exceptions.ModelError(str(ex))
+
+    def __str__(self):
+        """Refinement as string
+
+        Returns:
+
+        """
+        return self.name

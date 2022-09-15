@@ -13,7 +13,7 @@ for admin_menu_item in Menu.items["admin"]:
 config_children = (
     MenuItem(
         "Configuration",
-        reverse("admin:core_main_registry_app_custom_registry"),
+        reverse("core-admin:core_main_registry_app_custom_registry"),
         icon="upload",
     ),
 )

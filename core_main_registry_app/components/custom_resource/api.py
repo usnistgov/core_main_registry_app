@@ -2,11 +2,13 @@
 """
 import logging
 
-from core_main_app.commons import exceptions as exceptions
-from core_main_app.components.template import api as template_api
-from core_main_app.components.version_manager import api as version_manager_api
 from django.conf import settings
 
+from core_main_app.commons import exceptions as exceptions
+from core_main_app.components.template import api as template_api
+from core_main_app.components.template_version_manager import (
+    api as template_version_manager_api,
+)
 from core_main_registry_app.components.custom_resource.models import CustomResource
 from core_main_registry_app.constants import CUSTOM_RESOURCE_TYPE
 from core_main_registry_app.settings import REGISTRY_XSD_FILENAME
@@ -39,8 +41,8 @@ def parse_and_save(data, current_template):
         try:
             _check_curate(custom_resource)
             custom_resource.save()
-        except Exception as e:
-            raise exceptions.ModelError(str(e))
+        except Exception as exception:
+            raise exceptions.ModelError(str(exception))
 
 
 def _check_curate(custom_resource):
@@ -71,8 +73,8 @@ def _get_value(dict, key):
     """
     try:
         return dict[key]
-    except:
-        logger.warning("The key {0} is missing from the JSON file.".format(key))
+    except Exception:
+        logger.warning("The key %s is missing from the JSON file.", str(key))
         return None
 
 
@@ -95,7 +97,7 @@ def _is_type_all(resource):
     """
     try:
         return resource["type"] == CUSTOM_RESOURCE_TYPE.ALL.value
-    except:
+    except Exception:
         raise exceptions.ModelError("The configuration file is not valid.")
 
 
@@ -176,7 +178,7 @@ def get_current_custom_resource_type_all(request):
         raise exceptions.ModelError(
             "Multiple custom resources with type 'all' were found."
         )
-    elif len(custom_resources) == 0:
+    if len(custom_resources) == 0:
         raise exceptions.DoesNotExist(
             "The custom resource with type 'all' does not exist."
         )
@@ -192,11 +194,11 @@ def _get_current_template(request):
     Returns:
     """
     current_template_version = (
-        version_manager_api.get_active_global_version_manager_by_title(
+        template_version_manager_api.get_active_global_version_manager_by_title(
             REGISTRY_XSD_FILENAME, request=request
         )
     )
-    current_template = template_api.get(
+    current_template = template_api.get_by_id(
         current_template_version.current, request=request
     )
     return current_template
@@ -277,7 +279,7 @@ def replace_custom_resources_by_template(template, data):
         # create new custom resources
         parse_and_save(data, template)
 
-    except Exception as e:
+    except Exception as exception:
         # rollback old custom resource
         save_list(old_custom_resources, True)
-        raise e
+        raise exception

@@ -39,7 +39,12 @@ class TreeInfo(object):
         return self.title < other.title
 
     def value_as_category(self):
-        return "{0}{1}".format(self.value, CATEGORY_SUFFIX)
+        """value_as_category
+
+        Returns
+
+        """
+        return f"{self.value}{CATEGORY_SUFFIX}"
 
 
 def build_tree(tree, element_name, element_display_name, enums, dot_query):
@@ -66,13 +71,13 @@ def build_tree(tree, element_name, element_display_name, enums, dot_query):
 
         for i, level in enumerate(levels):
             # Create the tree info.
-            g = TreeInfo(
+            graph = TreeInfo(
                 xsd_name=level,
                 title=level,
                 path=dot_query,
                 value=":".join(levels[: i + 1]),
             )
-            g_node = parent_node.setdefault(g, OrderedDict())
+            g_node = parent_node.setdefault(graph, OrderedDict())
             parent_node = g_node
 
             # Case where it is the last element of the enum
@@ -80,17 +85,15 @@ def build_tree(tree, element_name, element_display_name, enums, dot_query):
             if len(levels) - 1 == i and _check_case_unspecified(enums, enum, i, level):
                 # Case unspecified: create a new node for the unspecified node
                 title = (
-                    "{0} {1}".format(UNSPECIFIED_LABEL, level)
-                    if UNSPECIFIED_CATEGORY
-                    else level
+                    f"{UNSPECIFIED_LABEL} {level}" if UNSPECIFIED_CATEGORY else level
                 )
-                g = TreeInfo(
+                graph = TreeInfo(
                     xsd_name=level,
                     title=title,
                     path=dot_query,
                     value=":".join(levels[: i + 1]),
                 )
-                parent_node.setdefault(g, OrderedDict())
+                parent_node.setdefault(graph, OrderedDict())
 
     return tree
 

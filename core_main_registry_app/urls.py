@@ -12,6 +12,8 @@ from core_main_app.utils.rendering import render
 from core_main_app.views.common import views as common_views
 from core_main_app.views.user import views as user_views, ajax as user_ajax
 
+from core_main_registry_app.settings import ENABLE_BLOB_ENDPOINTS
+
 schema_view = get_schema_view(
     openapi.Info(
         title="REST API",
@@ -147,4 +149,15 @@ else:
     )
     urlpatterns.append(
         re_path(r"^logout", user_views.custom_logout, name="core_main_app_logout")
+    )
+
+if ENABLE_BLOB_ENDPOINTS:
+    from core_main_app.components.blob import api as blob_api
+
+    urlpatterns.append(
+        re_path(
+            r"^assign-blob-workspace",
+            user_ajax.AssignView.as_view(api=blob_api),
+            name="core_main_assign_blob_workspace",
+        )
     )

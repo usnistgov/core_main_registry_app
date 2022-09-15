@@ -53,6 +53,16 @@ def get_doc(node, values, count_mode):
 
 
 def recursive_node_to_dict(node, values, count_mode):
+    """recursive node to dict.
+
+    Args:
+        node:
+        values:
+        count_mode:
+
+    Returns:
+
+    """
     result = get_doc(node, values, count_mode)
     children = [
         recursive_node_to_dict(c, values, count_mode) for c in node.get_children()
@@ -67,11 +77,23 @@ def recursive_node_to_dict(node, values, count_mode):
 
 
 def get_tree(nodes, values, count_mode):
+    """get tree.
+
+    Args:
+        nodes:
+        values:
+        count_mode:
+
+    Returns:
+
+    """
     root_nodes = cache_tree_children(nodes)
     return [recursive_node_to_dict(n, values, count_mode) for n in root_nodes]
 
 
 class FancyTreeWidget(Widget):
+    """Fancy Tree Widget"""
+
     def __init__(
         self, attrs=None, choices=(), queryset=None, select_mode=3, count_mode=False
     ):
@@ -83,19 +105,43 @@ class FancyTreeWidget(Widget):
             queryset:
             select_mode:
             count_mode: Add an html element to display counts next to each node (True/False).
+
         """
-        super(FancyTreeWidget, self).__init__(attrs)
+        super().__init__(attrs)
         self.queryset = queryset
         self.select_mode = select_mode
         self.choices = list(choices)
         self.count_mode = count_mode
 
     def value_from_datadict(self, data, files, name):
-        if isinstance(data, (MultiValueDict)):
+        """value from datadict
+
+        Args:
+            data:
+            files:
+            name:
+
+        Returns:
+
+        """
+
+        if isinstance(data, MultiValueDict):
             return data.getlist(name)
         return data.get(name, None)
 
     def render(self, name, value, attrs=None, choices=(), renderer=None):
+        """render
+
+        Args:
+            name:
+            value:
+            attrs:
+            choices:
+            renderer:
+
+        Returns:
+
+        """
         if value is None:
             value = []
         if not isinstance(value, (list, tuple)):
@@ -124,11 +170,11 @@ class FancyTreeWidget(Widget):
             else:
                 label_for = ""
 
-            cb = forms.CheckboxInput(
+            checkbox = forms.CheckboxInput(
                 final_attrs, check_test=lambda value: value in str_values
             )
             option_value = force_text(option_value)
-            rendered_cb = cb.render(name, option_value)
+            rendered_cb = checkbox.render(name, option_value)
             option_label = conditional_escape(force_text(option_label))
             output.append(
                 "<li><label%s>%s %s</label></li>"
@@ -263,7 +309,8 @@ class FancyTreeWidget(Widget):
         output.append("</script>")
         return mark_safe("\n".join(output))
 
-    class Media(object):
+    class Media:
+        """Media"""
 
         js = ("core_explore_common_app/common/js/tools.js",)
 

@@ -3,6 +3,7 @@
 
 
 from django.db import models
+from django.core.exceptions import ObjectDoesNotExist
 from django_extensions.db.fields import AutoSlugField
 from mptt.models import MPTTModel, TreeForeignKey
 
@@ -10,6 +11,8 @@ from core_main_app.commons import exceptions as exceptions
 
 
 class Category(MPTTModel):
+    """Category object"""
+
     parent = TreeForeignKey(
         "self", null=True, on_delete=models.CASCADE, blank=True, related_name="children"
     )
@@ -19,7 +22,14 @@ class Category(MPTTModel):
     value = models.CharField(max_length=255)
     refinement = models.ForeignKey("Refinement", on_delete=models.CASCADE)
 
+    class Meta:
+        """Meta"""
+
+        verbose_name_plural = "Categories"
+
     class MPTTMeta(object):
+        """MPTTMeta"""
+
         verbose_name_plural = "categories"
         unique_together = (("name", "slug", "parent"),)
         ordering = ("tree_id", "lft")
@@ -67,8 +77,8 @@ class Category(MPTTModel):
         """
         try:
             return Category.objects.get(pk=category_id)
-        except Category.DoesNotExist as e:
-            raise exceptions.DoesNotExist(str(e))
+        except ObjectDoesNotExist as exception:
+            raise exceptions.DoesNotExist(str(exception))
         except Exception as ex:
             raise exceptions.ModelError(str(ex))
 
@@ -87,8 +97,8 @@ class Category(MPTTModel):
             return Category.objects.get(
                 slug__startswith=parent_slug, refinement_id=refinement_id
             ).get_family()
-        except Category.DoesNotExist as e:
-            raise exceptions.DoesNotExist(str(e))
+        except ObjectDoesNotExist as exception:
+            raise exceptions.DoesNotExist(str(exception))
         except Exception as ex:
             raise exceptions.ModelError(str(ex))
 
@@ -116,7 +126,15 @@ class Category(MPTTModel):
             return Category.objects.get(
                 name=name, refinement_id=refinement_id
             ).get_family()
-        except Category.DoesNotExist as e:
-            raise exceptions.DoesNotExist(str(e))
+        except ObjectDoesNotExist as exception:
+            raise exceptions.DoesNotExist(str(exception))
         except Exception as ex:
             raise exceptions.ModelError(str(ex))
+
+    def __str__(self):
+        """Category as string
+
+        Returns:
+
+        """
+        return self.name

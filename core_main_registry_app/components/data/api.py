@@ -6,6 +6,7 @@ import string
 
 import pytz
 
+from xml_utils.xsd_tree.xsd_tree import XSDTree
 import core_main_app.components.data.api as data_api
 from core_main_app.access_control.decorators import access_control
 from core_main_app.commons import exceptions as exceptions
@@ -15,7 +16,6 @@ from core_main_registry_app.commons.constants import DataStatus
 from core_main_registry_app.components.data.access_control import can_publish_data
 from core_main_registry_app.system.api import is_local_id_already_used
 from core_main_registry_app.utils.role.extraction import role_extraction
-from xml_utils.xsd_tree.xsd_tree import XSDTree
 
 
 def get_role(data):
@@ -27,7 +27,7 @@ def get_role(data):
     Returns:
 
     """
-    return role_extraction(data.dict_content)
+    return role_extraction(data.get_dict_content())
 
 
 @access_control(can_publish_data)
@@ -41,6 +41,9 @@ def publish(data, user):
     Returns:
 
     """
+    # Check if  data has already been published
+    if data.workspace is not None and data.workspace.is_public:
+        raise exceptions.ApiError(get_data_label() + " already published")
     data.workspace = workspace_api.get_global_workspace()
     data.last_modification_date = datetime.datetime.now(pytz.utc)
     return data.save()
@@ -88,9 +91,9 @@ def get_status(data):
 
     """
     try:
-        return data.dict_content["Resource"]["@status"]
-    except Exception as e:
-        raise exceptions.ModelError(str(e))
+        return data.get_dict_content()["Resource"]["@status"]
+    except Exception as exception:
+        raise exceptions.ModelError(str(exception))
 
 
 def generate_unique_local_id(length_id):
@@ -107,7 +110,7 @@ def generate_unique_local_id(length_id):
         random.choice(string.ascii_uppercase + string.digits) for _ in range(length_id)
     )
     # we make sure this local id does not exist in db
-    while is_local_id_already_used(local_id):
+    while is_local_id_already_used(local_id).count() > 0:
         # otherwise we generate one until then
         local_id = "".join(
             random.choice(string.ascii_uppercase + string.digits)

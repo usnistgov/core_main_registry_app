@@ -6,11 +6,19 @@ from django.urls import re_path, reverse_lazy
 from django.views.generic.base import RedirectView
 
 import core_main_app.components.web_page_login.api as login_page_api
+from core_main_app.admin import core_admin_site
 from core_main_app.commons.enums import WEB_PAGE_TYPES
+from core_main_app.utils.admin_site.view_only_admin import ViewOnlyAdmin
 from core_main_app.utils.rendering import admin_render
 from core_main_app.views.admin import views as admin_views, ajax as admin_ajax
 from core_main_app.views.admin.views import WebPageView
 from core_main_app.views.common import views as common_views
+from core_main_registry_app.components.category.models import Category
+from core_main_registry_app.components.custom_resource.admin_site import (
+    CustomResourceAdmin,
+)
+from core_main_registry_app.components.custom_resource.models import CustomResource
+from core_main_registry_app.components.refinement.models import Refinement
 from core_main_registry_app.views.admin import views as registry_admin_views
 
 # FIXME: Check needed URLs for registry and remove the others.
@@ -22,7 +30,7 @@ admin_urls = [
             WebPageView.as_view(
                 api=login_page_api,
                 get_redirect="core_main_app/admin/web_page/login_page.html",
-                post_redirect="admin:core_main_app_login_page",
+                post_redirect="core-admin:core_main_app_login_page",
                 web_page_type=WEB_PAGE_TYPES["login"],
             )
         ),
@@ -61,8 +69,8 @@ admin_urls = [
             common_views.TemplateXSLRenderingView.as_view(
                 rendering=admin_render,
                 template_name="core_main_app/admin/templates_xslt/main.html",
-                save_redirect="admin:core_main_app_manage_template_versions",
-                back_to_url="admin:core_main_app_manage_template_versions",
+                save_redirect="core-admin:core_main_app_manage_template_versions",
+                back_to_url="core-admin:core_main_app_manage_template_versions",
             )
         ),
         name="core_main_app_template_xslt",
@@ -114,6 +122,8 @@ admin_urls = [
         name="core_main_registry_app_template_custom_resource",
     ),
 ]
-
-urls = admin.site.get_urls()
-admin.site.get_urls = lambda: admin_urls + urls
+admin.site.register(CustomResource, CustomResourceAdmin)
+admin.site.register(Category, ViewOnlyAdmin)
+admin.site.register(Refinement, ViewOnlyAdmin)
+urls = core_admin_site.get_urls()
+core_admin_site.get_urls = lambda: admin_urls + urls

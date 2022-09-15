@@ -29,3 +29,7 @@ CUSTOM_REGISTRY_FILE_PATH = getattr(
 )
 """ str: Custom registry configuration file path used for the initialisation.
 """
+
+ENABLE_BLOB_ENDPOINTS = getattr(settings, "ENABLE_BLOB_ENDPOINTS", False)
+""" bool: Enable blob api and user views for blob management.
+"""

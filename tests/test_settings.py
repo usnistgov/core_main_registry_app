@@ -1,4 +1,5 @@
-from core_main_app.utils.databases.mongoengine_database import Database
+""" Tests Settings
+"""
 
 SECRET_KEY = "fake-key"
 
@@ -13,7 +14,9 @@ INSTALLED_APPS = [
     # Extra apps
     "defender",
     # Local apps
+    "core_main_app",
     "core_main_registry_app",
+    "core_parser_app",
     "tests",
 ]
 
@@ -34,7 +37,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "core_main_app.utils.custom_context_processors.domain_context_processor",  # Needed by any curator app
+                # Needed by any curator app
+                "core_main_app.utils.custom_context_processors.domain_context_processor",
                 "django.template.context_processors.i18n",
             ],
         },
@@ -56,8 +60,5 @@ DATABASES = {
 
 PASSWORD_HASHERS = ("django.contrib.auth.hashers.UnsaltedMD5PasswordHasher",)
 
-MOCK_DATABASE_NAME = "db_mock"
-MOCK_DATABASE_HOST = "mongomock://localhost"
-
-database = Database(MOCK_DATABASE_HOST, MOCK_DATABASE_NAME)
-database.connect()
+USE_TZ = True
+CELERYBEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
