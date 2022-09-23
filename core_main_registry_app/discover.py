@@ -93,7 +93,7 @@ def _init_custom_registry():
             system_api.get_active_global_version_manager_by_title(REGISTRY_XSD_FILENAME)
         )
         current_template = current_template_version.current_version
-    except:
+    except Exception:
         raise Exception("Can't get the current template.")
 
     if custom_resource_api.get_all_by_template(current_template).count() > 0:
