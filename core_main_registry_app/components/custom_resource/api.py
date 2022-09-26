@@ -9,11 +9,15 @@ from core_main_app.components.template import api as template_api
 from core_main_app.components.template_version_manager import (
     api as template_version_manager_api,
 )
-from core_main_registry_app.components.custom_resource.models import CustomResource
+from core_main_registry_app.components.custom_resource.models import (
+    CustomResource,
+)
 from core_main_registry_app.constants import CUSTOM_RESOURCE_TYPE
 from core_main_registry_app.settings import REGISTRY_XSD_FILENAME
 
-logger = logging.getLogger("core_main_registry_app.components.custom_resource.api")
+logger = logging.getLogger(
+    "core_main_registry_app.components.custom_resource.api"
+)
 
 
 def parse_and_save(data, current_template):
@@ -36,7 +40,9 @@ def parse_and_save(data, current_template):
             )
             # TODO: make sure only one type = 'all' ?
         else:
-            custom_resource = _create_custom_resource(custom_resource, resource, key)
+            custom_resource = _create_custom_resource(
+                custom_resource, resource, key
+            )
 
         try:
             _check_curate(custom_resource)
@@ -55,7 +61,10 @@ def _check_curate(custom_resource):
     if (
         _is_custom_resource_type_resource(custom_resource)
         and "core_curate_app" in settings.INSTALLED_APPS
-        and (custom_resource.role_choice is None or custom_resource.role_type is None)
+        and (
+            custom_resource.role_choice is None
+            or custom_resource.role_type is None
+        )
     ):
         raise exceptions.ModelError(
             "Curate app is installed. "
@@ -193,10 +202,8 @@ def _get_current_template(request):
 
     Returns:
     """
-    current_template_version = (
-        template_version_manager_api.get_active_global_version_manager_by_title(
-            REGISTRY_XSD_FILENAME, request=request
-        )
+    current_template_version = template_version_manager_api.get_active_global_version_manager_by_title(
+        REGISTRY_XSD_FILENAME, request=request
     )
     current_template = template_api.get_by_id(
         current_template_version.current, request=request

@@ -24,7 +24,9 @@ def init_registry():
     Returns:
 
     """
-    from core_main_registry_app.utils.refinement import watch as refinement_watch
+    from core_main_registry_app.utils.refinement import (
+        watch as refinement_watch,
+    )
 
     try:
         # Add template
@@ -90,14 +92,18 @@ def _init_custom_registry():
 
     try:
         current_template_version = (
-            system_api.get_active_global_version_manager_by_title(REGISTRY_XSD_FILENAME)
+            system_api.get_active_global_version_manager_by_title(
+                REGISTRY_XSD_FILENAME
+            )
         )
         current_template = current_template_version.current_version
     except Exception:
         raise Exception("Can't get the current template.")
 
     if custom_resource_api.get_all_by_template(current_template).count() > 0:
-        logger.info("Custom resources related to current template already exist.")
+        logger.info(
+            "Custom resources related to current template already exist."
+        )
     else:
         json_path = CUSTOM_REGISTRY_FILE_PATH
         if json_path == "":
@@ -112,5 +118,6 @@ def _init_custom_registry():
                 custom_resource_api.parse_and_save(data, current_template)
         except Exception as exception:
             logger.error(
-                "Impossible to use the custom registry json file:  %s", str(exception)
+                "Impossible to use the custom registry json file:  %s",
+                str(exception),
             )

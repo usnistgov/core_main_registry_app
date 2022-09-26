@@ -4,8 +4,12 @@ import json
 from os.path import join, dirname, realpath
 
 from core_main_app.components.template.models import Template
-from core_main_app.utils.integration_tests.fixture_interface import FixtureInterface
-from core_main_registry_app.components.custom_resource.models import CustomResource
+from core_main_app.utils.integration_tests.fixture_interface import (
+    FixtureInterface,
+)
+from core_main_registry_app.components.custom_resource.models import (
+    CustomResource,
+)
 from core_main_registry_app.constants import CUSTOM_RESOURCE_TYPE
 
 

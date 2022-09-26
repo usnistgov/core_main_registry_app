@@ -18,4 +18,6 @@ config_children = (
     ),
 )
 
-Menu.add_item("admin", MenuItem("CUSTOM REGISTRY", None, children=config_children))
+Menu.add_item(
+    "admin", MenuItem("CUSTOM REGISTRY", None, children=config_children)
+)

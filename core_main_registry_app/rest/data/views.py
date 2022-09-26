@@ -86,7 +86,9 @@ class DataDetailRegistry(DataDetail):
                 # delete object
                 data_api.delete(data_object, request.user)
             else:
-                content = {"message": "You must have superuser right to delete data."}
+                content = {
+                    "message": "You must have superuser right to delete data."
+                }
                 return Response(content, status=status.HTTP_403_FORBIDDEN)
 
             # Return response
@@ -96,7 +98,9 @@ class DataDetailRegistry(DataDetail):
             return Response(content, status=status.HTTP_404_NOT_FOUND)
         except Exception as api_exception:
             content = {"message": str(api_exception)}
-            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                content, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
     def patch(self, request, pk):
         """Data cannot be updated

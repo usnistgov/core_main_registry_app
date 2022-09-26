@@ -38,10 +38,14 @@ def loads_refinements_trees(template):
     target_ns_prefix = _get_target_namespace_prefix(
         ref_xml_schema_content, xml_doc_tree
     )
-    target_ns_prefix = "{}:".format(target_ns_prefix) if target_ns_prefix != "" else ""
+    target_ns_prefix = (
+        "{}:".format(target_ns_prefix) if target_ns_prefix != "" else ""
+    )
 
     # Iterate over the simple types.
-    simple_types = xml_doc_tree.findall("./{0}simpleType".format(LXML_SCHEMA_NAMESPACE))
+    simple_types = xml_doc_tree.findall(
+        "./{0}simpleType".format(LXML_SCHEMA_NAMESPACE)
+    )
     trees = OrderedDict()
     for simple_type in simple_types:
         try:
@@ -73,7 +77,9 @@ def loads_refinements_trees(template):
 
                     # Build the path to access the element (dot notation)
                     while element is not None:
-                        if element.tag == "{0}element".format(LXML_SCHEMA_NAMESPACE):
+                        if element.tag == "{0}element".format(
+                            LXML_SCHEMA_NAMESPACE
+                        ):
                             query.insert(0, element.attrib["name"])
                         elif element.tag == "{0}simpleType".format(
                             LXML_SCHEMA_NAMESPACE
@@ -90,7 +96,9 @@ def loads_refinements_trees(template):
                         elif element.tag == "{0}extension".format(
                             LXML_SCHEMA_NAMESPACE
                         ):
-                            element = _get_extension_info(xml_doc_tree, element, query)
+                            element = _get_extension_info(
+                                xml_doc_tree, element, query
+                            )
 
                         element = element.getparent()
 
@@ -133,7 +141,9 @@ def _get_target_namespace_prefix(ref_xml_schema_content, xml_doc_tree):
 
     """
     namespaces = get_namespaces(ref_xml_schema_content)
-    target_namespace, target_ns_prefix = get_target_namespace(xml_doc_tree, namespaces)
+    target_namespace, target_ns_prefix = get_target_namespace(
+        xml_doc_tree, namespaces
+    )
 
     return target_ns_prefix
 
@@ -155,7 +165,9 @@ def _get_element_info(element, xml_doc_tree, target_ns_prefix):
     # Check if the element is embedded in a choice.
     # If yes, we use the first parent complexType to get the label.
     parent = element.getparent()
-    if parent is not None and parent.tag == "{0}choice".format(LXML_SCHEMA_NAMESPACE):
+    if parent is not None and parent.tag == "{0}choice".format(
+        LXML_SCHEMA_NAMESPACE
+    ):
         while parent.getparent() is not None:
             parent = parent.getparent()
             if parent.tag == "{0}complexType".format(LXML_SCHEMA_NAMESPACE):
@@ -190,12 +202,15 @@ def _get_simple_type_or_complex_type_info(
     try:
         to_search_element = xml_doc_tree.findall(
             ".//{0}element[@type='{1}']".format(
-                LXML_SCHEMA_NAMESPACE, target_ns_prefix + element.attrib["name"]
+                LXML_SCHEMA_NAMESPACE,
+                target_ns_prefix + element.attrib["name"],
             )
         )
         if len(to_search_element) == 0:
             logger.debug(
-                "No element using the enumeration ({0})".format(str(len(element)))
+                "No element using the enumeration ({0})".format(
+                    str(len(element))
+                )
             )
             element = _find_extension(xml_doc_tree, target_ns_prefix, element)
         elif len(to_search_element) > 1:
@@ -237,7 +252,9 @@ def _get_extension_info(xml_doc_tree, element, query=None):
         )
         if len(to_search_element) == 0:
             logger.debug(
-                "No element using the enumeration ({0})".format(str(len(element)))
+                "No element using the enumeration ({0})".format(
+                    str(len(element))
+                )
             )
         elif len(to_search_element) > 1:
             logger.error(
@@ -251,7 +268,9 @@ def _get_extension_info(xml_doc_tree, element, query=None):
                 query.insert(0, element.attrib["name"])
     except Exception as exception:
         raise Exception(
-            "Impossible to get the extension information: {0}".format(str(exception))
+            "Impossible to get the extension information: {0}".format(
+                str(exception)
+            )
         )
 
     return element
@@ -271,7 +290,8 @@ def _find_extension(xml_doc_tree, target_ns_prefix, element):
     try:
         to_search_element = xml_doc_tree.findall(
             ".//{0}extension[@base='{1}']".format(
-                LXML_SCHEMA_NAMESPACE, target_ns_prefix + element.attrib["name"]
+                LXML_SCHEMA_NAMESPACE,
+                target_ns_prefix + element.attrib["name"],
             )
         )
         if len(to_search_element) == 0:
@@ -288,7 +308,9 @@ def _find_extension(xml_doc_tree, target_ns_prefix, element):
             element = to_search_element[0]
     except Exception as exception:
         raise Exception(
-            "Impossible to get the extension information: {0}".format(str(exception))
+            "Impossible to get the extension information: {0}".format(
+                str(exception)
+            )
         )
 
     return element

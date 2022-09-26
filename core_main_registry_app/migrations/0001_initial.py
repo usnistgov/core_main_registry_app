@@ -36,7 +36,10 @@ class Migration(migrations.Migration):
                 (
                     "slug",
                     django_extensions.db.fields.AutoSlugField(
-                        blank=True, editable=False, overwrite=True, populate_from="name"
+                        blank=True,
+                        editable=False,
+                        overwrite=True,
+                        populate_from="name",
                     ),
                 ),
                 ("template_hash", models.CharField(max_length=255)),
@@ -58,14 +61,20 @@ class Migration(migrations.Migration):
                 (
                     "slug",
                     django_extensions.db.fields.AutoSlugField(
-                        blank=True, editable=False, overwrite=True, populate_from="name"
+                        blank=True,
+                        editable=False,
+                        overwrite=True,
+                        populate_from="name",
                     ),
                 ),
                 ("path", models.CharField(max_length=255)),
                 ("value", models.CharField(max_length=255)),
                 ("lft", models.PositiveIntegerField(editable=False)),
                 ("rght", models.PositiveIntegerField(editable=False)),
-                ("tree_id", models.PositiveIntegerField(db_index=True, editable=False)),
+                (
+                    "tree_id",
+                    models.PositiveIntegerField(db_index=True, editable=False),
+                ),
                 ("level", models.PositiveIntegerField(editable=False)),
                 (
                     "parent",
@@ -99,10 +108,16 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("name_in_schema", models.CharField(blank=True, max_length=200)),
+                (
+                    "name_in_schema",
+                    models.CharField(blank=True, max_length=200),
+                ),
                 ("title", models.CharField(max_length=200)),
                 ("slug", models.CharField(blank=True, max_length=200)),
-                ("description", models.TextField(blank=True, default=None, null=True)),
+                (
+                    "description",
+                    models.TextField(blank=True, default=None, null=True),
+                ),
                 (
                     "type",
                     models.CharField(
@@ -144,7 +159,10 @@ class Migration(migrations.Migration):
                 ),
             ],
             options={
-                "unique_together": {("sort", "template"), ("title", "template")},
+                "unique_together": {
+                    ("sort", "template"),
+                    ("title", "template"),
+                },
             },
         ),
     ]

@@ -17,7 +17,9 @@ from core_main_registry_app.components.category.models import Category
 from core_main_registry_app.components.custom_resource.admin_site import (
     CustomResourceAdmin,
 )
-from core_main_registry_app.components.custom_resource.models import CustomResource
+from core_main_registry_app.components.custom_resource.models import (
+    CustomResource,
+)
 from core_main_registry_app.components.refinement.models import Refinement
 from core_main_registry_app.views.admin import views as registry_admin_views
 
@@ -36,8 +38,14 @@ admin_urls = [
         ),
         name="core_main_app_login_page",
     ),
-    re_path(r"^login", RedirectView.as_view(url=reverse_lazy("core_main_app_login"))),
-    re_path(r"^logout", RedirectView.as_view(url=reverse_lazy("core_main_app_logout"))),
+    re_path(
+        r"^login",
+        RedirectView.as_view(url=reverse_lazy("core_main_app_login")),
+    ),
+    re_path(
+        r"^logout",
+        RedirectView.as_view(url=reverse_lazy("core_main_app_logout")),
+    ),
     re_path(
         r"^data",
         staff_member_required(
@@ -75,7 +83,9 @@ admin_urls = [
         ),
         name="core_main_app_template_xslt",
     ),
-    re_path(r"^dashboard$", admin_views.admin_home, name="core_main_app_admin_home"),
+    re_path(
+        r"^dashboard$", admin_views.admin_home, name="core_main_app_admin_home"
+    ),
     re_path(
         r"^template/resolve-dependencies",
         admin_ajax.resolve_dependencies,
@@ -118,7 +128,9 @@ admin_urls = [
     ),
     re_path(
         r"^template/(?P<template_id>\w+)/custom-resource",
-        staff_member_required(registry_admin_views.UploadCustomResource.as_view()),
+        staff_member_required(
+            registry_admin_views.UploadCustomResource.as_view()
+        ),
         name="core_main_registry_app_template_custom_resource",
     ),
 ]

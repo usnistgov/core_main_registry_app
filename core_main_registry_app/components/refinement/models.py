@@ -65,7 +65,10 @@ class Refinement(models.Model):
             Boolean: True/False
 
         """
-        return len(Refinement.get_all_filtered_by_template_hash(template_hash)) > 0
+        return (
+            len(Refinement.get_all_filtered_by_template_hash(template_hash))
+            > 0
+        )
 
     @staticmethod
     def get_by_template_hash_and_by_slug(template_hash, slug):

@@ -15,7 +15,9 @@ from core_main_app.components.template_version_manager import (
     api as template_version_manager_api,
 )
 from core_main_app.utils.rendering import admin_render
-from core_main_registry_app.components.custom_resource import api as custom_resource_api
+from core_main_registry_app.components.custom_resource import (
+    api as custom_resource_api,
+)
 from core_main_registry_app.views.admin.forms import UploadCustomResourcesForm
 
 logger = logging.getLogger("core_main_registry_app.views.admin.views")
@@ -38,8 +40,12 @@ def manage_templates(request):
 
     context = {
         "object_name": "Template",
-        "available": [template for template in templates if not template.is_disabled],
-        "disabled": [template for template in templates if template.is_disabled],
+        "available": [
+            template for template in templates if not template.is_disabled
+        ],
+        "disabled": [
+            template for template in templates if template.is_disabled
+        ],
     }
 
     assets = {}
@@ -97,14 +103,18 @@ class UploadCustomResource(View):
             upload_file = request.FILES["json_file"].read().decode("utf-8")
 
             data = json.loads(upload_file)
-            custom_resource_api.replace_custom_resources_by_template(template, data)
+            custom_resource_api.replace_custom_resources_by_template(
+                template, data
+            )
 
             return HttpResponseRedirect(
                 reverse("core-admin:core_main_registry_app_custom_registry")
             )
         except Exception as exception:
             self.context.update({"errors": html_escape(str(exception))})
-            return admin_render(request, self.template_name, context=self.context)
+            return admin_render(
+                request, self.template_name, context=self.context
+            )
 
 
 class CustomRegistry(View):
@@ -113,7 +123,9 @@ class CustomRegistry(View):
     def get(self, request, *args, **kwargs):
         data_context_list = []
         global_template_version_manager = (
-            template_version_manager_api.get_global_version_managers(request=request)
+            template_version_manager_api.get_global_version_managers(
+                request=request
+            )
         )
         if len(global_template_version_manager) == 1:
             template_version_manager = list(global_template_version_manager)[0]
@@ -124,14 +136,17 @@ class CustomRegistry(View):
                 # get the template
                 template = template_api.get_by_id(version, request=request)
                 # get all the template's custom resources
-                custom_resources = custom_resource_api.get_all_by_template(template)
+                custom_resources = custom_resource_api.get_all_by_template(
+                    template
+                )
                 # append to list for the context
                 data_context_list.append(
                     {
                         "template_name": template.display_name,
                         "count": custom_resources.count(),
                         "template_id": str(template.id),
-                        "is_current": current_template_version == str(template.id),
+                        "is_current": current_template_version
+                        == str(template.id),
                     }
                 )
         else:
@@ -143,7 +158,10 @@ class CustomRegistry(View):
             "js": [],
         }
 
-        context = {"objects": data_context_list, "object_name": "Custom Resources"}
+        context = {
+            "objects": data_context_list,
+            "object_name": "Custom Resources",
+        }
 
         return admin_render(
             request,

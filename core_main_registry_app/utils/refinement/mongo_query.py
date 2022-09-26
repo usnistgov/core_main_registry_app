@@ -12,10 +12,14 @@ from core_main_app.commons import exceptions as exceptions
 from core_main_registry_app.commons.constants import DataStatus
 from core_main_registry_app.components.category import api as category_api
 from core_main_registry_app.components.refinement import api as refinement_api
-from core_main_registry_app.components.template import api as template_registry_api
+from core_main_registry_app.components.template import (
+    api as template_registry_api,
+)
 from core_main_registry_app.constants import PATH_STATUS
 
-logger = logging.getLogger("core_main_registry_app.utils.refinement.mongo_query")
+logger = logging.getLogger(
+    "core_main_registry_app.utils.refinement.mongo_query"
+)
 
 
 def build_refinements_query(refinements):
@@ -65,7 +69,9 @@ def build_refinements_query(refinements):
 
             if len(in_queries) > 0:
                 # $or between categories belonging to the same refinement
-                or_queries.append({"$or": [{x: in_queries[x]} for x in in_queries]})
+                or_queries.append(
+                    {"$or": [{x: in_queries[x]} for x in in_queries]}
+                )
 
         if len(or_queries) > 0:
             # $and between refinements
@@ -127,16 +133,22 @@ def get_refinement_selected_values_from_query(query, request):
                         category_values_list.update({key: [selected_value]})
 
     # get global template.
-    template = template_registry_api.get_current_registry_template(request=request)
+    template = template_registry_api.get_current_registry_template(
+        request=request
+    )
     # get refinements.
-    refinements = refinement_api.get_all_filtered_by_template_hash(template.hash)
+    refinements = refinement_api.get_all_filtered_by_template_hash(
+        template.hash
+    )
     refinements_ids = [x.id for x in refinements]
     # get all category.
     q_list = []
     for key, values in list(category_values_list.items()):
         # prepare the query
         q_list.append(
-            Q(path=key) & Q(refinement_id__in=refinements_ids) & Q(value__in=values)
+            Q(path=key)
+            & Q(refinement_id__in=refinements_ids)
+            & Q(value__in=values)
         )
 
     if len(q_list) == 0:  # No refinement found
@@ -157,7 +169,10 @@ def get_refinement_selected_values_from_query(query, request):
                 {
                     key: {
                         display_name: [
-                            {"id": category.id, "value": category.value.split(":")[0]}
+                            {
+                                "id": category.id,
+                                "value": category.value.split(":")[0],
+                            }
                         ]
                     }
                 }

@@ -35,7 +35,9 @@ class TestDataDetailDeletePermissions(SimpleTestCase):
         mock_user = create_mock_user("1")
 
         response = RequestMock.do_request_delete(
-            data_rest_views.DataDetailRegistry.as_view(), mock_user, param={"pk": 0}
+            data_rest_views.DataDetailRegistry.as_view(),
+            mock_user,
+            param={"pk": 0},
         )
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
@@ -53,7 +55,9 @@ class TestDataDetailDeletePermissions(SimpleTestCase):
         mock_user = create_mock_user("1", is_staff=True)
 
         response = RequestMock.do_request_delete(
-            data_rest_views.DataDetailRegistry.as_view(), mock_user, param={"pk": 0}
+            data_rest_views.DataDetailRegistry.as_view(),
+            mock_user,
+            param={"pk": 0},
         )
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
@@ -71,7 +75,9 @@ class TestDataDetailDeletePermissions(SimpleTestCase):
         mock_user = create_mock_user("1", is_superuser=True)
 
         response = RequestMock.do_request_delete(
-            data_rest_views.DataDetailRegistry.as_view(), mock_user, param={"pk": 0}
+            data_rest_views.DataDetailRegistry.as_view(),
+            mock_user,
+            param={"pk": 0},
         )
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
@@ -89,7 +95,9 @@ class TestDataDetailDeletePermissions(SimpleTestCase):
         mock_user = create_mock_user("1", is_staff=True, is_superuser=True)
 
         response = RequestMock.do_request_delete(
-            data_rest_views.DataDetailRegistry.as_view(), mock_user, param={"pk": 0}
+            data_rest_views.DataDetailRegistry.as_view(),
+            mock_user,
+            param={"pk": 0},
         )
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)

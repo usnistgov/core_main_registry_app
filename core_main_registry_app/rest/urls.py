@@ -60,7 +60,9 @@ urlpatterns = [
         name="core_main_app_rest_template_detail",
     ),
     re_path(
-        r"^data/$", data_views.DataList.as_view(), name="core_main_app_rest_data_list"
+        r"^data/$",
+        data_views.DataList.as_view(),
+        name="core_main_app_rest_data_list",
     ),
     re_path(
         r"^data/permissions/$",

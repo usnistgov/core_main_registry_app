@@ -8,7 +8,9 @@ from core_main_app.components.template.models import Template
 from core_main_app.components.template_version_manager.models import (
     TemplateVersionManager,
 )
-from core_main_app.components.version_manager.utils import get_latest_version_name
+from core_main_app.components.version_manager.utils import (
+    get_latest_version_name,
+)
 from core_main_app.settings import MONGODB_INDEXING
 from core_main_app.system import api as main_system_api
 from core_main_app.utils.xml import is_schema_valid, get_hash
@@ -30,7 +32,9 @@ def is_local_id_already_used(local_id):
         return MongoData.objects(
             __raw__={"dict_content.Resource.@localid": str(local_id)}
         )
-    return Data.objects.filter(Q(**{"dict_content__Resource__@localid": str(local_id)}))
+    return Data.objects.filter(
+        Q(**{"dict_content__Resource__@localid": str(local_id)})
+    )
 
 
 def insert_registry_schema(xsd_filename, xsd_content):
@@ -59,7 +63,9 @@ def insert_registry_schema(xsd_filename, xsd_content):
         if len(template_version_manager.versions) == 0:
             template.is_current = True
         # update saved template
-        template.display_name = get_latest_version_name(template_version_manager)
+        template.display_name = get_latest_version_name(
+            template_version_manager
+        )
         # save template
         template.save()
         # return version manager
@@ -78,8 +84,10 @@ def get_current_registry_template():
 
     """
     try:
-        template_version = main_system_api.get_active_global_version_manager_by_title(
-            REGISTRY_XSD_FILENAME
+        template_version = (
+            main_system_api.get_active_global_version_manager_by_title(
+                REGISTRY_XSD_FILENAME
+            )
         )
         return main_system_api.get_template_by_id(template_version.current)
     except Exception as exception:

@@ -10,10 +10,16 @@ from core_main_app.utils.integration_tests.integration_base_test_case import (
 )
 from core_main_app.utils.tests_tools.MockUser import create_mock_user
 from core_main_app.utils.tests_tools.RequestMock import create_mock_request
-from core_main_registry_app.components.custom_resource import api as custom_resource_api
-from core_main_registry_app.components.custom_resource.models import CustomResource
+from core_main_registry_app.components.custom_resource import (
+    api as custom_resource_api,
+)
+from core_main_registry_app.components.custom_resource.models import (
+    CustomResource,
+)
 from core_main_registry_app.constants import CUSTOM_RESOURCE_TYPE
-from tests.components.custom_resource.fixtures.fixtures import CustomResourceFixtures
+from tests.components.custom_resource.fixtures.fixtures import (
+    CustomResourceFixtures,
+)
 
 fixtureCustomResource = CustomResourceFixtures()
 
@@ -25,7 +31,9 @@ class TestCreateAndSaveCustomResource(MongoIntegrationBaseTestCase):
 
     fixture = fixtureCustomResource
 
-    def test_create_all_custom_resource_return_collection_of_custom_resource(self):
+    def test_create_all_custom_resource_return_collection_of_custom_resource(
+        self,
+    ):
         """test_create_all_custom_resource_return_collection_of_custom_resource
 
         Returns:
@@ -38,7 +46,9 @@ class TestCreateAndSaveCustomResource(MongoIntegrationBaseTestCase):
         )
         result = custom_resource_api.get_all_by_template(template)
         # Assert
-        self.assertTrue(all(isinstance(item, CustomResource) for item in result))
+        self.assertTrue(
+            all(isinstance(item, CustomResource) for item in result)
+        )
 
     def test_create_custom_resource_return_slug_is_not_none(self):
         """test_create_custom_resource_return_slug_is_not_none
@@ -202,7 +212,11 @@ class TestCreateAndSaveCustomResource(MongoIntegrationBaseTestCase):
         # Assert
         with self.assertRaises(ValidationError):
             custom_resource = CustomResource(
-                template=template, title="title", type="wrong", icon="icon", sort=0
+                template=template,
+                title="title",
+                type="wrong",
+                icon="icon",
+                sort=0,
             )
             custom_resource.save()
 
@@ -327,7 +341,9 @@ class TestDeleteCustomResourcesByTemplate(MongoIntegrationBaseTestCase):
 
         # Act
         self.fixture.insert_data()
-        custom_resource_api.delete_custom_resources_by_template(self.fixture.template)
+        custom_resource_api.delete_custom_resources_by_template(
+            self.fixture.template
+        )
         result = custom_resource_api.get_all_by_template(self.fixture.template)
         # Assert
         self.assertEqual(0, len(result))
@@ -349,10 +365,18 @@ class TestSaveList(MongoIntegrationBaseTestCase):
         # Act
         template = self.fixture.create_and_save_template()
         custom_resource1 = CustomResource(
-            template=template, title="title1", type="resource", icon="icon", sort=0
+            template=template,
+            title="title1",
+            type="resource",
+            icon="icon",
+            sort=0,
         )
         custom_resource2 = CustomResource(
-            template=template, title="title2", type="resource", icon="icon", sort=1
+            template=template,
+            title="title2",
+            type="resource",
+            icon="icon",
+            sort=1,
         )
         list_custom = [custom_resource1, custom_resource2]
         custom_resource_api.save_list(list_custom)

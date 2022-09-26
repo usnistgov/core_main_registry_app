@@ -61,7 +61,9 @@ def build_tree(tree, element_name, element_display_name, enums, dot_query):
 
     """
     # Init tree.
-    type_refinement = TreeInfo(xsd_name=element_name, title=element_display_name)
+    type_refinement = TreeInfo(
+        xsd_name=element_name, title=element_display_name
+    )
     first_node = tree.setdefault(type_refinement, OrderedDict())
 
     # For each enumerations, we create the tree representation.
@@ -82,10 +84,14 @@ def build_tree(tree, element_name, element_display_name, enums, dot_query):
 
             # Case where it is the last element of the enum
             # check if we are in the unspecified case
-            if len(levels) - 1 == i and _check_case_unspecified(enums, enum, i, level):
+            if len(levels) - 1 == i and _check_case_unspecified(
+                enums, enum, i, level
+            ):
                 # Case unspecified: create a new node for the unspecified node
                 title = (
-                    f"{UNSPECIFIED_LABEL} {level}" if UNSPECIFIED_CATEGORY else level
+                    f"{UNSPECIFIED_LABEL} {level}"
+                    if UNSPECIFIED_CATEGORY
+                    else level
                 )
                 graph = TreeInfo(
                     xsd_name=level,
@@ -119,7 +125,8 @@ def _check_case_unspecified(enums, current_enum, i, current_level):
             if (
                 current_level in levels
                 and levels[i] == current_level
-                and len(current_enum.attrib["value"]) < len(enum.attrib["value"])
+                and len(current_enum.attrib["value"])
+                < len(enum.attrib["value"])
             ):
                 return True
     return False

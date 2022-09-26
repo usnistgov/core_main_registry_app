@@ -20,11 +20,11 @@ def get_current_registry_template(request):
 
     """
     try:
-        template_version = (
-            template_version_manager_api.get_active_global_version_manager_by_title(
-                REGISTRY_XSD_FILENAME, request=request
-            )
+        template_version = template_version_manager_api.get_active_global_version_manager_by_title(
+            REGISTRY_XSD_FILENAME, request=request
         )
-        return template_api.get_by_id(template_version.current, request=request)
+        return template_api.get_by_id(
+            template_version.current, request=request
+        )
     except Exception as exception:
         raise exceptions.ModelError(str(exception))

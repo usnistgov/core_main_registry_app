@@ -14,7 +14,11 @@ class Category(MPTTModel):
     """Category object"""
 
     parent = TreeForeignKey(
-        "self", null=True, on_delete=models.CASCADE, blank=True, related_name="children"
+        "self",
+        null=True,
+        on_delete=models.CASCADE,
+        blank=True,
+        related_name="children",
     )
     name = models.CharField(max_length=50)
     slug = AutoSlugField(max_length=50, overwrite=True, populate_from="name")
@@ -61,7 +65,11 @@ class Category(MPTTModel):
 
         """
         return Category.objects.create(
-            name=name, path=path, value=value, parent=parent, refinement=refinement
+            name=name,
+            path=path,
+            value=value,
+            parent=parent,
+            refinement=refinement,
         )
 
     @staticmethod
@@ -83,7 +91,9 @@ class Category(MPTTModel):
             raise exceptions.ModelError(str(ex))
 
     @staticmethod
-    def get_all_categories_by_parent_slug_and_refinement_id(parent_slug, refinement_id):
+    def get_all_categories_by_parent_slug_and_refinement_id(
+        parent_slug, refinement_id
+    ):
         """Get all categories by parent_slug and refinement.
 
         Args:
@@ -112,7 +122,9 @@ class Category(MPTTModel):
         return Category.objects.all()
 
     @staticmethod
-    def get_all_categories_ids_from_name_and_refinement_id(name, refinement_id):
+    def get_all_categories_ids_from_name_and_refinement_id(
+        name, refinement_id
+    ):
         """Get all categories by name and refinement id.
 
         Args:

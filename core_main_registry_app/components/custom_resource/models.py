@@ -14,7 +14,9 @@ class CustomResource(models.Model):
     Custom resource object
     """
 
-    template = models.ForeignKey(Template, blank=False, on_delete=models.CASCADE)
+    template = models.ForeignKey(
+        Template, blank=False, on_delete=models.CASCADE
+    )
     name_in_schema = models.CharField(blank=True, max_length=200)
     title = models.CharField(blank=False, max_length=200)
     slug = models.CharField(blank=True, max_length=200)
@@ -23,19 +25,28 @@ class CustomResource(models.Model):
         blank=False,
         max_length=200,
         choices=[
-            (CUSTOM_RESOURCE_TYPE.RESOURCE.value, CUSTOM_RESOURCE_TYPE.RESOURCE.value),
+            (
+                CUSTOM_RESOURCE_TYPE.RESOURCE.value,
+                CUSTOM_RESOURCE_TYPE.RESOURCE.value,
+            ),
             (CUSTOM_RESOURCE_TYPE.ALL.value, CUSTOM_RESOURCE_TYPE.ALL.value),
         ],
     )
     icon = models.CharField(blank=False, max_length=200)
-    icon_color = models.CharField(blank=True, default=None, null=True, max_length=200)
+    icon_color = models.CharField(
+        blank=True, default=None, null=True, max_length=200
+    )
     display_icon = models.BooleanField(
         blank=True,
         default=None,
         null=True,
     )
-    role_choice = models.CharField(blank=True, default=None, null=True, max_length=200)
-    role_type = models.CharField(blank=True, default=None, null=True, max_length=200)
+    role_choice = models.CharField(
+        blank=True, default=None, null=True, max_length=200
+    )
+    role_type = models.CharField(
+        blank=True, default=None, null=True, max_length=200
+    )
     sort = models.PositiveIntegerField()
     refinements = models.JSONField(blank=True, default=list)
 
@@ -84,7 +95,9 @@ class CustomResource(models.Model):
         Returns:
 
         """
-        return CustomResource.objects.filter(template=template, type=type_name).all()
+        return CustomResource.objects.filter(
+            template=template, type=type_name
+        ).all()
 
     @staticmethod
     def get_custom_resource_by_template_and_slug(template, slug):
@@ -121,7 +134,8 @@ class CustomResource(models.Model):
             ).all()
             if len(list_custom_resources) == 0:
                 raise exceptions.ModelError(
-                    "Can't find the custom resource with the given role: " + role
+                    "Can't find the custom resource with the given role: "
+                    + role
                 )
             return list_custom_resources[0]
 

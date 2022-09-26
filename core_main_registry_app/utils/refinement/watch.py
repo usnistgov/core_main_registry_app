@@ -30,4 +30,6 @@ def post_save_template(sender, instance, **kwargs):
     except (TimeoutError, SoftTimeLimitExceeded) as ex:
         logger.error("Timeout while generating refinements: %s ", str(ex))
     except Exception as ex:
-        logger.error("Error happened while generating refinements:  %s ", str(ex))
+        logger.error(
+            "Error happened while generating refinements:  %s ", str(ex)
+        )

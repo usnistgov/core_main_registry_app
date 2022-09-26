@@ -4,7 +4,9 @@ from os.path import join, dirname, realpath
 
 from core_main_app.components.data.models import Data
 from core_main_app.components.template.models import Template
-from core_main_app.utils.integration_tests.fixture_interface import FixtureInterface
+from core_main_app.utils.integration_tests.fixture_interface import (
+    FixtureInterface,
+)
 from core_main_app.components.workspace.models import Workspace
 
 
@@ -37,7 +39,9 @@ class DataRegistryFixtures(FixtureInterface):
         """
         mock_data_path = join(dirname(realpath(__file__)), "data")
         xml_path = join(mock_data_path, "data.xml")
-        xml_without_status_path = join(mock_data_path, "data_without_status.xml")
+        xml_without_status_path = join(
+            mock_data_path, "data_without_status.xml"
+        )
 
         with open(xml_path, "r", encoding="utf-8") as xml_file:
             xml_content_with_status = xml_file.read()

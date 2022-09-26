@@ -5,7 +5,9 @@ from rest_framework.permissions import IsAuthenticated
 from core_main_app.rest.template_version_manager.abstract_views import (
     AbstractStatusTemplateVersion,
 )
-from core_main_registry_app.components.version_manager import api as version_manager_api
+from core_main_registry_app.components.version_manager import (
+    api as version_manager_api,
+)
 
 
 class CurrentTemplateVersion(AbstractStatusTemplateVersion):
@@ -24,4 +26,6 @@ class CurrentTemplateVersion(AbstractStatusTemplateVersion):
 
             TemplateVersion
         """
-        return version_manager_api.set_current(template_object, request=self.request)
+        return version_manager_api.set_current(
+            template_object, request=self.request
+        )

@@ -65,7 +65,8 @@ def recursive_node_to_dict(node, values, count_mode):
     """
     result = get_doc(node, values, count_mode)
     children = [
-        recursive_node_to_dict(c, values, count_mode) for c in node.get_children()
+        recursive_node_to_dict(c, values, count_mode)
+        for c in node.get_children()
     ]
     if children:
         expand = [c for c in children if c.get("selected", False)]
@@ -95,7 +96,12 @@ class FancyTreeWidget(Widget):
     """Fancy Tree Widget"""
 
     def __init__(
-        self, attrs=None, choices=(), queryset=None, select_mode=3, count_mode=False
+        self,
+        attrs=None,
+        choices=(),
+        queryset=None,
+        select_mode=3,
+        count_mode=False,
     ):
         """
 
@@ -158,10 +164,13 @@ class FancyTreeWidget(Widget):
             output = ['<div name="%s"></div>' % self.choices.field.label]
             id_attr = ""
         output.append(
-            '<ul style="display: none;" class="fancytree_checkboxes"%s>' % id_attr
+            '<ul style="display: none;" class="fancytree_checkboxes"%s>'
+            % id_attr
         )
         str_values = set([force_text(v) for v in value])
-        for i, (option_value, option_label) in enumerate(chain(self.choices, choices)):
+        for i, (option_value, option_label) in enumerate(
+            chain(self.choices, choices)
+        ):
             if has_id:
                 final_attrs = dict(
                     final_attrs, id="%s_%s" % (attrs["id"], option_value)
@@ -188,7 +197,9 @@ class FancyTreeWidget(Widget):
                 "var %s = %s;"
                 % (
                     js_data_var,
-                    json.dumps(get_tree(self.queryset, str_values, self.count_mode)),
+                    json.dumps(
+                        get_tree(self.queryset, str_values, self.count_mode)
+                    ),
                 )
             )
             output.append(

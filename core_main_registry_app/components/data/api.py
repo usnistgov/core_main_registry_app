@@ -13,7 +13,9 @@ from core_main_app.commons import exceptions as exceptions
 from core_main_app.components.workspace import api as workspace_api
 from core_main_app.utils.labels import get_data_label
 from core_main_registry_app.commons.constants import DataStatus
-from core_main_registry_app.components.data.access_control import can_publish_data
+from core_main_registry_app.components.data.access_control import (
+    can_publish_data,
+)
 from core_main_registry_app.system.api import is_local_id_already_used
 from core_main_registry_app.utils.role.extraction import role_extraction
 
@@ -107,7 +109,8 @@ def generate_unique_local_id(length_id):
     """
     # we generate an local id
     local_id = "".join(
-        random.choice(string.ascii_uppercase + string.digits) for _ in range(length_id)
+        random.choice(string.ascii_uppercase + string.digits)
+        for _ in range(length_id)
     )
     # we make sure this local id does not exist in db
     while is_local_id_already_used(local_id).count() > 0:

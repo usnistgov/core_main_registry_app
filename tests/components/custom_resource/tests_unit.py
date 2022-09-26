@@ -4,14 +4,20 @@ from unittest import mock
 
 from django.conf import settings
 from django.test import TestCase
-from tests.components.custom_resource.fixtures.fixtures import CustomResourceFixtures
+from tests.components.custom_resource.fixtures.fixtures import (
+    CustomResourceFixtures,
+)
 
 from core_main_app.commons import exceptions as exceptions
 from core_main_app.components.template.models import Template
 from core_main_app.utils.tests_tools.MockUser import create_mock_user
 from core_main_app.utils.tests_tools.RequestMock import create_mock_request
-from core_main_registry_app.components.custom_resource import api as custom_resource_api
-from core_main_registry_app.components.custom_resource.models import CustomResource
+from core_main_registry_app.components.custom_resource import (
+    api as custom_resource_api,
+)
+from core_main_registry_app.components.custom_resource.models import (
+    CustomResource,
+)
 from core_main_registry_app.constants import CUSTOM_RESOURCE_TYPE
 
 fixtureCustomResource = CustomResourceFixtures()
@@ -90,7 +96,9 @@ class TestCreateCustomResource(TestCase):
             key,
         )
         # Assert
-        self.assertEqual(custom_resource.type, CUSTOM_RESOURCE_TYPE.RESOURCE.value)
+        self.assertEqual(
+            custom_resource.type, CUSTOM_RESOURCE_TYPE.RESOURCE.value
+        )
 
     def test_create_custom_resource_return_name_in_schema(self):
         """test_create_custom_resource_return_name_in_schema"""
@@ -226,10 +234,14 @@ class TestIsCustomResourceTypeResource(TestCase):
         """test_is_all_resource_return_type_resource"""
 
         # Act
-        custom_resource = CustomResource(type=CUSTOM_RESOURCE_TYPE.RESOURCE.value)
+        custom_resource = CustomResource(
+            type=CUSTOM_RESOURCE_TYPE.RESOURCE.value
+        )
         # Assert
         self.assertTrue(
-            custom_resource_api._is_custom_resource_type_resource(custom_resource)
+            custom_resource_api._is_custom_resource_type_resource(
+                custom_resource
+            )
         )
 
     def test_is_all_resource_return_type_all(self):
@@ -239,7 +251,9 @@ class TestIsCustomResourceTypeResource(TestCase):
         custom_resource = CustomResource(type=CUSTOM_RESOURCE_TYPE.ALL.value)
         # Assert
         self.assertFalse(
-            custom_resource_api._is_custom_resource_type_resource(custom_resource)
+            custom_resource_api._is_custom_resource_type_resource(
+                custom_resource
+            )
         )
 
 
@@ -299,16 +313,24 @@ class TestCheckCurate(TestCase):
         # Act
         custom_resource = CustomResource()
         # Assert
-        with mock.patch.object(settings, "INSTALLED_APPS", ["core_curate_app"]):
-            self.assertIsNone(custom_resource_api._check_curate(custom_resource))
+        with mock.patch.object(
+            settings, "INSTALLED_APPS", ["core_curate_app"]
+        ):
+            self.assertIsNone(
+                custom_resource_api._check_curate(custom_resource)
+            )
 
     def test_check_curate_is_resource_return_except(self):
         """test_check_curate_is_resource_return_except"""
 
         # Act
-        custom_resource = CustomResource(type=CUSTOM_RESOURCE_TYPE.RESOURCE.value)
+        custom_resource = CustomResource(
+            type=CUSTOM_RESOURCE_TYPE.RESOURCE.value
+        )
         # Assert
-        with mock.patch.object(settings, "INSTALLED_APPS", ["core_curate_app"]):
+        with mock.patch.object(
+            settings, "INSTALLED_APPS", ["core_curate_app"]
+        ):
             with self.assertRaises(exceptions.ModelError):
                 custom_resource_api._check_curate(custom_resource)
 
@@ -320,7 +342,9 @@ class TestCheckCurate(TestCase):
             type=CUSTOM_RESOURCE_TYPE.RESOURCE.value, role_type="role_type"
         )
         # Assert
-        with mock.patch.object(settings, "INSTALLED_APPS", ["core_curate_app"]):
+        with mock.patch.object(
+            settings, "INSTALLED_APPS", ["core_curate_app"]
+        ):
             with self.assertRaises(exceptions.ModelError):
                 custom_resource_api._check_curate(custom_resource)
 
@@ -332,7 +356,9 @@ class TestCheckCurate(TestCase):
             type=CUSTOM_RESOURCE_TYPE.RESOURCE.value, role_choice="role_choice"
         )
         # Assert
-        with mock.patch.object(settings, "INSTALLED_APPS", ["core_curate_app"]):
+        with mock.patch.object(
+            settings, "INSTALLED_APPS", ["core_curate_app"]
+        ):
             with self.assertRaises(exceptions.ModelError):
                 custom_resource_api._check_curate(custom_resource)
 
@@ -346,8 +372,12 @@ class TestCheckCurate(TestCase):
             role_choice="role_choice",
         )
         # Assert
-        with mock.patch.object(settings, "INSTALLED_APPS", ["core_curate_app"]):
-            self.assertIsNone(custom_resource_api._check_curate(custom_resource))
+        with mock.patch.object(
+            settings, "INSTALLED_APPS", ["core_curate_app"]
+        ):
+            self.assertIsNone(
+                custom_resource_api._check_curate(custom_resource)
+            )
 
 
 class TestGetByCurrentTemplateAndSlug(TestCase):
@@ -355,7 +385,9 @@ class TestGetByCurrentTemplateAndSlug(TestCase):
     Test Get By Current Template And Slug
     """
 
-    @mock.patch.object(CustomResource, "get_custom_resource_by_template_and_slug")
+    @mock.patch.object(
+        CustomResource, "get_custom_resource_by_template_and_slug"
+    )
     @mock.patch(
         "core_main_registry_app.components.custom_resource.api._get_current_template"
     )
@@ -367,7 +399,9 @@ class TestGetByCurrentTemplateAndSlug(TestCase):
         # Arrange
         mock_user = create_mock_user("1", is_superuser=True)
         mock_request = create_mock_request(user=mock_user)
-        get_custom_resource_by_template_and_slug.return_value = CustomResource()
+        get_custom_resource_by_template_and_slug.return_value = (
+            CustomResource()
+        )
         get_current.return_value = Template()
         # Assert
         self.assertTrue(
@@ -379,7 +413,9 @@ class TestGetByCurrentTemplateAndSlug(TestCase):
             )
         )
 
-    @mock.patch.object(CustomResource, "get_custom_resource_by_template_and_slug")
+    @mock.patch.object(
+        CustomResource, "get_custom_resource_by_template_and_slug"
+    )
     def test_get_absent_slug_or_template_raises_does_not_exist(
         self, get_custom_resource_by_template_and_slug
     ):
@@ -388,8 +424,8 @@ class TestGetByCurrentTemplateAndSlug(TestCase):
         # Arrange
         mock_user = create_mock_user("1", is_superuser=True)
         mock_request = create_mock_request(user=mock_user)
-        get_custom_resource_by_template_and_slug.side_effect = exceptions.DoesNotExist(
-            "error"
+        get_custom_resource_by_template_and_slug.side_effect = (
+            exceptions.DoesNotExist("error")
         )
         # Assert
         with self.assertRaises(exceptions.DoesNotExist):

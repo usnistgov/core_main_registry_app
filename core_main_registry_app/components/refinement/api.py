@@ -40,7 +40,9 @@ def get_all_filtered_by_template_hash(template_hash):
     Returns: Refinement collection
 
     """
-    return Refinement.get_all_filtered_by_template_hash(template_hash=template_hash)
+    return Refinement.get_all_filtered_by_template_hash(
+        template_hash=template_hash
+    )
 
 
 def check_refinements_already_exist_by_template_hash(template_hash):
@@ -53,7 +55,9 @@ def check_refinements_already_exist_by_template_hash(template_hash):
         Boolean: True/False
 
     """
-    return Refinement.check_refinements_already_exist_by_template_hash(template_hash)
+    return Refinement.check_refinements_already_exist_by_template_hash(
+        template_hash
+    )
 
 
 def get_by_template_hash_and_by_slug(template_hash, slug):

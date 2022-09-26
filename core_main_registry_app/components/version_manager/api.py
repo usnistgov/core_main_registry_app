@@ -4,7 +4,9 @@ Version Manager API
 
 from core_main_app.commons import exceptions as exceptions
 from core_main_app.components.version_manager import api as version_manager_api
-from core_main_registry_app.components.custom_resource import api as custom_resource_api
+from core_main_registry_app.components.custom_resource import (
+    api as custom_resource_api,
+)
 
 
 # NOTE: access control by main set current

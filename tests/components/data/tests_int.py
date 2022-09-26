@@ -33,7 +33,9 @@ class TestDataGetStatus(MongoIntegrationBaseTestCase):
         # Assert
         self.assertTrue(status == DataStatus.ACTIVE)
 
-    def test_data_get_status_raise_model_exception_if_status_key_does_not_exist(self):
+    def test_data_get_status_raise_model_exception_if_status_key_does_not_exist(
+        self,
+    ):
         """test_data_get_status_raise_model_exception_if_status_key_does_not_exist"""
 
         # Act, Assert
@@ -47,7 +49,9 @@ class TestDataSetStatus(MongoIntegrationBaseTestCase):
     fixture = fixture_data
 
     @patch.object(Data, "convert_to_file")
-    def test_data_set_status_to_inactive_should_always_work(self, mock_convert_to_file):
+    def test_data_set_status_to_inactive_should_always_work(
+        self, mock_convert_to_file
+    ):
         """test_data_set_status_to_inactive_should_always_work"""
 
         # Arrange
@@ -87,7 +91,9 @@ class TestDataPublish(MongoIntegrationBaseTestCase):
     fixture = fixture_data
 
     @patch.object(workspace_api, "get_global_workspace")
-    def test_publish_data_without_workspace_publishes_data(self, get_global_workspace):
+    def test_publish_data_without_workspace_publishes_data(
+        self, get_global_workspace
+    ):
         """test_publish_data_without_workspace_publishes_data"""
 
         # Arrange

@@ -24,7 +24,8 @@ class TestCurrentTemplateVersionPatchPermission(SimpleTestCase):
         """test_anonymous_returns_http_403"""
 
         response = RequestMock.do_request_patch(
-            template_version_manager_views.CurrentTemplateVersion.as_view(), None
+            template_version_manager_views.CurrentTemplateVersion.as_view(),
+            None,
         )
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
