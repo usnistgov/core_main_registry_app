@@ -4,7 +4,7 @@ from unittest import mock
 
 from django.conf import settings
 from django.test import TestCase
-from mock.mock import patch
+from tests.components.custom_resource.fixtures.fixtures import CustomResourceFixtures
 
 from core_main_app.commons import exceptions as exceptions
 from core_main_app.components.template.models import Template
@@ -13,7 +13,6 @@ from core_main_app.utils.tests_tools.RequestMock import create_mock_request
 from core_main_registry_app.components.custom_resource import api as custom_resource_api
 from core_main_registry_app.components.custom_resource.models import CustomResource
 from core_main_registry_app.constants import CUSTOM_RESOURCE_TYPE
-from tests.components.custom_resource.fixtures.fixtures import CustomResourceFixtures
 
 fixtureCustomResource = CustomResourceFixtures()
 
@@ -356,8 +355,8 @@ class TestGetByCurrentTemplateAndSlug(TestCase):
     Test Get By Current Template And Slug
     """
 
-    @patch.object(CustomResource, "get_custom_resource_by_template_and_slug")
-    @patch(
+    @mock.patch.object(CustomResource, "get_custom_resource_by_template_and_slug")
+    @mock.patch(
         "core_main_registry_app.components.custom_resource.api._get_current_template"
     )
     def test_get_returns_custom_resource(
@@ -380,7 +379,7 @@ class TestGetByCurrentTemplateAndSlug(TestCase):
             )
         )
 
-    @patch.object(CustomResource, "get_custom_resource_by_template_and_slug")
+    @mock.patch.object(CustomResource, "get_custom_resource_by_template_and_slug")
     def test_get_absent_slug_or_template_raises_does_not_exist(
         self, get_custom_resource_by_template_and_slug
     ):

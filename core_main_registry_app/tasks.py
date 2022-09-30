@@ -1,7 +1,5 @@
 """ Registry tasks
 """
-from __future__ import absolute_import, unicode_literals
-
 from celery import shared_task
 
 from core_main_app.system import api as system_api

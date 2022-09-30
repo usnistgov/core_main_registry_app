@@ -1,6 +1,6 @@
 """ Unit Test Data
 """
-from mock import patch
+from unittest.mock import patch
 
 
 from core_main_app.commons import exceptions as exceptions

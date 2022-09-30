@@ -1,7 +1,7 @@
 """ Authentication tests for Template Version Manager REST API
 """
 from django.test import SimpleTestCase
-from mock.mock import patch
+from unittest.mock import patch
 from rest_framework import status
 
 from core_main_app.components.template.models import Template
