@@ -3,15 +3,15 @@
 from django.urls import re_path
 from rest_framework.urlpatterns import format_suffix_patterns
 
+import core_main_app.rest.xsl_transformation.views as xslTransformationList_view
 from core_main_app.rest.data import views as data_views
 from core_main_app.rest.template import views as template_views
 from core_main_app.rest.template_version_manager import (
     views as template_version_manager_views,
 )
-import core_main_app.rest.xsl_transformation.views as xslTransformationList_view
 from core_main_app.rest.user import views as user_views
+from core_main_app.rest.views import CoreSettings
 from core_main_app.rest.workspace import views as workspace_views
-
 from core_main_registry_app.rest.data import views as registry_data_views
 from core_main_registry_app.rest.template_version_manager import (
     views as registry_template_version_manager_views,
@@ -258,6 +258,11 @@ urlpatterns = [
         r"^admin/data/$",
         data_views.AdminDataList.as_view(),
         name="core_main_app_rest_admin_data_list",
+    ),
+    re_path(
+        r"^core-settings/$",
+        CoreSettings.as_view(),
+        name="core_main_app_rest_core_settings",
     ),
 ]
 
