@@ -1,16 +1,13 @@
 """ Data's registry api
 """
-import datetime
 import random
 import string
 
-import pytz
-
-from xml_utils.xsd_tree.xsd_tree import XSDTree
 import core_main_app.components.data.api as data_api
 from core_main_app.access_control.decorators import access_control
 from core_main_app.commons import exceptions as exceptions
 from core_main_app.components.workspace import api as workspace_api
+from core_main_app.utils.datetime import datetime_now
 from core_main_app.utils.labels import get_data_label
 from core_main_registry_app.commons.constants import DataStatus
 from core_main_registry_app.components.data.access_control import (
@@ -18,6 +15,7 @@ from core_main_registry_app.components.data.access_control import (
 )
 from core_main_registry_app.system.api import is_local_id_already_used
 from core_main_registry_app.utils.role.extraction import role_extraction
+from xml_utils.xsd_tree.xsd_tree import XSDTree
 
 
 def get_role(data):
@@ -47,7 +45,7 @@ def publish(data, user):
     if data.workspace is not None and data.workspace.is_public:
         raise exceptions.ApiError(get_data_label() + " already published")
     data.workspace = workspace_api.get_global_workspace()
-    data.last_modification_date = datetime.datetime.now(pytz.utc)
+    data.last_modification_date = datetime_now()
     return data.save()
 
 
