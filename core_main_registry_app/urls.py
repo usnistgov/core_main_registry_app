@@ -135,6 +135,13 @@ urlpatterns = [
         user_ajax.change_data_display,
         name="core_main_add_change_data_display",
     ),
+    re_path(
+        r"^xml-editor/data",
+        login_required(
+            common_views.DataContentEditor.as_view(),
+        ),
+        name="core_main_app_xml_text_editor_view",
+    ),
 ]
 
 if settings.ENABLE_SAML2_SSO_AUTH:
