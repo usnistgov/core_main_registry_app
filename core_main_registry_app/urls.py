@@ -1,6 +1,5 @@
 """ Url router for the core main registry app
 """
-from django.conf import settings
 from django.conf.urls import include
 from django.contrib.auth.decorators import login_required
 from django.urls import re_path
@@ -9,9 +8,9 @@ from drf_yasg.views import get_schema_view
 
 from core_main_app.components.data import api as data_api
 from core_main_app.utils.rendering import render
+from core_main_app.utils.urls import get_auth_urls
 from core_main_app.views.common import views as common_views
 from core_main_app.views.user import views as user_views, ajax as user_ajax
-
 from core_main_registry_app.settings import ENABLE_BLOB_ENDPOINTS
 
 schema_view = get_schema_view(
@@ -144,33 +143,7 @@ urlpatterns = [
     ),
 ]
 
-if settings.ENABLE_SAML2_SSO_AUTH:
-    from djangosaml2 import views as saml2_views
-
-    urlpatterns.append(re_path(r"saml2/", include("djangosaml2.urls")))
-    urlpatterns.append(
-        re_path(
-            r"^saml2/login",
-            saml2_views.LoginView.as_view(),
-            name="core_main_app_login",
-        )
-    )
-    urlpatterns.append(
-        re_path(
-            r"^saml2/logout",
-            saml2_views.LogoutInitView.as_view(),
-            name="core_main_app_logout",
-        )
-    )
-else:
-    urlpatterns.append(
-        re_path(r"^login", user_views.custom_login, name="core_main_app_login")
-    )
-    urlpatterns.append(
-        re_path(
-            r"^logout", user_views.custom_logout, name="core_main_app_logout"
-        )
-    )
+urlpatterns.extend(get_auth_urls())
 
 if ENABLE_BLOB_ENDPOINTS:
     from core_main_app.components.blob import api as blob_api
