@@ -7,7 +7,7 @@ from core_main_app.commons import exceptions as exceptions
 from core_main_app.components.data.models import Data
 import core_main_app.components.workspace.api as workspace_api
 from core_main_app.utils.integration_tests.integration_base_test_case import (
-    MongoIntegrationBaseTestCase,
+    IntegrationBaseTestCase,
 )
 from core_main_app.utils.tests_tools.MockUser import create_mock_user
 from core_main_app.utils.tests_tools.RequestMock import create_mock_request
@@ -20,7 +20,7 @@ from tests.components.data.fixtures.fixtures import DataRegistryFixtures
 fixture_data = DataRegistryFixtures()
 
 
-class TestDataGetStatus(MongoIntegrationBaseTestCase):
+class TestDataGetStatus(IntegrationBaseTestCase):
     """Test Data Get Status"""
 
     fixture = fixture_data
@@ -43,7 +43,7 @@ class TestDataGetStatus(MongoIntegrationBaseTestCase):
             data_registry_api.get_status(self.fixture.data_2)
 
 
-class TestDataSetStatus(MongoIntegrationBaseTestCase):
+class TestDataSetStatus(IntegrationBaseTestCase):
     """Test Data Set Status"""
 
     fixture = fixture_data
@@ -85,7 +85,7 @@ class TestDataSetStatus(MongoIntegrationBaseTestCase):
             )
 
 
-class TestDataPublish(MongoIntegrationBaseTestCase):
+class TestDataPublish(IntegrationBaseTestCase):
     """Test Data Publish"""
 
     fixture = fixture_data

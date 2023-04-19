@@ -5,7 +5,7 @@ from rest_framework import status
 
 from core_main_app.rest.template_version_manager import views
 from core_main_app.utils.integration_tests.integration_base_test_case import (
-    MongoIntegrationBaseTestCase,
+    IntegrationBaseTestCase,
 )
 from core_main_app.utils.tests_tools.MockUser import create_mock_user
 from core_main_app.utils.tests_tools.RequestMock import RequestMock
@@ -16,7 +16,7 @@ from tests.components.template_version_manager.fixtures.fixtures import (
 fixture_template = TemplateVersionManagerFixtures()
 
 
-class TestCurrentTemplateVersion(MongoIntegrationBaseTestCase):
+class TestCurrentTemplateVersion(IntegrationBaseTestCase):
     """Test Current Template Version"""
 
     fixture = fixture_template

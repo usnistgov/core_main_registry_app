@@ -6,7 +6,7 @@ from unittest.mock import patch
 
 from core_main_app.commons import exceptions as exceptions
 from core_main_app.utils.integration_tests.integration_base_test_case import (
-    MongoIntegrationBaseTestCase,
+    IntegrationBaseTestCase,
 )
 from core_main_app.utils.tests_tools.MockUser import create_mock_user
 from core_main_app.utils.tests_tools.RequestMock import create_mock_request
@@ -24,7 +24,7 @@ from tests.components.custom_resource.fixtures.fixtures import (
 fixtureCustomResource = CustomResourceFixtures()
 
 
-class TestCreateAndSaveCustomResource(MongoIntegrationBaseTestCase):
+class TestCreateAndSaveCustomResource(IntegrationBaseTestCase):
     """
     Test Create And Save Custom Resource
     """
@@ -221,7 +221,7 @@ class TestCreateAndSaveCustomResource(MongoIntegrationBaseTestCase):
             custom_resource.save()
 
 
-class TestGetAllByTemplate(MongoIntegrationBaseTestCase):
+class TestGetAllByTemplate(IntegrationBaseTestCase):
     """
     Test Get All By Template
     """
@@ -245,7 +245,7 @@ class TestGetAllByTemplate(MongoIntegrationBaseTestCase):
         self.assertEqual(length, len(result))
 
 
-class TestGetByRoleForCurrentTemplate(MongoIntegrationBaseTestCase):
+class TestGetByRoleForCurrentTemplate(IntegrationBaseTestCase):
     """
     Test Get By Role For Current Template
     """
@@ -275,7 +275,7 @@ class TestGetByRoleForCurrentTemplate(MongoIntegrationBaseTestCase):
         self.assertTrue(isinstance(custom_resource, CustomResource))
 
 
-class TestGetByCurrentTemplateAndSlug(MongoIntegrationBaseTestCase):
+class TestGetByCurrentTemplateAndSlug(IntegrationBaseTestCase):
     """
     Test Get By Current Template And Slug
     """
@@ -326,7 +326,7 @@ class TestGetByCurrentTemplateAndSlug(MongoIntegrationBaseTestCase):
             )
 
 
-class TestDeleteCustomResourcesByTemplate(MongoIntegrationBaseTestCase):
+class TestDeleteCustomResourcesByTemplate(IntegrationBaseTestCase):
     """
     Test Delete Custom Resources By Template
     """
@@ -349,7 +349,7 @@ class TestDeleteCustomResourcesByTemplate(MongoIntegrationBaseTestCase):
         self.assertEqual(0, len(result))
 
 
-class TestSaveList(MongoIntegrationBaseTestCase):
+class TestSaveList(IntegrationBaseTestCase):
     """
     Test Save List
     """
@@ -385,7 +385,7 @@ class TestSaveList(MongoIntegrationBaseTestCase):
         self.assertEqual(len(list_custom), len(result))
 
 
-class TestReplaceCustomResourceByTemplate(MongoIntegrationBaseTestCase):
+class TestReplaceCustomResourceByTemplate(IntegrationBaseTestCase):
     """
     Test Replace Custom Resource By Template
     """
