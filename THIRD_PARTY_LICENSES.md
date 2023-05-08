@@ -10,8 +10,7 @@ this package (`requirements.*` files) and their dependencies.
 |-----------------------|---------------------------------------------------------|
 | Django                | BSD License                                             |
 | django-mptt           | MIT License                                             |
-| django-extensions     | MIT License                                                        |
-| drf-yasg              | BSD License                                             |
+| django-extensions     | MIT License                                             |
 
 ## Javascript / CSS
 
