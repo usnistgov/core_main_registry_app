@@ -22,7 +22,7 @@
                         <xsl:variable name="url" select="//rsm:Resource/rsm:content/rsm:landingPage" />
                         <xsl:choose>
                             <xsl:when test="//rsm:Resource/rsm:content/rsm:landingPage!=''">
-                                <a target="_blank" href="{$url}" style="font-weight: bold">
+                                <a target="_blank" rel="noopener noreferrer" href="{$url}" style="font-weight: bold">
                                     <xsl:call-template name="title"/>
                                 </a>
                             </xsl:when>
@@ -82,7 +82,7 @@
                         <span class='value'>
                             <xsl:choose>
                                 <xsl:when test="contains($name, 'URL')">
-                                    <a target="_blank" href="{$value}"><xsl:value-of select="$value"/></a>
+                                    <a target="_blank" rel="noopener noreferrer" href="{$value}"><xsl:value-of select="$value"/></a>
                                 </xsl:when>
                                 <xsl:otherwise>
                                     <xsl:value-of select="$value"/>
@@ -124,7 +124,7 @@
                 <span class='value'>
                     <xsl:choose>
                         <xsl:when test="contains($name, 'URL')">
-                            <a target="_blank" href="{$value}"><xsl:value-of select="$value"/></a>
+                            <a target="_blank" rel="noopener noreferrer" href="{$value}"><xsl:value-of select="$value"/></a>
                         </xsl:when>
                         <xsl:when test="$name='localid' and $value=''">
                             <i>
