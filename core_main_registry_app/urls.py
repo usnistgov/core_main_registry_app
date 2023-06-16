@@ -143,8 +143,50 @@ if ENABLE_BLOB_ENDPOINTS:
 
     urlpatterns.append(
         re_path(
+            r"^blob/(?P<pk>[\w-]+)/metadata",
+            login_required(common_views.ManageBlobMetadata.as_view()),
+            name="core_main_app_blob_metadata",
+        )
+    )
+    urlpatterns.append(
+        re_path(
+            r"^blob",
+            common_views.ViewBlob.as_view(),
+            name="core_main_app_blob_detail",
+        )
+    )
+    urlpatterns.append(
+        re_path(
             r"^assign-blob-workspace",
             user_ajax.AssignView.as_view(api=blob_api),
             name="core_main_assign_blob_workspace",
+        )
+    )
+    urlpatterns.append(
+        re_path(
+            r"^add-metadata-form",
+            user_ajax.LoadBlobMetadataForm.as_view(),
+            name="core_main_blob_metadata_form",
+        )
+    )
+    urlpatterns.append(
+        re_path(
+            r"^add-metadata-to-blob",
+            user_ajax.AddMetadataToBlob.as_view(),
+            name="core_main_blob_add_metadata",
+        )
+    )
+    urlpatterns.append(
+        re_path(
+            r"^remove-metadata-from-blob",
+            user_ajax.RemoveMetadataFromBlob.as_view(),
+            name="core_main_blob_remove_metadata",
+        )
+    )
+    urlpatterns.append(
+        re_path(
+            r"^upload-file",
+            user_ajax.UploadFile.as_view(),
+            name="core_main_upload_file",
         )
     )
