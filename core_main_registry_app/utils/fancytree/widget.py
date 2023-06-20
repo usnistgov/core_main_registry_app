@@ -8,12 +8,15 @@ from itertools import chain
 from django import forms
 from django.conf import settings
 from django.forms.widgets import Widget
-from django.templatetags.static import static
 from django.utils.datastructures import MultiValueDict
 from django.utils.encoding import force_text
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 from mptt.templatetags.mptt_tags import cache_tree_children
+
+FANCYTREE_CDN_PATH = (
+    "https://cdnjs.cloudflare.com/ajax/libs/jquery.fancytree/2.38.3"
+)
 
 try:
     import simplejson as json
@@ -212,16 +215,12 @@ class FancyTreeWidget(Widget):
                         })
                     ).done(function(){
                         $.when(
-                            cachedScript( "%(fancytree_wide)s" ),
-                            cachedScript( "%(fancytree_customtag)s" ),
-                            cachedScript( "%(fancytree_dnd)s" ),
-                            cachedScript( "%(fancytree_glyph)s" ),
                             $.Deferred(function( deferred ){
                                 $( deferred.resolve );
                             })
                         ).done(function(){
                             $("#%(id)s").fancytree({
-                                extensions: ["glyph", "wide", "customTag"],
+                                extensions: ["glyph"],
                                 checkbox: true,
                                 icon: false,
                                 selectMode: %(select_mode)d,
@@ -229,26 +228,13 @@ class FancyTreeWidget(Widget):
                                 debugLevel: %(debug)d,
                                 glyph: {
                                     map: {
-                                      doc: "glyphicon glyphicon-file",
-                                      docOpen: "glyphicon glyphicon-file",
-                                      checkbox: "glyphicon glyphicon-unchecked",
-                                      checkboxSelected: "glyphicon glyphicon-check",
-                                      checkboxUnknown: "glyphicon glyphicon-share",
-                                      dragHelper: "glyphicon glyphicon-play",
-                                      dropMarker: "glyphicon glyphicon-arrow-right",
-                                      error: "glyphicon glyphicon-warning-sign",
-                                      expanderClosed: "glyphicon glyphicon-menu-right",
-                                      expanderLazy: "glyphicon glyphicon-menu-right",
-                                      expanderOpen: "glyphicon glyphicon-menu-down",
-                                      folder: "glyphicon glyphicon-folder-close",
-                                      folderOpen: "glyphicon glyphicon-folder-open",
-                                      loading: "glyphicon glyphicon-refresh glyphicon-spin"
+                                        expanderClosed: "fa-solid fa-caret-right",
+                                        expanderLazy: "fa-solid fa-caret-right",
+                                        expanderOpen: "fa-solid fa-caret-down",
+                                        checkbox: "fa-regular fa-square",
+                                        checkboxSelected: "fa-regular fa-square-check",
+                                        checkboxUnknown: "fa-regular fa-square-minus",
                                     }
-                                },
-                                wide: {
-                                    iconWidth: "1em",
-                                    iconSpacing: "0.5em",
-                                    levelOfs: "1.5em"
                                 },
                                 customTag : {
                                     tag: "div"
@@ -300,21 +286,7 @@ class FancyTreeWidget(Widget):
                     "js_var": js_data_var,
                     "debug": settings.DEBUG and 1 or 0,
                     "select_mode": self.select_mode,
-                    "fancytree": static(
-                        "core_main_registry_app/libs/fancytree/jquery.fancytree.js"
-                    ),
-                    "fancytree_glyph": static(
-                        "core_main_registry_app/libs/fancytree/jquery.fancytree.glyph.js"
-                    ),
-                    "fancytree_wide": static(
-                        "core_main_registry_app/libs/fancytree/jquery.fancytree.wide.js"
-                    ),
-                    "fancytree_customtag": static(
-                        "core_main_registry_app/libs/fancytree/jquery.fancytree.customtag.js"
-                    ),
-                    "fancytree_dnd": static(
-                        "core_main_registry_app/libs/fancytree/jquery.fancytree.dnd.js"
-                    ),
+                    "fancytree": f"{FANCYTREE_CDN_PATH}/jquery.fancytree-all-deps.min.js",
                 }
             )
         output.append("</script>")
@@ -327,7 +299,7 @@ class FancyTreeWidget(Widget):
 
         css = {
             "all": (
-                "core_main_registry_app/libs/fancytree/skin-bootstrap/ui.fancytree.css",
+                f"{FANCYTREE_CDN_PATH}/skin-bootstrap/ui.fancytree.min.css",
                 "core_main_registry_app/user/css/fancytree/fancytree.custom.css",
             )
         }

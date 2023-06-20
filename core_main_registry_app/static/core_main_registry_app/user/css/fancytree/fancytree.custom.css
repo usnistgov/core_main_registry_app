@@ -1,19 +1,22 @@
 ul.fancytree-container{
-    width: 17em;
-}
-
-span.fancytree-title{
-    white-space: normal;
-    font-size: 14pt;
-    font-family: 'Source Sans Pro', sans-serif;
-}
-
-ul.fancytree-container{
-    width: 17em;
     border: none;
     position: relative;
 }
 
-span.fancytree-icon, span.fancytree-checkbox, span.fancytree-expander, span.fancytree-custom-icon {
-    margin-top: 6px;
+span.fancytree-node {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+}
+
+span.fancytree-expander, span.fancytree-checkbox {
+    width: 5%;
+}
+
+span.fancytree-title{
+    width: 85%;
+    white-space: normal;
+    font-size: 14pt;
+    font-family: 'Source Sans Pro', sans-serif;
 }
