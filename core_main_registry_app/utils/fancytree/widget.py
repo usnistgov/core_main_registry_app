@@ -9,7 +9,7 @@ from django import forms
 from django.conf import settings
 from django.forms.widgets import Widget
 from django.utils.datastructures import MultiValueDict
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 from mptt.templatetags.mptt_tags import cache_tree_children
@@ -170,7 +170,7 @@ class FancyTreeWidget(Widget):
             '<ul style="display: none;" class="fancytree_checkboxes"%s>'
             % id_attr
         )
-        str_values = set([force_text(v) for v in value])
+        str_values = set([force_str(v) for v in value])
         for i, (option_value, option_label) in enumerate(
             chain(self.choices, choices)
         ):
@@ -185,9 +185,9 @@ class FancyTreeWidget(Widget):
             checkbox = forms.CheckboxInput(
                 final_attrs, check_test=lambda value: value in str_values
             )
-            option_value = force_text(option_value)
+            option_value = force_str(option_value)
             rendered_cb = checkbox.render(name, option_value)
-            option_label = conditional_escape(force_text(option_label))
+            option_label = conditional_escape(force_str(option_label))
             output.append(
                 "<li><label%s>%s %s</label></li>"
                 % (label_for, rendered_cb, option_label)
