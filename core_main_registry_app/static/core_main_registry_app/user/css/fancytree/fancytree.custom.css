@@ -10,10 +10,6 @@ span.fancytree-node {
     align-items: center;
 }
 
-span.fancytree-expander, span.fancytree-checkbox {
-    width: 5%;
-}
-
 span.fancytree-title{
     width: 85%;
     white-space: normal;
