@@ -16,3 +16,7 @@ span.fancytree-title{
     font-size: 14pt;
     font-family: 'Source Sans Pro', sans-serif;
 }
+
+span.fancytree-expander:hover{
+    color: #37c0fb !important;
+}
