@@ -17,6 +17,10 @@ span.fancytree-title{
     font-family: 'Source Sans Pro', sans-serif;
 }
 
+span.fancytree-expander, span.fancytree-checkbox {
+    width: 5%;
+}
+
 span.fancytree-expander:hover{
     color: #37c0fb !important;
 }
