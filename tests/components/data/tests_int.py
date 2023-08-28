@@ -33,14 +33,15 @@ class TestDataGetStatus(IntegrationBaseTestCase):
         # Assert
         self.assertTrue(status == DataStatus.ACTIVE)
 
-    def test_data_get_status_raise_model_exception_if_status_key_does_not_exist(
+    def test_data_get_status_returns_none_if_status_key_does_not_exist(
         self,
     ):
-        """test_data_get_status_raise_model_exception_if_status_key_does_not_exist"""
+        """test_data_get_status_returns_none_if_status_key_does_not_exist"""
 
-        # Act, Assert
-        with self.assertRaises(exceptions.ModelError):
-            data_registry_api.get_status(self.fixture.data_2)
+        # Act
+        status = data_registry_api.get_status(self.fixture.data_2)
+        # Assert
+        self.assertIsNone(status)
 
 
 class TestDataSetStatus(IntegrationBaseTestCase):

@@ -16,7 +16,10 @@ from core_main_registry_app.rest.data import views as registry_data_views
 from core_main_registry_app.rest.template_version_manager import (
     views as registry_template_version_manager_views,
 )
-from core_main_registry_app.settings import ENABLE_BLOB_ENDPOINTS
+from core_main_registry_app.settings import (
+    ENABLE_BLOB_ENDPOINTS,
+    ALLOW_MULTIPLE_SCHEMAS,
+)
 
 urlpatterns = [
     re_path(
@@ -309,4 +312,22 @@ if ENABLE_BLOB_ENDPOINTS:
                 name="core_main_app_rest_blob_change_owner",
             ),
         ]
+    )
+
+if ALLOW_MULTIPLE_SCHEMAS:
+    urlpatterns.insert(
+        0,
+        re_path(
+            r"^template/global/$",
+            template_version_manager_views.GlobalTemplateList.as_view(),
+            name="core_main_app_rest_global_template_list",
+        ),
+    )
+    urlpatterns.insert(
+        0,
+        re_path(
+            r"^template/user/$",
+            template_version_manager_views.UserTemplateList.as_view(),
+            name="core_main_app_rest_user_template_list",
+        ),
     )

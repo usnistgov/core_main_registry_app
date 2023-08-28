@@ -43,14 +43,14 @@ class TemplateVersionManagerFixtures(FixtureInterface):
         self.template_1_1 = Template(
             filename="template1_1.xsd",
             content="content1_1",
-            hash="hash1_1",
+            _hash="hash1_1",
             version_manager=self.template_vm_1,
         )
         self.template_1_1.save()
         self.template_1_2 = Template(
             filename="template1_2.xsd",
             content="content1_2",
-            hash="hash1_2",
+            _hash="hash1_2",
             version_manager=self.template_vm_1,
             is_disabled=True,
         )
@@ -58,7 +58,7 @@ class TemplateVersionManagerFixtures(FixtureInterface):
         self.template_1_3 = Template(
             filename="template1_3.xsd",
             content="content1_3",
-            hash="hash1_3",
+            _hash="hash1_3",
             version_manager=self.template_vm_1,
             is_current=True,
         )
@@ -66,7 +66,7 @@ class TemplateVersionManagerFixtures(FixtureInterface):
         self.template_2_1 = Template(
             filename="template2_1.xsd",
             content="content2_1",
-            hash="hash2_1",
+            _hash="hash2_1",
             version_manager=self.template_vm_2,
             is_current=True,
         )

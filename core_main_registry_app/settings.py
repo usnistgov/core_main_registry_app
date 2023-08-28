@@ -33,3 +33,7 @@ CUSTOM_REGISTRY_FILE_PATH = getattr(
 ENABLE_BLOB_ENDPOINTS = getattr(settings, "ENABLE_BLOB_ENDPOINTS", False)
 """ bool: Enable blob api and user views for blob management.
 """
+
+ALLOW_MULTIPLE_SCHEMAS = getattr(settings, "ALLOW_MULTIPLE_SCHEMAS", False)
+""" bool: Enable the use of multiple schemas in the registry.
+"""

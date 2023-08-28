@@ -66,3 +66,6 @@ CELERYBEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 MONGODB_INDEXING = False
 MONGODB_ASYNC_SAVE = False
 ENABLE_SAML2_SSO_AUTH = False
+ALLOW_MULTIPLE_SCHEMAS = True
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

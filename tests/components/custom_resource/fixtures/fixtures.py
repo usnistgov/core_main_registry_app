@@ -42,7 +42,7 @@ class CustomResourceFixtures(FixtureInterface):
         template = Template(
             filename="Schema",
             content="<schema xmlns='http://www.w3.org/2001/XMLSchema'></schema>",
-            hash="",
+            _hash="",
         )
         template.save()
         return template

@@ -92,12 +92,12 @@ def get_status(data):
     """
     try:
         return data.get_dict_content()["Resource"]["@status"]
-    except Exception as exception:
-        raise exceptions.ModelError(str(exception))
+    except KeyError:
+        return None
 
 
 def generate_unique_local_id(length_id):
-    """Generate an unique ID with the given length
+    """Generate a unique ID with the given length
 
     Args:
         length_id:
@@ -105,7 +105,7 @@ def generate_unique_local_id(length_id):
     Returns:
 
     """
-    # we generate an local id
+    # we generate a local id
     local_id = "".join(
         random.choice(string.ascii_uppercase + string.digits)
         for _ in range(length_id)

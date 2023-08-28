@@ -3,12 +3,15 @@
 from django.urls import reverse
 from menu import Menu, MenuItem
 
+from core_main_registry_app.settings import ALLOW_MULTIPLE_SCHEMAS
+from core_main_registry_app.utils.menu.menu_utils import (
+    show_template_upload_menu,
+)
+
 # Remove 'Upload New Template' option from menu
-for admin_menu_item in Menu.items["admin"]:
-    if admin_menu_item.title == "TEMPLATES":
-        for template_menu_item_child in admin_menu_item.children:
-            if template_menu_item_child.title == "Upload New Template":
-                template_menu_item_child.visible = False
+show_template_upload_menu(
+    menu=Menu, allow_multiple_schemas=ALLOW_MULTIPLE_SCHEMAS
+)
 
 config_children = (
     MenuItem(

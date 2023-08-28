@@ -1,7 +1,5 @@
 """ Role extraction API
-
 """
-from core_main_app.commons import exceptions as exceptions
 
 
 def role_extraction(dict_content):
@@ -21,5 +19,5 @@ def role_extraction(dict_content):
         for dict_role in list_resource_role:
             list_role.append(dict_role["@xsi:type"])
         return list_role
-    except Exception as exception:
-        raise exceptions.ModelError(str(exception))
+    except KeyError:
+        return None
