@@ -109,7 +109,7 @@ urlpatterns = [
     re_path(
         r"^xml-editor/data",
         login_required(
-            common_views.DataContentEditor.as_view(),
+            common_views.DataXMLEditor.as_view(),
         ),
         name="core_main_app_xml_text_editor_view",
     ),
