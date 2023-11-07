@@ -1,6 +1,5 @@
 """ REST views for the registry Data API
 """
-from django.http import Http404
 from django.utils.decorators import method_decorator
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -77,31 +76,16 @@ class DataDetailRegistry(DataDetail):
             - code: 500
               content: Internal server error
         """
-        try:
+        # Only superusers allowed to delete data
+        if not request.user.is_superuser:
+            content = {
+                "message": "You must have superuser right to delete data."
+            }
+            return Response(content, status=status.HTTP_403_FORBIDDEN)
 
-            if request.user.is_superuser:
-                # Get object
-                data_object = self.get_object(request, pk)
+        return super(DataDetailRegistry, self).delete(request, pk)
 
-                # delete object
-                data_api.delete(data_object, request.user)
-            else:
-                content = {
-                    "message": "You must have superuser right to delete data."
-                }
-                return Response(content, status=status.HTTP_403_FORBIDDEN)
-
-            # Return response
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        except Http404:
-            content = {"message": "Data not found."}
-            return Response(content, status=status.HTTP_404_NOT_FOUND)
-        except Exception as api_exception:
-            content = {"message": str(api_exception)}
-            return Response(
-                content, status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
-
+    @method_decorator(api_staff_member_required())
     def patch(self, request, pk):
         """Data cannot be updated
 
@@ -113,7 +97,13 @@ class DataDetailRegistry(DataDetail):
         Returns:
 
             - code: 403
-              content: Data cannot be updated
+              content: Access forbidden
         """
-        content = {"message": "Data cannot be updated."}
-        return Response(content, status=status.HTTP_403_FORBIDDEN)
+        # Only superusers allowed to update data
+        if not request.user.is_superuser:
+            content = {
+                "message": "You must have superuser right to update data."
+            }
+            return Response(content, status=status.HTTP_403_FORBIDDEN)
+
+        return super(DataDetailRegistry, self).patch(request, pk)
