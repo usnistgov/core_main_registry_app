@@ -13,6 +13,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     # Extra apps
     "defender",
+    "menu",
     # Local apps
     "core_main_app",
     "core_main_registry_app",
@@ -69,3 +70,4 @@ ENABLE_SAML2_SSO_AUTH = False
 ALLOW_MULTIPLE_SCHEMAS = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+CUSTOM_NAME = "NMRR"

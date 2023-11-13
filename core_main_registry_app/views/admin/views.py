@@ -1,15 +1,16 @@
-"""
-    Admin views
+""" Admin views
 """
 import json
 import logging
 
+from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.html import escape as html_escape
 from django.views.generic import View
 
+from core_main_app.commons.exceptions import ModelError
 from core_main_app.components.template import api as template_api
 from core_main_app.components.template_version_manager import (
     api as template_version_manager_api,
@@ -17,6 +18,9 @@ from core_main_app.components.template_version_manager import (
 from core_main_app.utils.rendering import admin_render
 from core_main_registry_app.components.custom_resource import (
     api as custom_resource_api,
+)
+from core_main_registry_app.components.template import (
+    api as template_registry_api,
 )
 from core_main_registry_app.views.admin.forms import UploadCustomResourcesForm
 
@@ -121,18 +125,24 @@ class CustomRegistry(View):
     """Custom registry admin view."""
 
     def get(self, request, *args, **kwargs):
+        """Get Custom Registry configuration page
+
+        Args:
+            request:
+            *args:
+            **kwargs:
+
+        Returns:
+
+        """
         data_context_list = []
-        global_template_version_manager = (
-            template_version_manager_api.get_global_version_managers(
-                request=request
-            )
-        )
-        if len(global_template_version_manager) == 1:
-            template_version_manager = list(global_template_version_manager)[0]
+        try:
             # get the current version
-            current_template_version = template_version_manager.current
+            current_registry_template = (
+                template_registry_api.get_current_registry_template(request)
+            )
             # for each template versions
-            for version in template_version_manager.versions:
+            for version in current_registry_template.version_manager.versions:
                 # get the template
                 template = template_api.get_by_id(version, request=request)
                 # get all the template's custom resources
@@ -145,12 +155,12 @@ class CustomRegistry(View):
                         "template_name": template.display_name,
                         "count": custom_resources.count(),
                         "template_id": str(template.id),
-                        "is_current": current_template_version
+                        "is_current": current_registry_template
                         == str(template.id),
                     }
                 )
-        else:
-            logger.error("We should only have one template.")
+        except ModelError as model_error:
+            messages.add_message(request, messages.ERROR, str(model_error))
 
         modals = []
 
