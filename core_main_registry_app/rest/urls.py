@@ -3,7 +3,7 @@
 from django.urls import re_path
 from rest_framework.urlpatterns import format_suffix_patterns
 
-import core_main_app.rest.xsl_transformation.views as xslTransformationList_view
+import core_main_app.rest.xsl_transformation.views as xslt_views
 from core_main_app.rest.data import views as data_views
 from core_main_app.rest.template import views as template_views
 from core_main_app.rest.template_version_manager import (
@@ -12,6 +12,9 @@ from core_main_app.rest.template_version_manager import (
 from core_main_app.rest.user import views as user_views
 from core_main_app.rest.views import CoreSettings
 from core_main_app.rest.workspace import views as workspace_views
+from core_main_registry_app.rest.workspace import (
+    views as workspace_registry_views,
+)
 from core_main_registry_app.rest.data import views as registry_data_views
 from core_main_registry_app.rest.template_version_manager import (
     views as registry_template_version_manager_views,
@@ -139,22 +142,22 @@ urlpatterns = [
     ),
     re_path(
         r"^xslt/$",
-        xslTransformationList_view.XslTransformationList.as_view(),
+        xslt_views.XslTransformationList.as_view(),
         name="core_main_app_rest_xslt",
     ),
     re_path(
         r"^xslt/transform/$",
-        xslTransformationList_view.XslTransformationTransform.as_view(),
+        xslt_views.XslTransformationTransform.as_view(),
         name="core_main_app_rest_xslt_transform",
     ),
     re_path(
         r"^xslt/(?P<pk>\w+)/$",
-        xslTransformationList_view.XslTransformationDetail.as_view(),
+        xslt_views.XslTransformationDetail.as_view(),
         name="core_main_app_rest_xslt_detail",
     ),
     re_path(
         r"^workspace/$",
-        workspace_views.WorkspaceList.as_view(),
+        workspace_registry_views.WorkspaceListRegistry.as_view(),
         name="core_main_app_rest_workspace_list",
     ),
     re_path(
