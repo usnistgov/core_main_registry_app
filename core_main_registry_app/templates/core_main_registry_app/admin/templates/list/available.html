@@ -1,0 +1,61 @@
+{% extends 'core_main_app/_render/admin/theme/tools/box.html' %}
+
+{% block box_title %}Available{% endblock %}
+
+{% block box_tools %}
+{% endblock %}
+
+{% block box_body %}
+{% if data.MULTIPLE_SCHEMAS %}
+<p>
+This page lists all Templates uploaded by admin users. Use drag and drop to update the order templates appear
+on the website, then click on "Save ordering" when done.
+</p>
+{% endif %}
+
+<table class="table table-bordered table-striped table-hover">
+    <tr>
+        {% if data.MULTIPLE_SCHEMAS %} <th>Display order</th>{% endif %}
+        <th width="35%">{{ data.object_name }}</th>
+        <th>Format</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for object in data.available %}
+        <tr {% if data.MULTIPLE_SCHEMAS %} object-id={{object.id}} draggable="true" ondragstart="start()"  ondragover="dragover()" {% endif %}>
+
+            {% if data.MULTIPLE_SCHEMAS %}
+            <td>{% if object.display_rank %} {{object.display_rank}} {% else %} - {% endif %} </td>
+            {% endif %}
+            <td>{{ object.title }}</td>
+            <td>{{ object.current_version.format }}</td>
+            <td>
+                {% block box_actions %}
+                <a class="btn btn-secondary"
+                   href="{% url 'core-admin:core_main_app_manage_template_versions' object.id %}">
+                    <i class="fas fa-list"></i> Versions
+                </a>
+                {% if object != data.registry_current_template %}
+                    {% url 'core_main_app_edit_template' object.id as edit_url %}
+                    {% include 'core_main_app/common/buttons/edit.html' %}
+                    <span class="icon legend delete" objectid="{{ object.id }}">
+                        <button class="btn btn-danger"><i class="fas fa-trash"></i> Disable </button>
+                    </span>
+                {% endif %}
+                {% endblock %}
+            </td>
+        </tr>
+    {% empty %}
+        <tr>
+            <td class="empty" colspan="100%">
+                No {{ data.object_name }} uploaded.
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+{% if data.MULTIPLE_SCHEMAS %}
+<button  class="btn btn-primary mt-3 {% if BOOTSTRAP_VERSION|first == "4" %}float-right{% elif BOOTSTRAP_VERSION|first == "5"  %}float-end{% endif %} save-order-global"  disabled>
+        <i class="fas fa-save"></i> Save ordering
+</button>
+{% endif %}
+{% endblock %}

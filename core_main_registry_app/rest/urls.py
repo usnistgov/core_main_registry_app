@@ -265,6 +265,21 @@ urlpatterns = [
         CoreSettings.as_view(),
         name="core_main_app_rest_core_settings",
     ),
+    re_path(
+        r"^template-version-manager/(?P<pk>\w+)/disable/$",
+        template_version_manager_views.DisableTemplateVersionManager.as_view(),
+        name="core_main_app_rest_template_version_manager_disable",
+    ),
+    re_path(
+        r"^template-version-manager/(?P<pk>\w+)/restore/$",
+        template_version_manager_views.RestoreTemplateVersionManager.as_view(),
+        name="core_main_app_rest_template_version_manager_restore",
+    ),
+    re_path(
+        r"^template-version-manager/global/ordering/$",
+        template_version_manager_views.GlobalTemplateVersionManagerOrdering.as_view(),
+        name="core_main_app_rest_global_template_version_manager_ordering",
+    ),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

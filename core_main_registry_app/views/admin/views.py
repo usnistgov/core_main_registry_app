@@ -3,8 +3,8 @@
 import json
 import logging
 
+from django.conf import settings
 from django.contrib import messages
-from django.contrib.admin.views.decorators import staff_member_required
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.html import escape as html_escape
@@ -16,6 +16,7 @@ from core_main_app.components.template_version_manager import (
     api as template_version_manager_api,
 )
 from core_main_app.utils.rendering import admin_render
+from core_main_app.views.common.ajax import EditTemplateVersionManagerView
 from core_main_registry_app.components.custom_resource import (
     api as custom_resource_api,
 )
@@ -27,41 +28,81 @@ from core_main_registry_app.views.admin.forms import UploadCustomResourcesForm
 logger = logging.getLogger("core_main_registry_app.views.admin.views")
 
 
-@staff_member_required
-def manage_templates(request):
-    """View that allows template management.
+class ManageTemplatesRegistryView(View):
+    """Manage Templates view."""
 
-    Args:
-        request:
+    template = "core_main_registry_app/admin/templates/list.html"
 
-    Returns:
+    def get(self, request):
+        """get request
 
-    """
-    # get all current templates
-    templates = template_version_manager_api.get_global_version_managers(
-        request=request
-    )
+        Args:
+            request:
 
-    context = {
-        "object_name": "Template",
-        "available": [
-            template for template in templates if not template.is_disabled
-        ],
-        "disabled": [
-            template for template in templates if template.is_disabled
-        ],
-    }
+        Returns:
+        """
 
-    assets = {}
-    modals = []
+        templates = template_version_manager_api.get_global_version_managers(
+            request=request
+        )
+        # get all registry current template
+        registry_template = (
+            template_registry_api.get_current_registry_template(request)
+        )
+        context = {
+            "object_name": "Template",
+            "available": [
+                template for template in templates if not template.is_disabled
+            ],
+            "disabled": [
+                template for template in templates if template.is_disabled
+            ],
+            "registry_current_template": template_version_manager_api.get_by_id(
+                registry_template.version_manager_id, request
+            ),
+            "available_template_block": "core_main_registry_app/admin/core_main_app/templates/list/available.html",
+            "MULTIPLE_SCHEMAS": settings.ALLOW_MULTIPLE_SCHEMAS,
+        }
 
-    return admin_render(
-        request,
-        "core_main_app/admin/templates/list.html",
-        assets=assets,
-        context=context,
-        modals=modals,
-    )
+        assets = {
+            "js": [
+                {
+                    "path": "core_main_app/common/js/templates/list/restore.js",
+                    "is_raw": False,
+                },
+                {
+                    "path": "core_main_app/common/js/templates/list/modals/disable.js",
+                    "is_raw": False,
+                },
+                EditTemplateVersionManagerView.get_modal_js_path(),
+            ],
+        }
+        if settings.ALLOW_MULTIPLE_SCHEMAS:
+            assets["js"].extend(
+                [
+                    {
+                        "path": "core_main_app/common/js/templates/sort.js",
+                        "is_raw": True,
+                    },
+                    {
+                        "path": "core_main_registry_app/admin/js/templates/sort.raw.js",
+                        "is_raw": True,
+                    },
+                ]
+            )
+
+        modals = [
+            "core_main_app/admin/templates/list/modals/disable.html",
+            EditTemplateVersionManagerView.get_modal_html_path(),
+        ]
+
+        return admin_render(
+            request,
+            self.template,
+            assets=assets,
+            context=context,
+            modals=modals,
+        )
 
 
 class UploadCustomResource(View):

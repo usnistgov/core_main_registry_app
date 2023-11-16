@@ -58,7 +58,11 @@ admin_urls = [
     ),
     re_path(
         r"^templates$",
-        registry_admin_views.manage_templates,
+        staff_member_required(
+            registry_admin_views.ManageTemplatesRegistryView.as_view(
+                template="core_main_registry_app/admin/templates/list.html",
+            )
+        ),
         name="core_main_registry_app_templates",
     ),
     re_path(

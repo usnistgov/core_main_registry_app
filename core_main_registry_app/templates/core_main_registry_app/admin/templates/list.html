@@ -1,0 +1,15 @@
+{% extends "core_main_app/_render/admin/theme/tools/section.html" %}
+{% load static %}
+
+{% block section_title %}{{ data.object_name }} Manager{% endblock %}
+
+{% block section_content %}
+    <div class="row">
+        <div class="col-md-12">
+            {% block list_includes %}
+            {% include 'core_main_registry_app/admin/templates/list/available.html' %}
+            {% include 'core_main_app/admin/templates/list/disabled.html' %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

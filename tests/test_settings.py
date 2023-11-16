@@ -71,3 +71,4 @@ ALLOW_MULTIPLE_SCHEMAS = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CUSTOM_NAME = "NMRR"
+ROOT_URLCONF = "tests.urls"

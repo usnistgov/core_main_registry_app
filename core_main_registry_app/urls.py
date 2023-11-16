@@ -8,7 +8,10 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from core_main_app.components.data import api as data_api
 from core_main_app.utils.rendering import render
 from core_main_app.utils.urls import get_auth_urls
-from core_main_app.views.common import views as common_views
+from core_main_app.views.common import (
+    ajax as common_ajax,
+    views as common_views,
+)
 from core_main_app.views.user import views as user_views, ajax as user_ajax
 from core_main_registry_app.settings import ENABLE_BLOB_ENDPOINTS
 
@@ -124,6 +127,11 @@ urlpatterns = [
         r"^set-timezone",
         user_views.set_timezone,
         name="core_main_set_timezone",
+    ),
+    re_path(
+        r"^template/(?P<pk>[\w-]+)/edit/$",
+        common_ajax.EditTemplateVersionManagerView.as_view(),
+        name="core_main_app_edit_template",
     ),
 ]
 
