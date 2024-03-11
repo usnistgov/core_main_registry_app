@@ -1,6 +1,5 @@
 """ Admin views
 """
-import json
 import logging
 
 from django.conf import settings
@@ -15,6 +14,7 @@ from core_main_app.components.template import api as template_api
 from core_main_app.components.template_version_manager import (
     api as template_version_manager_api,
 )
+from core_main_app.utils.json_utils import load_json_string
 from core_main_app.utils.rendering import admin_render
 from core_main_app.views.common.ajax import EditTemplateVersionManagerView
 from core_main_registry_app.components.custom_resource import (
@@ -133,7 +133,7 @@ class UploadCustomResource(View):
         return admin_render(request, self.template_name, context=self.context)
 
     def _save_custom_resources(self, request, template_id):
-        """Saves an XSLT.
+        """Saves a JSON Custom resource.
 
         Args:
             request: Request.
@@ -147,7 +147,7 @@ class UploadCustomResource(View):
             # get the file from the form
             upload_file = request.FILES["json_file"].read().decode("utf-8")
 
-            data = json.loads(upload_file)
+            data = load_json_string(upload_file)
             custom_resource_api.replace_custom_resources_by_template(
                 template, data
             )
