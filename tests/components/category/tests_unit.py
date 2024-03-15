@@ -39,21 +39,24 @@ class TestCategoryGetAllFilteredByRefinementId(TestCase):
     Test Category Get All Filtered By Refinement Id
     """
 
-    def test_category_get_all_filtered_by_refinement_id_returns_empty_list(
+    def test_category_get_all_filtered_by_refinement_id_returns_list_of_categories(
         self,
     ):
-        """test_category_get_all_filtered_by_refinement_id_returns_empty_list"""
+        """test_category_get_all_filtered_by_refinement_id_returns_list_of_categories"""
         # Act
         result = category_api.get_all_filtered_by_refinement_id(1)
         # Assert
-        self.assertEqual(len(result), 0)
+        for obj in list(result):
+            self.assertTrue(isinstance(obj, Category))
 
     def test_category_get_all_filtered_by_refinement_id_returns_list(self):
         """test_category_get_all_filtered_by_refinement_id_returns_list"""
         # Arrange
         category = create_category()
         # Act
-        result = category_api.get_all_filtered_by_refinement_id(1)
+        result = category_api.get_all_filtered_by_refinement_id(
+            category.refinement.id
+        )
         # Assert
         self.assertEqual(len(result), 1)
         self.assertTrue(category in result)
@@ -85,12 +88,13 @@ class TestCategoryGetAll(TestCase):
     Test Category Get All
     """
 
-    def test_category_get_all_returns_empty_list(self):
-        """test_category_get_all_returns_empty_list"""
+    def test_category_get_all_returns_list_of_categories(self):
+        """test_category_get_all_returns_list_of_categories"""
         # Act
         result = category_api.get_all()
         # Assert
-        self.assertEqual(len(result), 0)
+        for obj in list(result):
+            self.assertTrue(isinstance(obj, Category))
 
     def test_category_get_all_returns_list(self):
         """test_category_get_all_returns_list"""
@@ -99,7 +103,6 @@ class TestCategoryGetAll(TestCase):
         # Act
         result = category_api.get_all()
         # Assert
-        self.assertEqual(len(result), 1)
         self.assertTrue(category in result)
 
 
@@ -123,11 +126,11 @@ class TestCategoryGetAllCategoriesIdsFromNameAndRefinementId(TestCase):
     ):
         """test_category_get_all_categories_ids_from_name_and_refinement_id_returns_list"""
         # Arrange
-        create_category()
+        category = create_category()
         # Act
         result = (
             category_api.get_all_categories_ids_from_name_and_refinement_id(
-                "Category", 1
+                "Category", category.refinement.id
             )
         )
         # Assert
@@ -154,10 +157,10 @@ class TestCategoryGetAllCategoriesIdsByParentSlugAndRefinementId(TestCase):
     ):
         """test_get_all_categories_ids_by_parent_slug_and_refinement_id_returns_list"""
         # Arrange
-        create_category()
+        category = create_category()
         # Act
         result = category_api.get_all_categories_ids_by_parent_slug_and_refinement_id(
-            "", 1
+            "", category.refinement.id
         )
         # Assert
         self.assertEqual(len(result), 1)

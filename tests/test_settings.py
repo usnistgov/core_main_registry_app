@@ -1,5 +1,6 @@
 """ Tests Settings
 """
+import os
 
 SECRET_KEY = "fake-key"
 
@@ -72,3 +73,14 @@ ALLOW_MULTIPLE_SCHEMAS = True
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CUSTOM_NAME = "NMRR"
 ROOT_URLCONF = "tests.urls"
+
+
+REGISTRY_XSD_FILEPATH = os.path.join(
+    "core_main_registry_app", "xsd", "res-md.xsd"
+)
+REGISTRY_XSD_FILENAME = "res-md.xsd"
+CUSTOM_REGISTRY_FILE_PATH = os.path.join(
+    "core_main_registry_app", "json", "custom_registry.json"
+)
+
+CELERY_ALWAYS_EAGER = True

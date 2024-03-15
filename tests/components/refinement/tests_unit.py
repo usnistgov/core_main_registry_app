@@ -30,24 +30,26 @@ class TestRefinementGetAll(TestCase):
     Test Refinement Get All
     """
 
-    def test_refinement_get_all_refinement_returns_empty_list(self):
-        """test_get_all_refinements_returns_empty_list"""
+    def test_refinement_get_all_refinements_returns_list_of_refinements(self):
+        """test_refinement_get_all_refinements_returns_list_of_refinements"""
         # Act
         result = refinement_api.get_all()
         # Assert
 
-        self.assertEqual(len(result), 0)
+        for obj in list(result):
+            self.assertTrue(isinstance(obj, Refinement))
 
     def test_refinement_get_all_refinement_returns_list(self):
         """test_get_all_refinements_returns_empty_list"""
         # Arrange
+        refinement_count = Refinement.objects.count()
         refinement_1 = create_refinement()
         refinement_2 = create_refinement()
         # Act
         result = refinement_api.get_all()
         # Assert
 
-        self.assertEqual(len(result), 2)
+        self.assertEqual(len(result), refinement_count + 2)
         self.assertTrue(refinement_1 in result)
         self.assertTrue(refinement_2 in result)
 

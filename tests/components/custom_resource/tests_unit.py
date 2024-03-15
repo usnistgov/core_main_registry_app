@@ -34,7 +34,7 @@ class TestCreateAllResourceCustomResource(TestCase):
         """test_create_all_resource_custom_resource_return_type_all"""
         # Act
         key = "all_resource"
-        custom_resource = custom_resource_api._create_custom_resource_type_all(
+        custom_resource = custom_resource_api._create_custom_resource(
             self.fixture.create_custom_resource(),
             self.fixture.get_dict_custom_resource_all_resource()[key],
             key,
@@ -46,7 +46,7 @@ class TestCreateAllResourceCustomResource(TestCase):
         """test_create_all_resource_custom_resource_return_icon"""
         # Act
         key = "all_resource"
-        custom_resource = custom_resource_api._create_custom_resource_type_all(
+        custom_resource = custom_resource_api._create_custom_resource(
             self.fixture.create_custom_resource(),
             self.fixture.get_dict_custom_resource_all_resource()[key],
             key,
@@ -58,7 +58,7 @@ class TestCreateAllResourceCustomResource(TestCase):
         """test_create_all_resource_custom_resource_return_icon_color"""
         # Act
         key = "all_resource"
-        custom_resource = custom_resource_api._create_custom_resource_type_all(
+        custom_resource = custom_resource_api._create_custom_resource(
             self.fixture.create_custom_resource(),
             self.fixture.get_dict_custom_resource_all_resource()[key],
             key,
@@ -70,7 +70,7 @@ class TestCreateAllResourceCustomResource(TestCase):
         """test_create_all_resource_custom_resource_return_sort"""
         # Act
         key = "all_resource"
-        custom_resource = custom_resource_api._create_custom_resource_type_all(
+        custom_resource = custom_resource_api._create_custom_resource(
             self.fixture.create_custom_resource(),
             self.fixture.get_dict_custom_resource_all_resource()[key],
             key,

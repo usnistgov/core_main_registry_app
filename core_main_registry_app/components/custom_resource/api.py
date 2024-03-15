@@ -1,4 +1,4 @@
-""" Custom Resource model
+""" Custom Resource api
 """
 import logging
 
@@ -28,27 +28,37 @@ def parse_and_save(data, current_template):
      current_template:
     Returns:
     """
-
-    for key in data.keys():
-        resource = data[key]
-
-        custom_resource = CustomResource(template=current_template)
-
-        if _is_type_all(resource):
-            custom_resource = _create_custom_resource_type_all(
-                custom_resource, resource, key
-            )
-            # TODO: make sure only one type = 'all' ?
-        else:
-            custom_resource = _create_custom_resource(
-                custom_resource, resource, key
-            )
-
+    # Build list of custom resources from data
+    custom_resources_list = get_resources_from_dict(data)
+    # Save custom resources
+    for custom_resource in custom_resources_list:
+        custom_resource.template = current_template
         try:
-            _check_curate(custom_resource)
             custom_resource.save()
         except Exception as exception:
             raise exceptions.ModelError(str(exception))
+
+
+def get_resources_from_dict(resource_dict):
+    """Get list of custom resources from dictionary
+
+    Args:
+        resource_dict:
+
+    Returns:
+
+    """
+    # Initialize list
+    custom_resources_list = list()
+    # Create Custom Resources
+    for key in resource_dict.keys():
+        resource = resource_dict[key]
+        custom_resource = CustomResource()
+        custom_resources_list.append(
+            _create_custom_resource(custom_resource, resource, key)
+        )
+    # Return list of custom resources
+    return custom_resources_list
 
 
 def _check_curate(custom_resource):
@@ -70,21 +80,6 @@ def _check_curate(custom_resource):
             "Curate app is installed. "
             "You need url key, role choice and role type configured in configuration file."
         )
-
-
-def _get_value(dict, key):
-    """Get the value from the dict with the key.
-
-    Args:
-     dict:
-     key:
-    Returns:
-    """
-    try:
-        return dict[key]
-    except Exception:
-        logger.warning("The key %s is missing from the JSON file.", str(key))
-        return None
 
 
 def _is_custom_resource_type_resource(custom_resource):
@@ -110,24 +105,6 @@ def _is_type_all(resource):
         raise exceptions.ModelError("The configuration file is not valid.")
 
 
-def _create_custom_resource_type_all(custom_resource, resource, key):
-    """Create a custom resource for 'all resource'.
-
-    Args:
-     custom_resource:
-     resource:
-    Returns:
-    """
-    custom_resource.type = CUSTOM_RESOURCE_TYPE.ALL.value
-    custom_resource.name_in_schema = key
-    custom_resource.title = _get_value(resource, "title")
-    custom_resource.icon = _get_value(resource, "icon")
-    custom_resource.display_icon = _get_value(resource, "display_icon")
-    custom_resource.icon_color = _get_value(resource, "icon_color")
-    custom_resource.sort = _get_value(resource, "sort")
-    return custom_resource
-
-
 def _create_custom_resource(custom_resource, resource, key):
     """Create a custom resource.
 
@@ -137,17 +114,21 @@ def _create_custom_resource(custom_resource, resource, key):
      key:
     Returns:
     """
-    custom_resource.type = CUSTOM_RESOURCE_TYPE.RESOURCE.value
+    if _is_type_all(resource):
+        custom_resource.type = CUSTOM_RESOURCE_TYPE.ALL.value
+    else:
+        custom_resource.type = CUSTOM_RESOURCE_TYPE.RESOURCE.value
+        custom_resource.role_choice = resource.get("role_choice", None)
+        custom_resource.role_type = resource.get("role_type", None)
+        custom_resource.description = resource.get("description", None)
+        custom_resource.refinements = resource.get("refinements", None)
     custom_resource.name_in_schema = key
-    custom_resource.title = _get_value(resource, "title")
-    custom_resource.description = _get_value(resource, "description")
-    custom_resource.icon = _get_value(resource, "icon")
-    custom_resource.icon_color = _get_value(resource, "icon_color")
-    custom_resource.display_icon = _get_value(resource, "display_icon")
-    custom_resource.role_choice = _get_value(resource, "role_choice")
-    custom_resource.role_type = _get_value(resource, "role_type")
-    custom_resource.sort = _get_value(resource, "sort")
-    custom_resource.refinements = _get_value(resource, "refinements")
+    custom_resource.title = resource.get("title", None)
+    custom_resource.icon = resource.get("icon", None)
+    custom_resource.icon_color = resource.get("icon_color", None)
+    custom_resource.display_icon = resource.get("display_icon", None)
+    custom_resource.sort = resource.get("sort", None)
+    _check_curate(custom_resource)
     return custom_resource
 
 

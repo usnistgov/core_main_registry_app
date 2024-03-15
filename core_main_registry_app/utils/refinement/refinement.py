@@ -92,7 +92,7 @@ def _create_sub_categories(key, leaves, refinement, parent=None):
             parent=parent,
             refinement=refinement,
         )
-        # For each children.
+        # For each child.
         for key, value in sorted(leaves.items()):
             # Create sub categories.
             _create_sub_categories(key, value, refinement, parent=parent)

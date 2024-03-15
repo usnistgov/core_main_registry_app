@@ -18,7 +18,9 @@ class InitApp(AppConfig):
 
         """
         if "migrate" not in sys.argv:
-            from core_main_registry_app import discover
+            from core_main_registry_app.utils.refinement import (
+                watch as refinement_watch,
+            )
 
             # Init registry
-            discover.init_registry()
+            refinement_watch.init()
