@@ -13,7 +13,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.sites",
     # Extra apps
-    "defender",
     "menu",
     # Local apps
     "core_main_app",
