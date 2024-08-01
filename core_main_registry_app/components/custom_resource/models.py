@@ -1,6 +1,6 @@
 """ Custom Resource model
 """
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db import models
 from django.utils.text import slugify
 
@@ -66,8 +66,12 @@ class CustomResource(models.Model):
         # set refinements to default value before cleaning if not set
         if not self.refinements:
             self.refinements = list()
-        # manually clean object to trigger choices validation
-        self.full_clean()
+        # manually check choices validation
+        if self.type not in (
+            CUSTOM_RESOURCE_TYPE.RESOURCE.value,
+            CUSTOM_RESOURCE_TYPE.ALL.value,
+        ):
+            raise ValidationError("Incorrect type.")
         if not self.slug:
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)

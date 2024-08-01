@@ -112,10 +112,9 @@ def init_registry():
     custom_resources = custom_resource_api.get_resources_from_dict(json_data)
 
     # Insert template
-    tvm = registry_system_api.insert_registry_schema(
+    tvm, current_template = registry_system_api.insert_registry_schema(
         main_registry_settings.REGISTRY_XSD_FILENAME, xsd_data
     )
-    current_template = tvm.current_version
     # Insert refinements
     refinement.init_refinements(current_template)
     # Insert custom resources

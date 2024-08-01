@@ -69,7 +69,7 @@ def insert_registry_schema(xsd_filename, xsd_content):
         # save template
         template.save()
         # return version manager
-        return template_version_manager
+        return template_version_manager, template
     except Exception as exception:
         template.delete()
         raise exception
