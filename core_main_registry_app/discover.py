@@ -1,5 +1,6 @@
 """"Discover rules for core main registry app
 """
+
 import json
 import logging
 from os.path import join

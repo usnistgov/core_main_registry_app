@@ -1,5 +1,6 @@
 """ Admin views
 """
+
 import logging
 
 from django.conf import settings

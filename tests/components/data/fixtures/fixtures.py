@@ -1,5 +1,6 @@
 """ Fixtures files for Data
 """
+
 from os.path import join, dirname, realpath
 
 from core_main_app.components.data.models import Data

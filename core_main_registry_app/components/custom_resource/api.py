@@ -1,5 +1,6 @@
 """ Custom Resource api
 """
+
 import logging
 
 from django.conf import settings

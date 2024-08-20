@@ -1,5 +1,6 @@
 """ Unit tests for role extraction
 """
+
 from unittest import TestCase
 
 from core_main_registry_app.utils.role.extraction import role_extraction

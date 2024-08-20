@@ -1,5 +1,6 @@
 """ Handle refinement signals
 """
+
 from logging import getLogger
 
 from billiard.exceptions import SoftTimeLimitExceeded

@@ -1,5 +1,6 @@
 """ Fixtures files for Custom Resource
 """
+
 import json
 from os.path import join, dirname, realpath
 

@@ -1,5 +1,6 @@
 """ Url router for the core main registry app
 """
+
 from django.conf.urls import include
 from django.contrib.auth.decorators import login_required
 from django.urls import re_path

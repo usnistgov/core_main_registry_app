@@ -1,5 +1,6 @@
 """ Unit Test for Custom Resource API
 """
+
 from unittest import mock
 
 from django.conf import settings

@@ -1,5 +1,6 @@
 """ Data's registry api
 """
+
 import random
 import string
 

@@ -1,5 +1,6 @@
 """ Unit tests for `core_main_registry_app.views.admin.views` package
 """
+
 from unittest.mock import patch, MagicMock
 
 from django.test import SimpleTestCase

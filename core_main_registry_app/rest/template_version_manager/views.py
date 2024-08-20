@@ -1,5 +1,6 @@
 """ REST views for the registry template version manager API
 """
+
 from rest_framework.permissions import IsAuthenticated
 
 from core_main_app.rest.template_version_manager.abstract_views import (

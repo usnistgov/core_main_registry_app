@@ -1,5 +1,6 @@
 """ Unit Test for Migrations
 """
+
 from unittest.mock import patch
 
 from django.db.migrations.exceptions import BadMigrationError

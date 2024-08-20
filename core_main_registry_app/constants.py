@@ -1,6 +1,7 @@
 """
 Constants for core main registry app
 """
+
 from enum import Enum
 
 # Create an unspecified category when 2+ levels.

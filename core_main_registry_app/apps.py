@@ -1,5 +1,6 @@
 """ Apps file for setting core main registry app package when app is ready
 """
+
 import sys
 
 from django.apps import AppConfig

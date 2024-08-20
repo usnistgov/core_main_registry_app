@@ -1,5 +1,6 @@
 """ Mocks for core_main_registry_app
 """
+
 from unittest.mock import Mock
 
 

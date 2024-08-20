@@ -1,5 +1,6 @@
 """ Tests Settings
 """
+
 import os
 
 SECRET_KEY = "fake-key"

@@ -1,5 +1,6 @@
 """ Unit test views
 """
+
 from unittest.mock import patch
 
 from django.contrib.messages.storage.fallback import FallbackStorage

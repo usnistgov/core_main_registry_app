@@ -1,5 +1,6 @@
 """ Unit tests for `rest.workspace.serializers` package.
 """
+
 from unittest import TestCase
 from unittest.mock import MagicMock, patch
 from core_main_registry_app.rest.workspace import (

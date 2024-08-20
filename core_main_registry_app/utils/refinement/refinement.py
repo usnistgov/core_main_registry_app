@@ -1,6 +1,7 @@
 """
 Refinements creation.
 """
+
 from core_main_registry_app.constants import UNSPECIFIED_LABEL
 from core_main_registry_app.utils.refinement.tools import xsd_refinements
 

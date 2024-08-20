@@ -1,5 +1,6 @@
 """ Set of functions to define the rules for access control in registry
 """
+
 from core_main_app.access_control.api import check_can_write
 from core_main_app.components.data.access_control import has_perm_publish_data
 

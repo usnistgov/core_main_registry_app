@@ -1,5 +1,6 @@
 """ Registry tasks
 """
+
 from celery import shared_task
 
 from core_main_app.system import api as system_api

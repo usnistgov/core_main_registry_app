@@ -1,5 +1,6 @@
 """ Unit tests for the fancytree widget
 """
+
 from unittest import TestCase
 
 from core_main_registry_app.utils.fancytree.widget import (

@@ -1,5 +1,6 @@
 """ REST views for the registry Data API
 """
+
 from django.utils.decorators import method_decorator
 from rest_framework import status
 from rest_framework.decorators import api_view

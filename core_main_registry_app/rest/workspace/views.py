@@ -1,5 +1,6 @@
 """ REST views for the workspace API
 """
+
 from rest_framework.permissions import IsAuthenticated
 
 from core_main_app.rest.workspace.views import WorkspaceList
