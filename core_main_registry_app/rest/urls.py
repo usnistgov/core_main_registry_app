@@ -10,6 +10,9 @@ from core_main_app.rest.template import views as template_views
 from core_main_app.rest.template_version_manager import (
     views as template_version_manager_views,
 )
+from core_main_app.rest.template_html_rendering import (
+    views as template_html_rendering_views,
+)
 from core_main_app.rest.user import views as user_views
 from core_main_app.rest.views import CoreSettings
 from core_main_app.rest.workspace import views as workspace_views
@@ -47,6 +50,16 @@ urlpatterns = [
         name="core_main_app_rest_template_version",
     ),
     re_path(
+        r"^template/html_rendering/$",
+        template_html_rendering_views.TemplateHtmlRenderingList.as_view(),
+        name="core_main_app_rest_template_html_rendering",
+    ),
+    re_path(
+        r"^template/html_rendering/(?P<pk>\w+)$",
+        template_html_rendering_views.TemplateHtmlRenderingDetail.as_view(),
+        name="core_main_app_rest_template_html_rendering_detail",
+    ),
+    re_path(
         r"^template/version/(?P<pk>\w+)/current/$",
         registry_template_version_manager_views.CurrentTemplateVersion.as_view(),
         name="core_main_app_rest_template_version_current",
@@ -75,6 +88,11 @@ urlpatterns = [
         r"^data/$",
         data_views.DataList.as_view(),
         name="core_main_app_rest_data_list",
+    ),
+    re_path(
+        r"^data/(?P<pk>\w+)/render/$",
+        data_views.DataHtmlRender.as_view(),
+        name="core_main_app_rest_data_html_render",
     ),
     re_path(
         r"^data/permissions/$",
