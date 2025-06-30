@@ -2,6 +2,12 @@
 """
 
 from django.utils.decorators import method_decorator
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import (
+    extend_schema,
+    OpenApiParameter,
+    OpenApiResponse,
+)
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -9,11 +15,16 @@ from rest_framework.response import Response
 from core_main_app.access_control.exceptions import AccessControlError
 from core_main_app.commons import exceptions
 from core_main_app.components.data import api as data_api
+from core_main_app.rest.data.serializers import DataSerializer
 from core_main_app.rest.data.views import DataDetail
 from core_main_app.utils.decorators import api_staff_member_required
 from core_main_registry_app.components.data import api as registry_data_api
 
 
+@extend_schema(
+    tags=["Data"],
+    description="Publish a data",
+)
 @api_view(["PATCH"])
 def publish_data(request, pk):
     """Publish a data
@@ -54,20 +65,38 @@ def publish_data(request, pk):
         return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+@extend_schema(
+    tags=["Data"],
+    description="Retrieve or update a data",
+)
 class DataDetailRegistry(DataDetail):
     """Retrieve or update a data"""
 
+    @extend_schema(
+        summary="Delete a data",
+        description="Delete a Data",
+        parameters=[
+            OpenApiParameter(
+                name="id",
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.PATH,
+                description="Data ID",
+            ),
+        ],
+        responses={
+            204: None,
+            403: OpenApiResponse(description="Access Forbidden"),
+            404: OpenApiResponse(description="Object was not found"),
+            500: OpenApiResponse(description="Internal server error"),
+        },
+    )
     @method_decorator(api_staff_member_required())
     def delete(self, request, pk):
         """Delete a Data
-
         Args:
-
             request: HTTP request
             pk: ObjectId
-
         Returns:
-
             - code: 204
               content: Deletion succeed
             - code: 403
@@ -83,20 +112,37 @@ class DataDetailRegistry(DataDetail):
                 "message": "You must have superuser right to delete data."
             }
             return Response(content, status=status.HTTP_403_FORBIDDEN)
-
         return super(DataDetailRegistry, self).delete(request, pk)
 
+    @extend_schema(
+        summary="Update a Data",
+        description="Update a Data",
+        parameters=[
+            OpenApiParameter(
+                name="id",
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.PATH,
+                description="Id of the data",
+            ),
+        ],
+        request=DataSerializer,
+        responses={
+            200: OpenApiResponse(
+                response=DataSerializer,
+                description="Data updated successfully",
+            ),
+            400: OpenApiResponse(description="Validation error"),
+            404: OpenApiResponse(description="Data not found"),
+            500: OpenApiResponse(description="Internal server error"),
+        },
+    )
     @method_decorator(api_staff_member_required())
     def patch(self, request, pk):
         """Data cannot be updated
-
         Args:
-
             request: HTTP request
             pk: ObjectId
-
         Returns:
-
             - code: 403
               content: Access forbidden
         """
@@ -106,5 +152,4 @@ class DataDetailRegistry(DataDetail):
                 "message": "You must have superuser right to update data."
             }
             return Response(content, status=status.HTTP_403_FORBIDDEN)
-
         return super(DataDetailRegistry, self).patch(request, pk)
