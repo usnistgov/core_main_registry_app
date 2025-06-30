@@ -45,7 +45,7 @@ test:
       - PYTHON_VERSION: ['3.9', '3.10', '3.11', '3.12']
   image: python:${PYTHON_VERSION}-slim-bullseye
   script:
-    - coverage run --parallel --source=core_main_app --omit=*settings.py -p runtests.py
+    - coverage run --parallel --source=core_main_registry_app --omit=*settings.py -p runtests.py
     - coverage combine || true
     - coverage xml
     - diff-cover coverage.xml --compare-branch=origin/master --fail-under=100
