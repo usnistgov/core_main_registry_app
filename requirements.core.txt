@@ -1,2 +1,2 @@
 core-main-app[mongodb]==2.16.*
-core_parser_app==2.16.*
+core_parser_app==2.17.*
