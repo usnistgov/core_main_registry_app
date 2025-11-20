@@ -1,7 +1,8 @@
 """ Unit tests for rest apis
 """
 
-from unittest.case import TestCase
+from django.test import TestCase
+
 from core_main_registry_app.rest import urls as rest_urls
 
 

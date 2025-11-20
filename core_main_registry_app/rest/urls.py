@@ -5,27 +5,31 @@ from django.urls import re_path
 from rest_framework.urlpatterns import format_suffix_patterns
 
 import core_main_app.rest.xsl_transformation.views as xslt_views
+from core_main_app.rest.blob import views as blob_views
+from core_main_app.rest.blob_processing_module import (
+    views as blob_processing_module_views,
+)
 from core_main_app.rest.data import views as data_views
 from core_main_app.rest.template import views as template_views
-from core_main_app.rest.template_version_manager import (
-    views as template_version_manager_views,
-)
 from core_main_app.rest.template_html_rendering import (
     views as template_html_rendering_views,
+)
+from core_main_app.rest.template_version_manager import (
+    views as template_version_manager_views,
 )
 from core_main_app.rest.user import views as user_views
 from core_main_app.rest.views import CoreSettings
 from core_main_app.rest.workspace import views as workspace_views
-from core_main_registry_app.rest.workspace import (
-    views as workspace_registry_views,
+from core_main_registry_app.settings import (
+    ALLOW_MULTIPLE_SCHEMAS,
+    ENABLE_BLOB_ENDPOINTS,
 )
 from core_main_registry_app.rest.data import views as registry_data_views
 from core_main_registry_app.rest.template_version_manager import (
     views as registry_template_version_manager_views,
 )
-from core_main_registry_app.settings import (
-    ENABLE_BLOB_ENDPOINTS,
-    ALLOW_MULTIPLE_SCHEMAS,
+from core_main_registry_app.rest.workspace import (
+    views as workspace_registry_views,
 )
 
 urlpatterns = [
@@ -304,8 +308,6 @@ urlpatterns = [
 urlpatterns = format_suffix_patterns(urlpatterns)
 
 if ENABLE_BLOB_ENDPOINTS:
-    from core_main_app.rest.blob import views as blob_views
-
     urlpatterns.extend(
         [
             re_path(
@@ -342,6 +344,21 @@ if ENABLE_BLOB_ENDPOINTS:
                 r"^blob/(?P<pk>\w+)/change-owner/(?P<user_id>\w+)$",
                 blob_views.BlobChangeOwner.as_view(),
                 name="core_main_app_rest_blob_change_owner",
+            ),
+            re_path(
+                r"^blob/(?P<blob_id>\w+)/run/(?P<processing_module_id>\w+)$",
+                blob_views.BlobRunProcessingModule.as_view(),
+                name="core_main_app_rest_blob_run_processing_module",
+            ),
+            re_path(
+                r"^blob-processing-module/$",
+                blob_processing_module_views.BlobProcessingModuleListView.as_view(),
+                name="core_main_app_rest_blob_processing_module_list",
+            ),
+            re_path(
+                r"^blob-processing-module/(?P<blob_processing_module_id>\w+)/$",
+                blob_processing_module_views.BlobProcessingModuleManageView.as_view(),
+                name="core_main_app_rest_blob_processing_module_manage",
             ),
         ]
     )
