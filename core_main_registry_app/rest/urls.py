@@ -284,6 +284,11 @@ urlpatterns = [
         name="core_main_app_rest_admin_data_list",
     ),
     re_path(
+        r"^data/(?P<data_id>\w+)/run/(?P<processing_module_id>\w+)$",
+        data_views.DataRunProcessingModule.as_view(),
+        name="core_main_app_rest_data_run_processing_module",
+    ),
+    re_path(
         r"^core-settings/$",
         CoreSettings.as_view(),
         name="core_main_app_rest_core_settings",
