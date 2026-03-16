@@ -1,5 +1,4 @@
-""" Custom Resource api
-"""
+"""Custom Resource api"""
 
 import logging
 

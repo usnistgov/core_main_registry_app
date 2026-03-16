@@ -1,5 +1,4 @@
-""" Custom admin site for the Custom Resource model
-"""
+"""Custom admin site for the Custom Resource model"""
 
 from django.contrib import admin
 

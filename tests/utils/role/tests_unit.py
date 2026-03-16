@@ -1,5 +1,4 @@
-""" Unit tests for role extraction
-"""
+"""Unit tests for role extraction"""
 
 from unittest import TestCase
 

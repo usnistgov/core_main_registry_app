@@ -1,5 +1,4 @@
-""" Unit Test Data
-"""
+"""Unit Test Data"""
 
 from unittest.mock import patch
 
@@ -16,7 +15,6 @@ from core_main_app.utils.tests_tools.RequestMock import create_mock_request
 import core_main_registry_app.components.data.api as data_registry_api
 from core_main_registry_app.commons.constants import DataStatus
 from tests.components.data.fixtures.fixtures import DataRegistryFixtures
-
 
 fixture_data = DataRegistryFixtures()
 

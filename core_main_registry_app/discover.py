@@ -1,5 +1,4 @@
-""""Discover rules for core main registry app
-"""
+""" "Discover rules for core main registry app"""
 
 import json
 import logging

@@ -1,5 +1,4 @@
-""" Unit Test for Custom Resource API
-"""
+"""Unit Test for Custom Resource API"""
 
 from unittest import mock
 

@@ -1,5 +1,4 @@
-""" Data's registry api
-"""
+"""Data's registry api"""
 
 import random
 import string

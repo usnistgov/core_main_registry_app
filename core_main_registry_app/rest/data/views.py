@@ -1,5 +1,4 @@
-""" REST views for the registry Data API
-"""
+"""REST views for the registry Data API"""
 
 from django.utils.decorators import method_decorator
 from drf_spectacular.types import OpenApiTypes

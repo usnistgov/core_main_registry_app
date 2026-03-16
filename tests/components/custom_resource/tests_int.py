@@ -1,5 +1,4 @@
-""" Integration Test for Custom Resource API
-"""
+"""Integration Test for Custom Resource API"""
 
 from django.core.exceptions import ValidationError
 from django.utils.text import slugify

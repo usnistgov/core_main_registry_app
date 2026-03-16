@@ -1,5 +1,4 @@
-""" Admin views
-"""
+"""Admin views"""
 
 import logging
 

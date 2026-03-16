@@ -214,6 +214,8 @@ conf/my-mongodb.conf
 # tests
 xml_schemas
 xslt
+template/
+xsltransformation/
 
 # redis server
 *.rdb

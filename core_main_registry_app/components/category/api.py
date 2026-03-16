@@ -1,5 +1,4 @@
-""" Category API
-"""
+"""Category API"""
 
 from core_main_registry_app.components.category.models import Category
 

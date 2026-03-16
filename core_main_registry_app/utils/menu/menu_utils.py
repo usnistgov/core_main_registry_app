@@ -1,5 +1,4 @@
-""" Menu utils
-"""
+"""Menu utils"""
 
 
 def show_template_upload_menu(menu, allow_multiple_schemas=False):

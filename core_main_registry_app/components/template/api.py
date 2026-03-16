@@ -1,5 +1,4 @@
-""" Template's registry api
-"""
+"""Template's registry api"""
 
 from core_main_app.commons import exceptions as exceptions
 from core_main_app.components.template import api as template_api

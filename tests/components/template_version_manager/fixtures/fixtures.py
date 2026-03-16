@@ -1,5 +1,4 @@
-""" Fixtures files for template version manager
-"""
+"""Fixtures files for template version manager"""
 
 from core_main_app.components.template.models import Template
 from core_main_app.components.template_version_manager.models import (

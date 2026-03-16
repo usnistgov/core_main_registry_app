@@ -1,5 +1,4 @@
-""" Unit Test for Refinement API
-"""
+"""Unit Test for Refinement API"""
 
 from django.test import TestCase
 from core_main_app.commons.exceptions import DoesNotExist

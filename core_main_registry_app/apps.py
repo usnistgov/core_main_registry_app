@@ -1,5 +1,4 @@
-""" Apps file for setting core main registry app package when app is ready
-"""
+"""Apps file for setting core main registry app package when app is ready"""
 
 import sys
 

@@ -1,5 +1,4 @@
-""" Unit Test for Migrations
-"""
+"""Unit Test for Migrations"""
 
 from unittest.mock import patch
 

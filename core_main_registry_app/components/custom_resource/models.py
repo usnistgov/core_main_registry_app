@@ -1,5 +1,4 @@
-""" Custom Resource model
-"""
+"""Custom Resource model"""
 
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db import models

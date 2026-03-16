@@ -1,5 +1,4 @@
-""" Role extraction API
-"""
+"""Role extraction API"""
 
 
 def role_extraction(dict_content):

@@ -1,5 +1,4 @@
-""" Setup for core main registry app
-"""
+"""Setup for core main registry app"""
 
 from os import chdir, pardir
 from os.path import join, exists, dirname, normpath, abspath

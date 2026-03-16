@@ -1,5 +1,4 @@
-""" Menu configuration for core_main_registry_app.
-"""
+"""Menu configuration for core_main_registry_app."""
 
 from django.urls import reverse
 from menu import Menu, MenuItem

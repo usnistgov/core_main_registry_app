@@ -1,5 +1,4 @@
-""" Tests Settings
-"""
+"""Tests Settings"""
 
 import os
 

@@ -1,5 +1,4 @@
-""" all constants for the core_main_registry_app
-"""
+"""all constants for the core_main_registry_app"""
 
 
 class DataStatus:

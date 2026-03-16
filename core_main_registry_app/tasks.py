@@ -1,5 +1,4 @@
-""" Registry tasks
-"""
+"""Registry tasks"""
 
 from celery import shared_task
 

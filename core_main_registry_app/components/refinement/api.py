@@ -1,5 +1,4 @@
-""" Refinement API
-"""
+"""Refinement API"""
 
 from core_main_registry_app.components.refinement.models import Refinement
 

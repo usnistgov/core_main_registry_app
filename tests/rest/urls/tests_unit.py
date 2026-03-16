@@ -1,5 +1,4 @@
-""" Unit tests for rest apis
-"""
+"""Unit tests for rest apis"""
 
 from django.test import TestCase
 

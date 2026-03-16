@@ -1,5 +1,4 @@
-""" Fixtures files for Data
-"""
+"""Fixtures files for Data"""
 
 from os.path import join, dirname, realpath
 

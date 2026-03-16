@@ -1,5 +1,4 @@
-""" Integration Test for registry Template Version Manager Rest API
-"""
+"""Integration Test for registry Template Version Manager Rest API"""
 
 from rest_framework import status
 

@@ -1,5 +1,4 @@
-""" Refinement model
-"""
+"""Refinement model"""
 
 from django.db import models
 from django_extensions.db.fields import AutoSlugField

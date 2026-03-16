@@ -1,5 +1,4 @@
-""" REST views for the workspace API
-"""
+"""REST views for the workspace API"""
 
 from rest_framework.permissions import IsAuthenticated
 

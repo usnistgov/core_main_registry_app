@@ -1,5 +1,4 @@
-""" Authentication tests for Data REST API
-"""
+"""Authentication tests for Data REST API"""
 
 from django.test import SimpleTestCase
 from unittest.mock import patch, MagicMock

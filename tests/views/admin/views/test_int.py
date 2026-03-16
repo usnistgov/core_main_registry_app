@@ -1,5 +1,4 @@
-""" Unit test views
-"""
+"""Unit test views"""
 
 from unittest.mock import patch
 

@@ -1,5 +1,4 @@
-""" System api to access data without access control neither API rules
-"""
+"""System api to access data without access control neither API rules"""
 
 from django.db.models import Q
 

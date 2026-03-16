@@ -1,5 +1,4 @@
-""" Unit tests for the fancytree widget
-"""
+"""Unit tests for the fancytree widget"""
 
 from unittest import TestCase
 

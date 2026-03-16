@@ -1,5 +1,4 @@
-""" Handle refinement signals
-"""
+"""Handle refinement signals"""
 
 from logging import getLogger
 
